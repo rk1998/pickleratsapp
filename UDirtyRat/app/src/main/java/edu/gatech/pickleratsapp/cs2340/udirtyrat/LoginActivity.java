@@ -201,7 +201,8 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
             // perform the user login attempt.
             //showProgress(true);
             if(TEMP_USER.equals(email) && TEMP_PASS.equals(password)) {
-                //take the user to the app screen
+                Intent appIntent = new Intent(LoginActivity.this, MainScreen.class);
+                startActivity(appIntent);
             } else {
                 AlertDialog.Builder badAttemptDialog = new AlertDialog.Builder(this);
                 badAttemptDialog.setTitle("Oops!");
