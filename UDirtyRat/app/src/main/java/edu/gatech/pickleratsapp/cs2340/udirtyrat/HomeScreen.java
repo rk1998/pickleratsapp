@@ -16,7 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class HomeScreen extends AppCompatActivity {
-    Button login;
+    private Button login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
