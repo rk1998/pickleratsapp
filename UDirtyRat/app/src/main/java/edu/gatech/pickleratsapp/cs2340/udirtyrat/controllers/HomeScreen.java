@@ -1,4 +1,9 @@
-package edu.gatech.pickleratsapp.cs2340.udirtyrat;
+package edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.*;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -21,7 +26,7 @@ public class HomeScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_screen);
+        setContentView(R.layout.activity_home_screen2);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Locate the button in activity_main.xml
@@ -33,7 +38,7 @@ public class HomeScreen extends AppCompatActivity {
 
                 // Start NewActivity.class
                 Intent myIntent = new Intent(HomeScreen.this,
-                        LoginActivity.class);
+                        edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers.LoginActivity.class);
                 startActivity(myIntent);
                 startActivity(myIntent);
             }
