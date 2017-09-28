@@ -1,7 +1,7 @@
 package edu.gatech.pickleratsapp.cs2340.udirtyrat.Model;
 
 /**
- * Created by rokrishnan on 9/27/17.
+ * Class representing a user in our system.
  */
 
 public class User {
@@ -14,5 +14,36 @@ public class User {
         _userID = userID;
         _passWord = passWord;
         _isAdmin = isAdmin;
+    }
+
+    public String get_name() {
+        return _name;
+    }
+    public String get_passWord() {
+        return _passWord;
+    }
+    public String get_userID() {
+        return _userID;
+    }
+    public boolean get_isAdmin() {
+        return _isAdmin;
+    }
+    public void set_name(String name) {
+        _name = name;
+    }
+
+    public void set_passWord(String _passWord) {
+        this._passWord = _passWord;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        //TODO: add own implementation of this
+        return super.equals(obj);
+    }
+
+    @Override
+    public String toString() {
+        return "User " + _name + "has userId : " + _userID;
     }
 }
