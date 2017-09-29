@@ -10,6 +10,8 @@ import android.support.compat.BuildConfig;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 public class Model {
     /**Singleton Instance**/
@@ -22,19 +24,43 @@ public class Model {
     public static Model get_instance() {
         return _instance;
     }
-    private List<User> _users;
+    private Set<User> _users;
     /**
      * Make a new Model
      */
     private  Model() {
-        _users = new LinkedList<>();
+        _users = new HashSet<>();
     }
 
     /**
      *
-     * @return The List of Users
+     * @return The Set of Users
      */
-    public List<User> get_users() {
+    public Set<User> get_users() {
         return _users;
+    }
+
+    /**
+     * Populates app with dummy users
+     */
+    private void loadDummyUsers() {
+        _users.add(new User("Jamie", "jhaunkainen@gatech.edu", "1234", false));
+        _users.add(new User("Rohith", "rkrishnan42@gatech.edu", "1234", false));
+        _users.add(new User("Nick", "nhuang@gatech.edu", "1234", false));
+
+    }
+
+    public boolean add_user(User newUser) {
+        if(_users.contains(newUser)) {
+            return false;
+        } else {
+            _users.add(newUser);
+            return true;
+        }
+    }
+
+    public boolean login_user(User user) {
+        //Todo
+        return false;
     }
 }

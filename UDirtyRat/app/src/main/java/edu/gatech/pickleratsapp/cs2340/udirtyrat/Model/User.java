@@ -39,7 +39,7 @@ public class User {
     @Override
     public boolean equals(Object obj) {
         //TODO: add own implementation of this
-        return super.equals(obj);
+        return (this == (User) obj || this._userID ==  ((User) obj)._userID);
     }
 
     @Override
