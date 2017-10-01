@@ -15,6 +15,9 @@ public class User {
         _passWord = passWord;
         _isAdmin = isAdmin;
     }
+    public User(String userID, String passWord) {
+        this("BigBoi", userID, passWord, false);
+    }
 
     public String get_name() {
         return _name;

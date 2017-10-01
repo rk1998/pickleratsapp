@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
 
 /**
  * A login screen that offers login via email/password.

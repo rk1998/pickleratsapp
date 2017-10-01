@@ -71,6 +71,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.User;
 
 /**
  * A login screen that offers login via email/password.
@@ -235,7 +237,14 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             //showProgress(true);
-            if(TEMP_USER.equals(email) && TEMP_PASS.equals(password)) {
+            User tempUser = new User(email, password);
+            Model model = Model.get_instance();
+
+//            if(TEMP_USER.equals(email) && TEMP_PASS.equals(password)) {
+//                Intent appIntent = new Intent(LoginActivity.this, MainScreen.class);
+//                startActivity(appIntent);
+//            }
+            if(model.login_user(tempUser)) {
                 Intent appIntent = new Intent(LoginActivity.this, MainScreen.class);
                 startActivity(appIntent);
             } else {

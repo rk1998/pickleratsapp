@@ -24,19 +24,19 @@ public class Model {
     public static Model get_instance() {
         return _instance;
     }
-    private Set<User> _users;
+    private List<User> _users;
     /**
      * Make a new Model
      */
     private  Model() {
-        _users = new HashSet<>();
+        _users = new LinkedList<>();
     }
 
     /**
      *
      * @return The Set of Users
      */
-    public Set<User> get_users() {
+    public List<User> get_users() {
         return _users;
     }
 
@@ -61,6 +61,11 @@ public class Model {
 
     public boolean login_user(User user) {
         //Todo
-        return false;
+        if(_users.contains(user)) {
+           User attemptedUser = _users.get(_users.indexOf(user));
+            return attemptedUser.get_passWord().equals(user.get_passWord());
+        } else {
+            return false;
+        }
     }
 }
