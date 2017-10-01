@@ -30,6 +30,7 @@ public class Model {
      */
     private  Model() {
         _users = new LinkedList<>();
+       loadDummyUsers();
     }
 
     /**
@@ -51,6 +52,7 @@ public class Model {
     }
 
     public boolean add_user(User newUser) {
+
         if(_users.contains(newUser)) {
             return false;
         } else {
@@ -60,7 +62,6 @@ public class Model {
     }
 
     public boolean login_user(User user) {
-        //Todo
         if(_users.contains(user)) {
            User attemptedUser = _users.get(_users.indexOf(user));
             return attemptedUser.get_passWord().equals(user.get_passWord());

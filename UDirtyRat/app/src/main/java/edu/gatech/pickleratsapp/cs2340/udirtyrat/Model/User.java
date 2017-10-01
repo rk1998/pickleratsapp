@@ -42,7 +42,7 @@ public class User {
     @Override
     public boolean equals(Object obj) {
         //TODO: add own implementation of this
-        return (this == (User) obj || this._userID ==  ((User) obj)._userID);
+        return (this == (User) obj || this.get_userID().equals(((User) obj).get_userID()));
     }
 
     @Override
