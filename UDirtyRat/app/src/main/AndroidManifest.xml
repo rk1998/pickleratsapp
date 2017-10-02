@@ -15,11 +15,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
+            android:name=".controllers.LoginActivity"
             android:label="@string/app_name"></activity>
         <activity
-            android:name=".HomeScreen"
-            android:label="U Dirty Rat"
+            android:name=".controllers.RegisterActivity"
+            android:label="@string/app_name"></activity>
+        <activity
+            android:name=".controllers.HomeScreen"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainScreen"
+            android:name=".controllers.MainScreen"
             android:label="Rat Data"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

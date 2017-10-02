@@ -1,46 +1,30 @@
-package edu.gatech.pickleratsapp.cs2340.udirtyrat;
+package edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
-
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.AsyncTask;
-
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.content.Intent;
-import android.app.AlertDialog;
+import android.widget.ToggleButton;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.Manifest.permission.READ_CONTACTS;
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.User;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity /*implements LoaderCallbacks<Cursor>*/ {
+public class RegisterActivity extends AppCompatActivity /*implements LoaderCallbacks<Cursor>*/ {
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -59,54 +43,54 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private UserLoginTask mAuthTask = null;
+    private RegisterActivity.UserLoginTask mAuthTask = null;
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
-    private EditText mPasswordView;
-    private View mProgressView;
-    private View mLoginFormView;
+    private EditText userNameInput;
+    private EditText userIDInput;
+    private EditText userPasswordInput;
+    private ToggleButton adminToggle;
+    private Button registerYes;
+    private Button cancelRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        setContentView(R.layout.activity_register);
+        // Set up the register form.
+        userNameInput = (EditText) findViewById(R.id.userNameInput);
+        userIDInput = (EditText) findViewById(R.id.userIDinput);
+        userPasswordInput = (EditText) findViewById(R.id.userPasswordInput);
+        adminToggle = (ToggleButton) findViewById(R.id.adminToggle);
+        registerYes = (Button) findViewById(R.id.registerConfirm);
+        cancelRegister = (Button) findViewById(R.id.cancelRegister);
         //populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        userPasswordInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
                 return false;
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        registerYes.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
             }
         });
 
-        Button mCancelButton = (Button) findViewById(R.id.cancel_button);
-        mCancelButton.setOnClickListener(new OnClickListener() {
+        cancelRegister.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Start new HomeScreen.Class
-                Intent myIntent = new Intent(LoginActivity.this, HomeScreen.class);
+                Intent myIntent = new Intent(RegisterActivity.this, HomeScreen.class);
                 startActivity(myIntent);
             }
         });
 
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
+        //mLoginFormView = findViewById(R.id.login_form);
+        //mProgressView = findViewById(R.id.login_progress);
     }
 
 //    private void populateAutoComplete() {
@@ -164,31 +148,46 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
         }
 
         // Reset errors.
-        mEmailView.setError(null);
-        mPasswordView.setError(null);
+        userNameInput.setError(null);
+        userIDInput.setError(null);
+        userPasswordInput.setError(null);
+
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        String name = userNameInput.getText().toString();
+        String email = userIDInput.getText().toString();
+        String password = userPasswordInput.getText().toString();
+        boolean isAdmin = adminToggle.isPressed();
 
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
+        if (TextUtils.isEmpty(password)) {
+            userPasswordInput.setError("This field is required");
+            focusView = userPasswordInput;
+            cancel = true;
+        } else if (!isPasswordValid(password)) {
+            userPasswordInput.setError("This password is too short");
+            focusView = userPasswordInput;
             cancel = true;
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
+            userIDInput.setError("This field is required");
+            focusView = userIDInput;
             cancel = true;
         } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
+            userIDInput.setError("This email address is invalid");
+            focusView = userIDInput;
+            cancel = true;
+        }
+
+        // Check that the user entered a name
+        if (TextUtils.isEmpty(name)) {
+            userNameInput.setError("This field is required");
+            focusView = userNameInput;
             cancel = true;
         }
 
@@ -200,13 +199,16 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             //showProgress(true);
-            if(TEMP_USER.equals(email) && TEMP_PASS.equals(password)) {
-                Intent appIntent = new Intent(LoginActivity.this, MainScreen.class);
+            Model model = Model.get_instance();
+            boolean check = model.add_user(new User(name, email, password, isAdmin));
+            // check will be true if the account was added successfully
+            if (check) {
+                Intent appIntent = new Intent(RegisterActivity.this, MainScreen.class);
                 startActivity(appIntent);
             } else {
                 AlertDialog.Builder badAttemptDialog = new AlertDialog.Builder(this);
                 badAttemptDialog.setTitle("Oops!");
-                badAttemptDialog.setMessage("Wrong email or password.");
+                badAttemptDialog.setMessage("Account Already exists for this email");
                 badAttemptDialog.setPositiveButton("OK", null);
                 badAttemptDialog.setCancelable(true);
                 badAttemptDialog.create().show();
@@ -367,8 +369,8 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
             if (success) {
                 finish();
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+                //mPasswordView.setError(getString(R.string.error_incorrect_password));
+                //mPasswordView.requestFocus();
             }
         }
 
