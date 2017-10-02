@@ -163,7 +163,11 @@ public class RegisterActivity extends AppCompatActivity /*implements LoaderCallb
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (TextUtils.isEmpty(password)) {
+            userPasswordInput.setError("This field is required");
+            focusView = userPasswordInput;
+            cancel = true;
+        } else if (!isPasswordValid(password)) {
             userPasswordInput.setError("This password is too short");
             focusView = userPasswordInput;
             cancel = true;
@@ -196,26 +200,25 @@ public class RegisterActivity extends AppCompatActivity /*implements LoaderCallb
             // perform the user login attempt.
             //showProgress(true);
             Model model = Model.get_instance();
-            model.add_user(new User(name, email, password, isAdmin));
-            Intent appIntent = new Intent(RegisterActivity.this, MainScreen.class);
-            startActivity(appIntent);
-//            if(TEMP_USER.equals(email) && TEMP_PASS.equals(password)) {
-//                Intent appIntent = new Intent(RegisterActivity.this, MainScreen.class);
-//                startActivity(appIntent);
-//            } else {
-//                AlertDialog.Builder badAttemptDialog = new AlertDialog.Builder(this);
-//                badAttemptDialog.setTitle("Oops!");
-//                badAttemptDialog.setMessage("Wrong email or password.");
-//                badAttemptDialog.setPositiveButton("OK", null);
-//                badAttemptDialog.setCancelable(true);
-//                badAttemptDialog.create().show();
-//                badAttemptDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//                    }
-//
-//                });
-//            }
+            boolean check = model.add_user(new User(name, email, password, isAdmin));
+            // check will be true if the account was added successfully
+            if (check) {
+                Intent appIntent = new Intent(RegisterActivity.this, MainScreen.class);
+                startActivity(appIntent);
+            } else {
+                AlertDialog.Builder badAttemptDialog = new AlertDialog.Builder(this);
+                badAttemptDialog.setTitle("Oops!");
+                badAttemptDialog.setMessage("Account Already exists for this email");
+                badAttemptDialog.setPositiveButton("OK", null);
+                badAttemptDialog.setCancelable(true);
+                badAttemptDialog.create().show();
+                badAttemptDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+
+                });
+            }
 //            mAuthTask = new UserLoginTask(email, password);
 //            mAuthTask.execute((Void) null);
         }
