@@ -19,6 +19,7 @@ import android.widget.ToggleButton;
 
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.User;
 
 /**
  * A login screen that offers login via email/password.
@@ -58,8 +59,8 @@ public class RegisterActivity extends AppCompatActivity /*implements LoaderCallb
         setContentView(R.layout.activity_register);
         // Set up the register form.
         userNameInput = (EditText) findViewById(R.id.userNameInput);
-        userIDInput = (EditText) findViewById(R.id.userNameInput);
-        userPasswordInput = (EditText) findViewById(R.id.userNameInput);
+        userIDInput = (EditText) findViewById(R.id.userIDinput);
+        userPasswordInput = (EditText) findViewById(R.id.userPasswordInput);
         adminToggle = (ToggleButton) findViewById(R.id.adminToggle);
         registerYes = (Button) findViewById(R.id.registerConfirm);
         cancelRegister = (Button) findViewById(R.id.cancelRegister);
@@ -147,42 +148,57 @@ public class RegisterActivity extends AppCompatActivity /*implements LoaderCallb
         }
 
         // Reset errors.
-        //mEmailView.setError(null);
-        //mPasswordView.setError(null);
+        userNameInput.setError(null);
+        userIDInput.setError(null);
+        userPasswordInput.setError(null);
+
 
         // Store values at the time of the login attempt.
-        //String email = mEmailView.getText().toString();
-        //String password = mPasswordView.getText().toString();
+        String name = userNameInput.getText().toString();
+        String email = userIDInput.getText().toString();
+        String password = userPasswordInput.getText().toString();
+        boolean isAdmin = adminToggle.isPressed();
 
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        //if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-        //    mPasswordView.setError(getString(R.string.error_invalid_password));
-        //    focusView = mPasswordView;
-        //    cancel = true;
+        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+            userPasswordInput.setError("This password is too short");
+            focusView = userPasswordInput;
+            cancel = true;
         }
 
         // Check for a valid email address.
-        //if (TextUtils.isEmpty(email)) {
-        //    mEmailView.setError(getString(R.string.error_field_required));
-        //    focusView = mEmailView;
-        //    cancel = true;
-        //} else if (!isEmailValid(email)) {
-        //    mEmailView.setError(getString(R.string.error_invalid_email));
-        //    focusView = mEmailView;
-        //    cancel = true;
-        //}
+        if (TextUtils.isEmpty(email)) {
+            userIDInput.setError("This field is required");
+            focusView = userIDInput;
+            cancel = true;
+        } else if (!isEmailValid(email)) {
+            userIDInput.setError("This email address is invalid");
+            focusView = userIDInput;
+            cancel = true;
+        }
 
-//        if (cancel) {
-//            // There was an error; don't attempt login and focus the first
-//            // form field with an error.
-//            focusView.requestFocus();
-//        } else {
-//            // Show a progress spinner, and kick off a background task to
-//            // perform the user login attempt.
-//            //showProgress(true);
+        // Check that the user entered a name
+        if (TextUtils.isEmpty(name)) {
+            userNameInput.setError("This field is required");
+            focusView = userNameInput;
+            cancel = true;
+        }
+
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        } else {
+            // Show a progress spinner, and kick off a background task to
+            // perform the user login attempt.
+            //showProgress(true);
+            Model model = Model.get_instance();
+            model.add_user(new User(name, email, password, isAdmin));
+            Intent appIntent = new Intent(RegisterActivity.this, MainScreen.class);
+            startActivity(appIntent);
 //            if(TEMP_USER.equals(email) && TEMP_PASS.equals(password)) {
 //                Intent appIntent = new Intent(RegisterActivity.this, MainScreen.class);
 //                startActivity(appIntent);
@@ -200,10 +216,10 @@ public class RegisterActivity extends AppCompatActivity /*implements LoaderCallb
 //
 //                });
 //            }
-////            mAuthTask = new UserLoginTask(email, password);
-////            mAuthTask.execute((Void) null);
-//        }
-//    }
+//            mAuthTask = new UserLoginTask(email, password);
+//            mAuthTask.execute((Void) null);
+        }
+    }
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
