@@ -10,8 +10,8 @@ import android.support.compat.BuildConfig;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.Map;
+import java.util.HashMap;
 
 public class Model {
     /**Singleton Instance**/
@@ -25,11 +25,14 @@ public class Model {
         return _instance;
     }
     private List<User> _users;
+    private Map<Integer, RatReport> _reports;
+
     /**
      * Make a new Model
      */
     private  Model() {
         _users = new LinkedList<>();
+        _reports = new HashMap<>();
        loadDummyUsers();
     }
 
@@ -49,6 +52,9 @@ public class Model {
         _users.add(new User("Rohith", "rkrishnan42@gatech.edu", "1234", false));
         _users.add(new User("Nick", "nhuang@gatech.edu", "1234", false));
 
+    }
+    private void load_rat_data() {
+        //TODO:Load the rat data from csv.
     }
 
     public boolean add_user(User newUser) {
