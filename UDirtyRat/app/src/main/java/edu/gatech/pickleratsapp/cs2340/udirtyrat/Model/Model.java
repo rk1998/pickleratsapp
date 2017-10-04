@@ -61,6 +61,11 @@ public class Model {
         }
     }
 
+    /**
+     *
+     * @param user user to login
+     * @return if the user was logged in or not
+     */
     public boolean login_user(User user) {
         if(_users.contains(user)) {
            User attemptedUser = _users.get(_users.indexOf(user));
