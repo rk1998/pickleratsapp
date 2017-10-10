@@ -31,8 +31,10 @@ public class HomeScreen extends AppCompatActivity {
         // Locate the button in activity_main.xml
         login = (Button) findViewById(R.id.login);
         register = (Button) findViewById(R.id.registerConfirm);
-        loadRatData();
-
+        Model model = Model.get_instance();
+        if(model.numReports() == 0) {
+            loadRatData();
+        }
 
         // Capture button clicks
         login.setOnClickListener(new OnClickListener() {

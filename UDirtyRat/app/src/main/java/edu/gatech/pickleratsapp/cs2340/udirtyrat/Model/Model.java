@@ -55,6 +55,15 @@ public class Model {
 
     }
 
+    public int numReports() {
+        return _reports.size();
+    }
+
+    /**
+     * Adds a new user to the model
+     * @param newUser a new user to add to the model
+     * @return if the user was successfully added
+     */
     public boolean add_user(User newUser) {
 
         if(_users.contains(newUser)) {
@@ -73,6 +82,11 @@ public class Model {
         _reports.put(report.get_key(), report);
     }
 
+    /**
+     * Gets a rat report based on the key id of the report
+     * @param key the key of the report the user wants
+     * @return the RatReport corresponding to key
+     */
     public RatReport get_report(int key) {
         return _reports.get(key);
     }
