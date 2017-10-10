@@ -71,7 +71,10 @@ public class HomeScreen extends AppCompatActivity {
 //                }
 //                System.out.println();
                 int id = Integer.parseInt(reportData[0]);
-                int zip = Integer.parseInt(reportData[8]);
+                int zip = 0;
+                if(!reportData[8].isEmpty() && !reportData[8].equals("N/A")) {
+                    zip = Integer.parseInt(reportData[8]);
+                }
                 double latitude = 0.0;
                 double longitude = 0.0;
                 int length = reportData.length;
