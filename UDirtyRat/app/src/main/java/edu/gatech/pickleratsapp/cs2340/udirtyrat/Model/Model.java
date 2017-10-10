@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
+
 public class Model {
     /**Singleton Instance**/
     private static final Model _instance = new Model();
@@ -53,9 +54,6 @@ public class Model {
         _users.add(new User("Nick", "nhuang@gatech.edu", "1234", false));
 
     }
-    private void load_rat_data() {
-        //TODO:Load the rat data from csv.
-    }
 
     public boolean add_user(User newUser) {
 
@@ -65,6 +63,18 @@ public class Model {
             _users.add(newUser);
             return true;
         }
+    }
+
+    /**
+     * Adds new rat reports to the Model
+     * @param report New report to add to the app
+     */
+    public void add_report(RatReport report) {
+        _reports.put(report.get_key(), report);
+    }
+
+    public RatReport get_report(int key) {
+        return _reports.get(key);
     }
 
     /**
