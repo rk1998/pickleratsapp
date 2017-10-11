@@ -68,6 +68,7 @@ public class RatReport {
     public int get_key() {
         return _key;
     }
+    public String get_date() { return _date; }
     public int get_zip() {
         return _zip;
     }

@@ -34,7 +34,8 @@
             android:label="Rat Data"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".controllers.ReportListView" />
-        <activity android:name=".controllers.ReportActivity"></activity>
+        <activity android:name=".controllers.ReportActivity" />
+        <activity android:name=".controllers.ReportDetailActivity"></activity>
     </application>
 
 </manifest>
