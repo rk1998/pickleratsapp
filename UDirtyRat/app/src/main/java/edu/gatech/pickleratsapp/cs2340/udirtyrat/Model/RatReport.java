@@ -76,6 +76,11 @@ public class RatReport {
 
     /**
      *
+     * @return date the report was made
+     */
+    public String get_date() { return _date; }
+    /**
+     *
      * @return zip code of the report
      */
     public int get_zip() {

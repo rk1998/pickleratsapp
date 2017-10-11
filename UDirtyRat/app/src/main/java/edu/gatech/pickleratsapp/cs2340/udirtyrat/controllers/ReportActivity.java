@@ -59,7 +59,9 @@ public class ReportActivity extends AppCompatActivity {
         report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptReport();
+            //    attemptReport();
+                Intent appIntent = new Intent(ReportActivity.this, ReportDetailActivity.class);
+                startActivity(appIntent);
             }
         });
 
