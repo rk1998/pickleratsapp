@@ -11,6 +11,7 @@ import edu.gatech.pickleratsapp.cs2340.udirtyrat.*;
 
 public class MainScreen extends AppCompatActivity {
     private Button logOut;
+    private Button viewReports;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +20,7 @@ public class MainScreen extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         logOut = (Button) findViewById(R.id.back_to_home_button);
+        viewReports = (Button) findViewById(R.id.view_reports_button);
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(fab);
         logOut.setOnClickListener(new View.OnClickListener() {
@@ -29,6 +31,14 @@ public class MainScreen extends AppCompatActivity {
                 startActivity(new Intent(MainScreen.this, HomeScreen.class));
             }
         });
+
+        viewReports.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainScreen.this, ReportListView.class));
+            }
+        });
+
     }
 
 }
