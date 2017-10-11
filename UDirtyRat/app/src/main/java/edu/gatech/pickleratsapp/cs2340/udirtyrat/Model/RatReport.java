@@ -1,5 +1,8 @@
 package edu.gatech.pickleratsapp.cs2340.udirtyrat.Model;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Class representing a RatReport in the app
  */
@@ -21,6 +24,9 @@ public class RatReport {
 //        }
 //    }
     /**Enum for Borough where the report took place**/
+
+    public static List<String> boroughs = Arrays.asList("Queens", "Manhattan", "Bronx", "Brooklyn", "Staten Island");
+
     public enum Borough {
         QUEENS("Queens"),
         MANHATTAN("Manhattan"),
