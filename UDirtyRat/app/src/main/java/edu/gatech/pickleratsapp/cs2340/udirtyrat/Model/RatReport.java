@@ -65,27 +65,67 @@ public class RatReport {
         _longitude = longitude;
 
     }
+
+    /**
+     * Gets the key of the rat report
+     * @return rat report key
+     */
     public int get_key() {
         return _key;
     }
+
+    /**
+     *
+     * @return zip code of the report
+     */
     public int get_zip() {
         return _zip;
     }
+
+    /**
+     *
+     * @return the location type of this report
+     */
     public String get_locationType() {
         return _locationType;
     }
+
+    /**
+     *
+     * @return the address of the report
+     */
     public String get_address() {
         return _address;
     }
+
+    /**
+     *
+     * @return the city where the report was made
+     */
     public String get_city() {
         return _city;
     }
+
+    /**
+     *
+     * @return the borough where the report was made
+     */
     public String get_borough() {
         return _borough;
     }
+
+    /**
+     *
+     * @return the latitude of the rat sighting
+     */
     public double get_latitude() {
         return _latitude;
     }
+
+    /**
+     *
+     * @return the longitude of the rat sighting
+     */
     public double get_longitude() {
         return _longitude;
     }
