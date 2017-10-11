@@ -2,6 +2,7 @@ package edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.AsyncTask;
 
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.*;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.*;
@@ -21,6 +22,55 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 public class HomeScreen extends AppCompatActivity {
+
+    private class LoadCSVTask extends AsyncTask<String, Integer, Long> {
+        @Override
+        protected Long doInBackground(String ... str) {
+            long lineNumber = 0;
+            Model model = Model.get_instance();
+            try {
+                InputStream is = getResources().openRawResource(R.raw.rats);
+                BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+
+                String line;
+                br.readLine(); //get rid of header line
+                while ((line = br.readLine()) != null) {
+                    String[] reportData = line.split(",");
+//                for(int i = 0; i < reportData.length; i++) {
+//                    System.out.print(reportData[i] + " , ");
+//                }
+//                System.out.println();
+                    int id = Integer.parseInt(reportData[0]);
+                    int zip = 0;
+                    if(!reportData[8].isEmpty() && !reportData[8].equals("N/A")) {
+                        zip = Integer.parseInt(reportData[8]);
+                    }
+                    double latitude = 0.0;
+                    double longitude = 0.0;
+                    int length = reportData.length;
+                    if(!(length < 53) &&
+                            (!reportData[length - 3].isEmpty()
+                                    || !reportData[length - 3].equals("Unspecified"))
+                            && (!reportData[length - 4].isEmpty()
+                            || !reportData[length - 4].equals("Unspecified"))) {
+                        latitude = Double.parseDouble(reportData[reportData.length - 3]);
+                        longitude = Double.parseDouble(reportData[reportData.length - 4]);
+                    }
+                    model.add_report(new RatReport(id, reportData[1], reportData[7], zip,
+                            reportData[9], reportData[16], reportData[23],latitude, longitude));
+                    lineNumber++;
+                }
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return lineNumber;
+        }
+        protected void onPostExecute(Long result) {
+            System.out.println("File Loaded: " + result + " lines");
+        }
+
+    }
     private Button login;
     private Button register;
 
@@ -33,7 +83,8 @@ public class HomeScreen extends AppCompatActivity {
         register = (Button) findViewById(R.id.registerConfirm);
         Model model = Model.get_instance();
         if(model.numReports() == 0) {
-            loadRatData();
+            //loadRatData();
+            new LoadCSVTask().execute("load"); // launches Async task in background while the Homescreen is being created
         }
 
         // Capture button clicks
@@ -58,42 +109,42 @@ public class HomeScreen extends AppCompatActivity {
         });
     }
 
-    private void loadRatData() {
-        Model model = Model.get_instance();
-        try {
-            InputStream is = getResources().openRawResource(R.raw.rats);
-            BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-
-            String line;
-            br.readLine(); //get rid of header line
-            while ((line = br.readLine()) != null) {
-                String[] reportData = line.split(",");
-//                for(int i = 0; i < reportData.length; i++) {
-//                    System.out.print(reportData[i] + " , ");
+//    private void loadRatData() {
+//        Model model = Model.get_instance();
+//        try {
+//            InputStream is = getResources().openRawResource(R.raw.rats);
+//            BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+//
+//            String line;
+//            br.readLine(); //get rid of header line
+//            while ((line = br.readLine()) != null) {
+//                String[] reportData = line.split(",");
+////                for(int i = 0; i < reportData.length; i++) {
+////                    System.out.print(reportData[i] + " , ");
+////                }
+////                System.out.println();
+//                int id = Integer.parseInt(reportData[0]);
+//                int zip = 0;
+//                if(!reportData[8].isEmpty() && !reportData[8].equals("N/A")) {
+//                    zip = Integer.parseInt(reportData[8]);
 //                }
-//                System.out.println();
-                int id = Integer.parseInt(reportData[0]);
-                int zip = 0;
-                if(!reportData[8].isEmpty() && !reportData[8].equals("N/A")) {
-                    zip = Integer.parseInt(reportData[8]);
-                }
-                double latitude = 0.0;
-                double longitude = 0.0;
-                int length = reportData.length;
-                if(!(length < 53) &&
-                        (!reportData[length - 3].equals("") || !reportData[length - 3].equals("Unspecified"))
-                        && (!reportData[length - 4].equals("")
-                        || !reportData[length - 4].equals("Unspecified"))) {
-                    latitude = Double.parseDouble(reportData[reportData.length - 3]);
-                    longitude = Double.parseDouble(reportData[reportData.length - 4]);
-                }
-                model.add_report(new RatReport(id, reportData[1], reportData[7], zip,
-                        reportData[9], reportData[16], reportData[23],latitude, longitude));
-            }
-            br.close();
-        } catch (IOException e) {
-           System.out.println("ERROR");
-        }
-
-    }
+//                double latitude = 0.0;
+//                double longitude = 0.0;
+//                int length = reportData.length;
+//                if(!(length < 53) &&
+//                        (!reportData[length - 3].equals("") || !reportData[length - 3].equals("Unspecified"))
+//                        && (!reportData[length - 4].equals("")
+//                        || !reportData[length - 4].equals("Unspecified"))) {
+//                    latitude = Double.parseDouble(reportData[reportData.length - 3]);
+//                    longitude = Double.parseDouble(reportData[reportData.length - 4]);
+//                }
+//                model.add_report(new RatReport(id, reportData[1], reportData[7], zip,
+//                        reportData[9], reportData[16], reportData[23],latitude, longitude));
+//            }
+//            br.close();
+//        } catch (IOException e) {
+//           System.out.println("ERROR");
+//        }
+//
+//    }
 }
