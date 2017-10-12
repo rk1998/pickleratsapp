@@ -92,6 +92,13 @@ public class Model {
     }
 
     /**
+     * returns the whole of the RatReports as an array for the list view mainly
+     * @return the rat reports as an array
+     */
+    public RatReport[] get_reports() {
+        return (RatReport[]) _reports.values().toArray();
+    }
+    /**
      *
      * @param user user to login
      * @return if the user was logged in or not
