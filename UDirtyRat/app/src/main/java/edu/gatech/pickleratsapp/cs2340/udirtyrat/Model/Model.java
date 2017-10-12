@@ -8,6 +8,7 @@ package edu.gatech.pickleratsapp.cs2340.udirtyrat.Model;
 import android.support.annotation.NonNull;
 import android.support.compat.BuildConfig;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,7 @@ public class Model {
     }
     private List<User> _users;
     private Map<Integer, RatReport> _reports;
+    private Map<String, Integer> _string_to_key;
 
     /**
      * Make a new Model
@@ -80,6 +82,7 @@ public class Model {
      */
     public void add_report(RatReport report) {
         _reports.put(report.get_key(), report);
+        _string_to_key.put(report.toString(), report.get_key());
     }
 
     /**
@@ -92,11 +95,24 @@ public class Model {
     }
 
     /**
+     * Gets a rat report based on its string representation
+     * @param report_string the string representation of a rat report
+     * @return the full rat report 
+     */
+    public RatReport get_report_from_string(String report_string) {
+        return _reports.get(_string_to_key.get(report_string));
+    }
+
+    /**
      * returns the whole of the RatReports as an array for the list view mainly
      * @return the rat reports as an array
      */
-    public RatReport[] get_reports() {
-        return (RatReport[]) _reports.values().toArray();
+    public List<RatReport> get_reports() {
+        List<RatReport> reports = new ArrayList<>();
+       for(RatReport rat : _reports.values()) {
+           reports.add(rat);
+       }
+       return reports;
     }
     /**
      *

@@ -22,14 +22,13 @@ public class ReportListView extends AppCompatActivity {
         setContentView(R.layout.activity_report_list_view);
         mRatListView = (ListView) findViewById(R.id.ratList);
         Model model = Model.get_instance();
-        RatReport[] reports = model.get_reports();
+        List<RatReport> reports = model.get_reports();
         LinkedList<String> keys = new LinkedList<>();
-        for (RatReport report : reports) {
-            keys.add("" + report.get_key());
+        for (int i = 0; i < 50; i++) {
+            keys.add(reports.get(i).toString());
         }
-        String[] keysDisplay = (String[]) keys.toArray();
         ArrayAdapter adapter = new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1, keysDisplay);
+                android.R.layout.simple_list_item_1, keys);
 
         mRatListView.setAdapter(adapter);
     }

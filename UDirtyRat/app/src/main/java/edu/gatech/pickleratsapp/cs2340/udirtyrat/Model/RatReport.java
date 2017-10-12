@@ -134,4 +134,9 @@ public class RatReport {
     public double get_longitude() {
         return _longitude;
     }
+
+    @Override
+    public String toString() {
+        return _address + " " + _city + " " + _date + " ";
+    }
 }
