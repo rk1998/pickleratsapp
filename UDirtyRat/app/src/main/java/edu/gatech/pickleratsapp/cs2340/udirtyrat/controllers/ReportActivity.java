@@ -85,7 +85,8 @@ public class ReportActivity extends AppCompatActivity {
             latitude.setError(null);
             longitude.setError(null);
 
-            // Store values at the time of the login attempt.
+            // Store values at the time of the login attempt
+            //Todo:Validation for user input
             String dateZ = date.getText().toString();
             String locationTypeZ = locationType.getText().toString();
             int zipZ = Integer.parseInt(zip.getText().toString());
