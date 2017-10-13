@@ -23,7 +23,8 @@ public class ReportDetailActivity extends AppCompatActivity {
     private TextView latitude;
     private TextView longitude;
     private TextView borough;
-    private RatReport toReportDetails = Model.get_instance().get_report(31464015);
+    private int key = this.getIntent().getExtras().getInt("key");
+    private RatReport toReportDetails = Model.get_instance().get_report(key);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

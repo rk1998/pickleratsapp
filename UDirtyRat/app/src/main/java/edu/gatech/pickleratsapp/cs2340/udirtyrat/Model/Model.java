@@ -82,7 +82,7 @@ public class Model {
      */
     public void add_report(RatReport report) {
         _reports.put(report.get_key(), report);
-        _string_to_key.put(report.toString(), report.get_key());
+        //_string_to_key.put(report.toString(), report.get_key());
     }
 
     /**
