@@ -41,6 +41,7 @@ public class ReportListView extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 RatReport selectedReport = reports.get(position);
                 Intent detailIntent = new Intent(ReportListView.this, ReportDetailActivity.class);
+                System.out.println(selectedReport.toString());
                 detailIntent.putExtra("key",  selectedReport.get_key());
                 startActivity(detailIntent);
             }

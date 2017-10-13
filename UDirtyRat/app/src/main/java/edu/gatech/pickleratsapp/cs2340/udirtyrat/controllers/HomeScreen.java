@@ -22,7 +22,9 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 public class HomeScreen extends AppCompatActivity {
-
+    /**
+     * Custom Csv loading task, loads csv in background thread when home screen is created
+     */
     private class LoadCSVTask extends AsyncTask<String, Integer, Long> {
         @Override
         protected Long doInBackground(String ... str) {
@@ -108,43 +110,5 @@ public class HomeScreen extends AppCompatActivity {
             }
         });
     }
-
-//    private void loadRatData() {
-//        Model model = Model.get_instance();
-//        try {
-//            InputStream is = getResources().openRawResource(R.raw.rats);
-//            BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-//
-//            String line;
-//            br.readLine(); //get rid of header line
-//            while ((line = br.readLine()) != null) {
-//                String[] reportData = line.split(",");
-////                for(int i = 0; i < reportData.length; i++) {
-////                    System.out.print(reportData[i] + " , ");
-////                }
-////                System.out.println();
-//                int id = Integer.parseInt(reportData[0]);
-//                int zip = 0;
-//                if(!reportData[8].isEmpty() && !reportData[8].equals("N/A")) {
-//                    zip = Integer.parseInt(reportData[8]);
-//                }
-//                double latitude = 0.0;
-//                double longitude = 0.0;
-//                int length = reportData.length;
-//                if(!(length < 53) &&
-//                        (!reportData[length - 3].equals("") || !reportData[length - 3].equals("Unspecified"))
-//                        && (!reportData[length - 4].equals("")
-//                        || !reportData[length - 4].equals("Unspecified"))) {
-//                    latitude = Double.parseDouble(reportData[reportData.length - 3]);
-//                    longitude = Double.parseDouble(reportData[reportData.length - 4]);
-//                }
-//                model.add_report(new RatReport(id, reportData[1], reportData[7], zip,
-//                        reportData[9], reportData[16], reportData[23],latitude, longitude));
-//            }
-//            br.close();
-//        } catch (IOException e) {
-//           System.out.println("ERROR");
-//        }
-//
-//    }
+    
 }
