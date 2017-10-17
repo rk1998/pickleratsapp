@@ -25,8 +25,8 @@
             android:layout_below="@+id/Name"
             android:layout_marginTop="7dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:hint="Name"
+            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/UserID"
@@ -41,12 +41,12 @@
             android:id="@+id/userIDinput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/UserID"
+            android:layout_below="@+id/UserID"
             android:layout_marginTop="19dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="User ID"
-            android:layout_below="@+id/UserID"
-            android:layout_alignStart="@+id/UserID" />
+            android:hint="User ID"
+            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/Password"

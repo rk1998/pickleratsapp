@@ -19,21 +19,10 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="13dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:ems="10"
-            android:inputType="date"
-            android:text="date" />
-
-        <EditText
-            android:id="@+id/locationType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/date"
-            android:layout_below="@+id/date"
-            android:layout_marginTop="7dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Location Type" />
+            android:hint="MM/DD/YYYY"
+            android:inputType="date" />
 
         <EditText
             android:id="@+id/zip"
@@ -41,21 +30,21 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/locationType"
             android:layout_below="@+id/locationType"
-            android:layout_marginTop="9dp"
+            android:layout_marginTop="10dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Zipcode" />
+            android:hint="ZipCode"
+            android:inputType="number" />
 
         <EditText
             android:id="@+id/address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Address"
-            android:layout_below="@+id/zip"
             android:layout_alignStart="@+id/zip"
-            android:layout_marginTop="8dp" />
+            android:layout_below="@+id/zip"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="Address"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/city"
@@ -63,10 +52,10 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/address"
             android:layout_below="@+id/address"
-            android:layout_marginTop="9dp"
+            android:layout_marginTop="10dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="City" />
+            android:hint="City"
+            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/boroughText"
@@ -74,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/city"
             android:layout_below="@+id/city"
-            android:layout_marginTop="9dp"
+            android:layout_marginTop="10dp"
             android:text="Borough" />
 
         <Spinner
@@ -84,7 +73,7 @@
             android:layout_alignEnd="@+id/city"
             android:layout_alignStart="@+id/boroughText"
             android:layout_below="@+id/boroughText"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="10dp" />
 
         <EditText
             android:id="@+id/latitude"
@@ -94,8 +83,8 @@
             android:layout_below="@+id/borough"
             android:layout_marginTop="8dp"
             android:ems="10"
-            android:inputType="numberDecimal"
-            android:text="Latitude" />
+            android:hint="Latitude"
+            android:inputType="numberDecimal" />
 
         <EditText
             android:id="@+id/Longitude"
@@ -103,10 +92,10 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/latitude"
             android:layout_below="@+id/latitude"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="10dp"
             android:ems="10"
-            android:inputType="numberDecimal"
-            android:text="Longitude" />
+            android:hint="Longitude"
+            android:inputType="numberDecimal" />
 
         <Button
             android:id="@+id/report"
@@ -114,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/Longitude"
             android:layout_below="@+id/Longitude"
-            android:layout_marginTop="11dp"
+            android:layout_marginTop="5dp"
             android:text="Report" />
 
         <Button
@@ -124,6 +113,24 @@
             android:layout_alignEnd="@+id/Longitude"
             android:layout_alignTop="@+id/report"
             android:text="Cancel" />
+
+        <Spinner
+            android:id="@+id/locationType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/locationTypeLabel"
+            android:layout_below="@+id/locationTypeLabel"
+            android:layout_marginTop="10dp"
+            android:layout_alignEnd="@+id/date" />
+
+        <TextView
+            android:id="@+id/locationTypeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/date"
+            android:layout_below="@+id/date"
+            android:layout_marginTop="10dp"
+            android:text="Location Type" />
 
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

@@ -54,7 +54,7 @@ public class Model {
         _users.add(new User("Jamie", "jhaunkainen@gatech.edu", "1234", false));
         _users.add(new User("Rohith", "rkrishnan42@gatech.edu", "1234", false));
         _users.add(new User("Nick", "nhuang@gatech.edu", "1234", false));
-
+        _users.add(new User("b", "b@b", "bb", false));
     }
 
     public int numReports() {

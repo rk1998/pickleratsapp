@@ -9,20 +9,24 @@ import java.util.List;
 
 public class RatReport {
     /**Enum for the location type of the report**/
-//    public enum LocationType {
-//        PARK("Park"),
-//        RESIDENTIAL("Residential"),
-//        BUSINESS("Business"),
-//        METRO("NYC Metro");
-//
-//        private final String _locationType;
-//        LocationType(String locationType) {
-//            _locationType = locationType;
-//        }
-//        public String get_locationType() {
-//            return _locationType;
-//        }
-//    }
+
+    public static List<String> locationTypes = Arrays.asList("Park", "Residential", "Business", "NYC Metro");
+
+    public enum LocationType {
+        PARK("Park"),
+        RESIDENTIAL("Residential"),
+        BUSINESS("Business"),
+        METRO("NYC Metro");
+
+        private final String _locationType;
+        LocationType(String locationType) {
+            _locationType = locationType;
+        }
+
+        public String get_locationType() {
+            return _locationType;
+        }
+    }
     /**Enum for Borough where the report took place**/
 
     public static List<String> boroughs = Arrays.asList("Queens", "Manhattan", "Bronx", "Brooklyn", "Staten Island");

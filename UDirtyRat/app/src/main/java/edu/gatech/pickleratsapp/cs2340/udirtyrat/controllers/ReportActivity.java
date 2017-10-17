@@ -28,7 +28,7 @@ public class ReportActivity extends AppCompatActivity {
 
     // UI references.
     private EditText date;
-    private EditText locationType;
+    private Spinner locationType;
     private EditText zip;
     private EditText address;
     private EditText city;
@@ -44,7 +44,7 @@ public class ReportActivity extends AppCompatActivity {
         setContentView(R.layout.activity_report);
         // Set up the register form.
         date = (EditText) findViewById(R.id.date);
-        locationType = (EditText) findViewById(R.id.locationType);
+        locationType = (Spinner) findViewById(R.id.locationType);
         zip = (EditText) findViewById(R.id.zip);
         address = (EditText) findViewById(R.id.address);
         report = (Button) findViewById(R.id.report);
@@ -55,16 +55,21 @@ public class ReportActivity extends AppCompatActivity {
         cancelReport = (Button) findViewById(R.id.cancelReport);
         //populateAutoComplete();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, RatReport.boroughs);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        borough.setAdapter(adapter);
+        ArrayAdapter<String> boroughAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, RatReport.boroughs);
+        boroughAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        borough.setAdapter(boroughAdapter);
+
+        ArrayAdapter<String> locationTypeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, RatReport.locationTypes);
+        locationTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        locationType.setAdapter(locationTypeAdapter);
 
         report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            //    attemptReport();
-                Intent appIntent = new Intent(ReportActivity.this, ReportDetailActivity.class);
-                startActivity(appIntent);
+                if(attemptReport()){
+                    Intent appIntent = new Intent(ReportActivity.this, MainScreen.class);
+                    startActivity(appIntent);
+                }
             }
         });
 
@@ -81,52 +86,54 @@ public class ReportActivity extends AppCompatActivity {
         protected boolean attemptReport() {
             // Reset errors.
             date.setError(null);
-            locationType.setError(null);
             zip.setError(null);
             address.setError(null);
             city.setError(null);
             latitude.setError(null);
             longitude.setError(null);
 
-            // Store values at the time of the login attempt
-            //Todo:Validation for user input
-            String dateZ = date.getText().toString();
-            String locationTypeZ = locationType.getText().toString();
-            int zipZ = Integer.parseInt(zip.getText().toString());
-            String cityZ = city.getText().toString();
-            String addressZ = address.getText().toString();
-            double latitudeZ = Double.parseDouble(latitude.getText().toString());
-            double longitudeZ = Double.parseDouble(longitude.getText().toString());
-            String boroughZ = borough.getSelectedItem().toString();
-
             boolean cancel = false;
             View focusView = null;
 
             // Check for a valid date, if the user entered one.
-            if (TextUtils.isEmpty(dateZ)) {
+            if (TextUtils.isEmpty(date.getText().toString())) {
                 date.setError("This field is required");
                 focusView = date;
                 cancel = true;
             }
 
-            // Check for a valid location type.
-            if (TextUtils.isEmpty(locationTypeZ)) {
-                locationType.setError("This field is required");
-                focusView = locationType;
+            // Check that the user entered a zipcode
+            if (TextUtils.isEmpty(zip.getText().toString())) {
+                zip.setError("This field is required");
+                focusView = zip;
                 cancel = true;
             }
 
             // Check that the user entered a city
-            if (TextUtils.isEmpty(cityZ)) {
+            if (TextUtils.isEmpty(city.getText().toString())) {
                 city.setError("This field is required");
                 focusView = city;
                 cancel = true;
             }
 
             // Check that the user entered an address
-            if (TextUtils.isEmpty(addressZ)) {
+            if (TextUtils.isEmpty(address.getText().toString())) {
                 address.setError("This field is required");
                 focusView = address;
+                cancel = true;
+            }
+
+            // Check that the user entered a latitude
+            if (TextUtils.isEmpty(latitude.getText().toString())) {
+                latitude.setError("This field is required");
+                focusView = latitude;
+                cancel = true;
+            }
+
+            // Check that the user entered a longitude
+            if (TextUtils.isEmpty(longitude.getText().toString())) {
+                longitude.setError("This field is required");
+                focusView = longitude;
                 cancel = true;
             }
 
@@ -136,14 +143,22 @@ public class ReportActivity extends AppCompatActivity {
                 focusView.requestFocus();
                 return false;
             } else {
-                // Show a progress spinner, and kick off a background task to
-                // perform the user login attempt.
-                //showProgress(true);
+                //get values
+                String dateZ = date.getText().toString();
+                String locationTypeZ = locationType.getSelectedItem().toString();
+                int zipZ = Integer.parseInt(zip.getText().toString());
+                String cityZ = city.getText().toString();
+                String addressZ = address.getText().toString();
+                double latitudeZ = Double.parseDouble(latitude.getText().toString());
+                double longitudeZ = Double.parseDouble(longitude.getText().toString());
+                String boroughZ = borough.getSelectedItem().toString();
+
+                // add report to the model with random key
                 Random rand = new Random();
                 int n = rand.nextInt(100000);
                 Model model = Model.get_instance();
                 model.add_report(new RatReport(n, dateZ, locationTypeZ, zipZ, addressZ, cityZ, boroughZ, latitudeZ, longitudeZ));
-                // check will be true if the account was added successfully
+                // go to the main screen
                 Intent appIntent = new Intent(ReportActivity.this, MainScreen.class);
                 startActivity(appIntent);
                 return true;
