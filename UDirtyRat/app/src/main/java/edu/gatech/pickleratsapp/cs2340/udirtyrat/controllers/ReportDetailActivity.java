@@ -13,6 +13,9 @@ import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.RatReport;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
 
+/**
+ * Activity for seeing a detailed rat report
+ */
 public class ReportDetailActivity extends AppCompatActivity {
     // UI references.
     private TextView date;

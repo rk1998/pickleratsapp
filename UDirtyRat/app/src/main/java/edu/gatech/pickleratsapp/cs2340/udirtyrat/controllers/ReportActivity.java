@@ -21,6 +21,9 @@ import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.RatReport;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.User;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
 
+/**
+ * activity to create a new rat report
+ */
 public class ReportActivity extends AppCompatActivity {
 
     // UI references.

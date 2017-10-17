@@ -18,8 +18,16 @@ import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.RatReport;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
 
+/**
+ * Activity for the Report List View
+ */
 public class ReportListView extends AppCompatActivity {
     private ListView mRatListView;
+
+    /**
+     * Creates the ReportPage
+     * @param savedInstanceData
+     */
     public void onCreate(Bundle savedInstanceData) {
         super.onCreate(savedInstanceData);
         setContentView(R.layout.activity_report_list_view);

@@ -9,6 +9,9 @@ import android.widget.Button;
 
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.*;
 
+/**
+ * Main app screen, user can either view reports, make a new one, or logout
+ */
 public class MainScreen extends AppCompatActivity {
     private Button logOut;
     private Button viewReports;

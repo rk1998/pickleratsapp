@@ -137,6 +137,6 @@ public class RatReport {
 
     @Override
     public String toString() {
-        return _address + " " + _city + " " + _date + " ";
+        return _address + " " + _city + " " + _date + "  ";
     }
 }

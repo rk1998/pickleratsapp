@@ -21,6 +21,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Activity for the home screen of the app
+ */
 public class HomeScreen extends AppCompatActivity {
     /**
      * Custom Csv loading task, loads csv in background thread when home screen is created
