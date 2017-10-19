@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -155,9 +156,9 @@ public class ReportActivity extends AppCompatActivity {
 
                 // add report to the model with random key
                 Random rand = new Random();
-                int n = Model.get_latest_report_key();
+                int n = Model.get_latest_report_key() + 1;
                 Model model = Model.get_instance();
-                model.add_report(new RatReport(n + 1, dateZ, locationTypeZ, zipZ,
+                model.add_report(new RatReport(n, dateZ, locationTypeZ, zipZ,
                         addressZ, cityZ, boroughZ, latitudeZ, longitudeZ));
                 // go to the main screen
                 return true;

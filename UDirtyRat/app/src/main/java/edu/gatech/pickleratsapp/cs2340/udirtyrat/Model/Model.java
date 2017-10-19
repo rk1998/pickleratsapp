@@ -7,6 +7,7 @@ package edu.gatech.pickleratsapp.cs2340.udirtyrat.Model;
 
 import android.support.annotation.NonNull;
 import android.support.compat.BuildConfig;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -117,12 +118,7 @@ public class Model {
      * @return the rat reports as an array
      */
     public List<RatReport> get_reports() {
-//        List<RatReport> reports = new ArrayList<>();
-//       for(RatReport rat : _reports.values()) {
-//           reports.add(rat);
-//       }
-      Collections.reverse(_report_list);
-       return _report_list;
+        return _report_list;
     }
     /**
      *

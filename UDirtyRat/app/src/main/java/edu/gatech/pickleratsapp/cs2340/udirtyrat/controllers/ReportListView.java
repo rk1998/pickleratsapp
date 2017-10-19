@@ -38,8 +38,8 @@ public class ReportListView extends AppCompatActivity {
         reports = model.get_reports();
         LinkedList<String> keys = new LinkedList<>();
         Log.d("LATEST REPORT KEY", "" + Model.get_latest_report_key());
-        int numReports = reports.size()/2;
-        for (int i = 0; i < 100; i++) {
+        int numReports = reports.size() - 100;
+        for (int i = reports.size() - 1; i > numReports; i--) {
             keys.add(reports.get(i).toString());
         }
         ArrayAdapter adapter = new ArrayAdapter(this,
