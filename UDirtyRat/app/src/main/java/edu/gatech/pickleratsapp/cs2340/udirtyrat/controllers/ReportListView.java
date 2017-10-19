@@ -1,6 +1,7 @@
 package edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers;
 
 import android.app.ListActivity;
+import android.util.Log;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -23,6 +24,7 @@ import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
  */
 public class ReportListView extends AppCompatActivity {
     private ListView mRatListView;
+    private List<RatReport> reports;
 
     /**
      * Creates the ReportPage
@@ -33,9 +35,11 @@ public class ReportListView extends AppCompatActivity {
         setContentView(R.layout.activity_report_list_view);
         mRatListView = (ListView) findViewById(R.id.ratList);
         Model model = Model.get_instance();
-        final List<RatReport> reports = model.get_reports();
+        reports = model.get_reports();
         LinkedList<String> keys = new LinkedList<>();
-        for (int i = 0; i < 50; i++) {
+        Log.d("LATEST REPORT KEY", "" + Model.get_latest_report_key());
+        int numReports = reports.size()/2;
+        for (int i = 0; i < 100; i++) {
             keys.add(reports.get(i).toString());
         }
         ArrayAdapter adapter = new ArrayAdapter(this,

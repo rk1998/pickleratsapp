@@ -155,12 +155,11 @@ public class ReportActivity extends AppCompatActivity {
 
                 // add report to the model with random key
                 Random rand = new Random();
-                int n = rand.nextInt(100000);
+                int n = Model.get_latest_report_key();
                 Model model = Model.get_instance();
-                model.add_report(new RatReport(n, dateZ, locationTypeZ, zipZ, addressZ, cityZ, boroughZ, latitudeZ, longitudeZ));
+                model.add_report(new RatReport(n + 1, dateZ, locationTypeZ, zipZ,
+                        addressZ, cityZ, boroughZ, latitudeZ, longitudeZ));
                 // go to the main screen
-                Intent appIntent = new Intent(ReportActivity.this, MainScreen.class);
-                startActivity(appIntent);
                 return true;
             }
         }

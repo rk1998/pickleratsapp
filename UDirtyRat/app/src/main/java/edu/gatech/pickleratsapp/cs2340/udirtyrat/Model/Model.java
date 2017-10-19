@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.compat.BuildConfig;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 public class Model {
     /**Singleton Instance**/
     private static final Model _instance = new Model();
+    private static int latest_report_key = 0;
 
     /**
      * Gets the singleton instance of model
@@ -26,9 +28,14 @@ public class Model {
     public static Model get_instance() {
         return _instance;
     }
+
+    public static int get_latest_report_key() {
+        return latest_report_key;
+    }
     private List<User> _users;
     private Map<Integer, RatReport> _reports;
     private Map<String, Integer> _string_to_key;
+    private List<RatReport> _report_list;
 
     /**
      * Make a new Model
@@ -36,6 +43,7 @@ public class Model {
     private  Model() {
         _users = new LinkedList<>();
         _reports = new HashMap<>();
+        _report_list = new LinkedList<>();
        loadDummyUsers();
     }
 
@@ -82,7 +90,8 @@ public class Model {
      */
     public void add_report(RatReport report) {
         _reports.put(report.get_key(), report);
-        //_string_to_key.put(report.toString(), report.get_key());
+        _report_list.add(report);
+        latest_report_key = report.get_key();
     }
 
     /**
@@ -108,11 +117,12 @@ public class Model {
      * @return the rat reports as an array
      */
     public List<RatReport> get_reports() {
-        List<RatReport> reports = new ArrayList<>();
-       for(RatReport rat : _reports.values()) {
-           reports.add(rat);
-       }
-       return reports;
+//        List<RatReport> reports = new ArrayList<>();
+//       for(RatReport rat : _reports.values()) {
+//           reports.add(rat);
+//       }
+      Collections.reverse(_report_list);
+       return _report_list;
     }
     /**
      *
