@@ -245,7 +245,7 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
 //                startActivity(appIntent);
 //            }
             if(model.login_user(tempUser)) {
-                Intent appIntent = new Intent(LoginActivity.this, MainScreen.class);
+                Intent appIntent = new Intent(LoginActivity.this, NavigationActivity.class);
                 startActivity(appIntent);
             } else {
                 AlertDialog.Builder badAttemptDialog = new AlertDialog.Builder(this);

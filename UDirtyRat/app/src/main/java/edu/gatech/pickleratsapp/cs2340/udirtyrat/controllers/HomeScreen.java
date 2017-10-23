@@ -41,10 +41,6 @@ public class HomeScreen extends AppCompatActivity {
                 br.readLine(); //get rid of header line
                 while ((line = br.readLine()) != null) {
                     String[] reportData = line.split(",");
-//                for(int i = 0; i < reportData.length; i++) {
-//                    System.out.print(reportData[i] + " , ");
-//                }
-//                System.out.println();
                     int id = Integer.parseInt(reportData[0]);
                     int zip = 0;
                     if(!reportData[8].isEmpty() && !reportData[8].equals("N/A")) {
