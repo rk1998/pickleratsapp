@@ -1,6 +1,7 @@
 package edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers;
 
 import android.app.FragmentTransaction;
+import android.content.ClipData;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,15 +18,24 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.List;
+
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.RatReport;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
 
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private FragmentManager fragManager;
     private SupportMapFragment mapFrag;
+    private Model model;
 
 
     @Override
@@ -34,6 +44,7 @@ public class NavigationActivity extends AppCompatActivity
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        model = Model.get_instance();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +65,22 @@ public class NavigationActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         fragManager = getSupportFragmentManager();
         mapFrag = (SupportMapFragment) fragManager.findFragmentById(R.id.map);
+        mapFrag.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                RatReport report;
+                List<RatReport> recent_reports = model.get_reports();
+                for(int i = recent_reports.size() - 1; i > recent_reports.size() - 50; i--) {
+                    report = recent_reports.get(i);
+                    LatLng location = new LatLng(report.get_longitude(),
+                            report.get_latitude());
+                    googleMap.addMarker(new MarkerOptions().position(location).title(report.toString()));
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+
+                }
+            }
+        });
+
 
     }
 
