@@ -1,10 +1,12 @@
 package edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,10 +17,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
 
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private FragmentManager fragManager;
+    private SupportMapFragment mapFrag;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +52,9 @@ public class NavigationActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        fragManager = getSupportFragmentManager();
+        mapFrag = (SupportMapFragment) fragManager.findFragmentById(R.id.map);
+
     }
 
     @Override
@@ -84,13 +95,11 @@ public class NavigationActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (id == R.id.nav_map) {
+        if (id == R.id.nav_create_report) {
             // Handle the camera action
-        } else if (id == R.id.nav_view_report) {
+        } else if (id == R.id.nav_view_report_list) {
 
-        } else if (id == R.id.nav_create_report) {
-
-        }  else if (id == R.id.nav_logout) {
+        } else if (id == R.id.nav_logout) {
 
         }
 

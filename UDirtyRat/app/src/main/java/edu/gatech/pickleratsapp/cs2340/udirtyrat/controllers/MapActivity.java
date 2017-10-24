@@ -11,10 +11,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private Model mModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +26,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        mModel = Model.get_instance();
     }
 
 
@@ -39,6 +42,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+//        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+//           @Override
+//            public void onMapClick(LatLng latlng) {
+//               MarkerOptions markerOptions = new MarkerOptions();
+//               markerOptions.position(latlng);
+//
+//
+//           }
+//        });
 
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(40, 74);
