@@ -78,7 +78,7 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Start new HomeScreen.Class
-                Intent myIntent = new Intent(ReportActivity.this, HomeScreen.class);
+                Intent myIntent = new Intent(ReportActivity.this, MainScreen.class);
                 startActivity(myIntent);
             }
         });
