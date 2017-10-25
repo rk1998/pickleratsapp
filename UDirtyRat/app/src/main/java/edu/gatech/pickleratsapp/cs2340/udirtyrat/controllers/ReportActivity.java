@@ -38,6 +38,7 @@ public class ReportActivity extends AppCompatActivity {
     private Spinner borough;
     private Button report;
     private Button cancelReport;
+    private RatReport ratReport;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,7 @@ public class ReportActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(attemptReport()){
                     Intent appIntent = new Intent(ReportActivity.this, NavigationActivity.class);
+                    appIntent.putExtra("latest_report_key", ratReport.get_key());
                     startActivity(appIntent);
                 }
             }
@@ -158,8 +160,9 @@ public class ReportActivity extends AppCompatActivity {
                 Random rand = new Random();
                 int n = Model.get_latest_report_key() + 1;
                 Model model = Model.get_instance();
-                model.add_report(new RatReport(n, dateZ, locationTypeZ, zipZ,
-                        addressZ, cityZ, boroughZ, latitudeZ, longitudeZ));
+                ratReport = new RatReport(n, dateZ, locationTypeZ, zipZ,
+                        addressZ, cityZ, boroughZ, latitudeZ, longitudeZ);
+                model.add_report(ratReport);
                 // go to the main screen
                 return true;
             }

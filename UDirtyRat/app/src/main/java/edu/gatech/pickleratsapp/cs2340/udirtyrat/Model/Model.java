@@ -130,16 +130,22 @@ public class Model {
     public List<RatReport> get_reports_in_range(String startYear, String endYear) {
         String[] startYearArr = startYear.split("/");
         String[] endYearArr = endYear.split("/");
+        int startDayNum = Integer.parseInt(startYearArr[0]);
+        int startMonthNum = Integer.parseInt(startYearArr[1]);
+        int startYearNum = Integer.parseInt(startYearArr[2].substring(0, 4));
+        int endDayNum = Integer.parseInt(endYearArr[0]);
+        int endMonthNum = Integer.parseInt(endYearArr[1]);
+        int endYearNum = Integer.parseInt(endYearArr[2].substring(0,4));
         List<RatReport> results = new LinkedList<>();
         for(RatReport report: _report_list) {
             String[] date = report.get_date().split("/");
             int monthNum = Integer.parseInt(date[0]);
             int dayNum = Integer.parseInt(date[1]);
             int yearNum = Integer.parseInt(date[2].substring(0,4));
-            if( ((monthNum >= Integer.parseInt(startYearArr[0]))
-                    ||(yearNum >= Integer.parseInt(startYearArr[2].substring(0,4))))
-                && ((monthNum <= Integer.parseInt(endYearArr[0]))
-                    || (yearNum <= Integer.parseInt(endYearArr[2].substring(0,4))))) {
+            if( ((monthNum >= startMonthNum) && (dayNum >= startDayNum)
+                    ||(yearNum >= startYearNum))
+                && ((monthNum <= endYearNum) && (dayNum <= endDayNum)
+                    || (yearNum <= endYearNum))){
                 results.add(report);
 
             }

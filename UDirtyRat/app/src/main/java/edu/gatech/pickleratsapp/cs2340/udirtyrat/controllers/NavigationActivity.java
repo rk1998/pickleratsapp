@@ -46,8 +46,9 @@ public class NavigationActivity extends AppCompatActivity
     private FragmentManager fragManager;
     private SupportMapFragment mapFrag;
     private Model model;
-    private String startYear = "09/12/2015";
-    private String endYear = "09/12/2016";
+    private String startYear = "09/04/2015";
+    private String endYear = "09/05/2015";
+    private RatReport latestRatReport;
 
 
     @Override
@@ -56,7 +57,17 @@ public class NavigationActivity extends AppCompatActivity
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Bundle extras = getIntent().getExtras();
         model = Model.get_instance();
+        if(extras != null) {
+            int latestKey = extras.getInt("key");
+            if(latestKey >= 0) {
+                latestRatReport = model.get_report(latestKey);
+            } else {
+                latestRatReport = model.get_report(Model.get_latest_report_key());
+            }
+
+        }
         LayoutInflater inflater = LayoutInflater.from(this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -67,7 +78,31 @@ public class NavigationActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         Context context = navigationView.getContext();
+        fragManager = getSupportFragmentManager();
+        mapFrag = (SupportMapFragment) fragManager.findFragmentById(R.id.map);
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+        mapFrag.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                googleMap.clear();
+                RatReport report;
+                List<RatReport> recent_reports = model.get_reports();
+                Log.d("Reports in range", ": " + recent_reports.size());
+                for(int i = recent_reports.size() - 1; i > recent_reports.size() - 150; i--) {
+                    report = recent_reports.get(i);
+                    LatLng location = new LatLng(report.get_longitude(), report.get_latitude());
+                    googleMap.addMarker(
+                            new MarkerOptions().position(location).title(report.toString()));
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+
+                }
+
+            }
+        });
+
+
+
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,6 +129,40 @@ public class NavigationActivity extends AppCompatActivity
                                             "Invalid Year", Toast.LENGTH_SHORT).show();
                                     startYear = "2015";
                                     endYear = "2016";
+                                } else {
+                                    mapFrag.getMapAsync(new OnMapReadyCallback() {
+                                        @Override
+                                        public void onMapReady(GoogleMap googleMap) {
+                                            googleMap.clear();
+                                            RatReport report;
+                                            List<RatReport> recent_reports = model.get_reports_in_range(startYear, endYear);
+                                            Log.d("Reports in range", ": " + recent_reports.size());
+                                            if(recent_reports.size() == 0) {
+                                                Toast.makeText(getApplicationContext(),
+                                                        "No reports found in this date range", Toast.LENGTH_SHORT).show();
+                                                recent_reports = model.get_reports();
+                                                for(int i = 0; i > recent_reports.size() - 50; i--) {
+                                                    report = recent_reports.get(i);
+                                                    LatLng location = new LatLng(report.get_longitude(), report.get_latitude());
+                                                    googleMap.addMarker(
+                                                            new MarkerOptions().position(location).title(report.toString()));
+                                                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+
+                                                }
+
+                                            } else {
+                                                for(int i = 0; i < 300; i++) {
+                                                    report = recent_reports.get(i);
+                                                    LatLng location = new LatLng(report.get_longitude(),
+                                                            report.get_latitude());
+                                                    googleMap.addMarker(new MarkerOptions().position(location).title(report.toString()));
+                                                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+
+                                                }
+                                            }
+                                        }
+                                    });
+
                                 }
                             }
                         });
@@ -107,41 +176,7 @@ public class NavigationActivity extends AppCompatActivity
             }
         });
 
-
-        fragManager = getSupportFragmentManager();
-        mapFrag = (SupportMapFragment) fragManager.findFragmentById(R.id.map);
-        mapFrag.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                RatReport report;
-                List<RatReport> recent_reports = model.get_reports_in_range(startYear, endYear);
-                Log.d("Reports in range", ": " + recent_reports.size());
-                if(recent_reports.size() == 0) {
-                    Toast.makeText(getApplicationContext(),
-                            "No reports found in this date range", Toast.LENGTH_SHORT).show();
-                    recent_reports = model.get_reports();
-                    for(int i = recent_reports.size() - 1; i > recent_reports.size() - 50; i--) {
-                        report = recent_reports.get(i);
-                        LatLng location = new LatLng(report.get_longitude(), report.get_latitude());
-                        googleMap.addMarker(
-                                new MarkerOptions().position(location).title(report.toString()));
-                        googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-
-                    }
-
-                } else {
-                    for(int i = recent_reports.size() - 1; i > recent_reports.size() - 50; i--) {
-                        report = recent_reports.get(i);
-                        LatLng location = new LatLng(report.get_longitude(),
-                                report.get_latitude());
-                        googleMap.addMarker(new MarkerOptions().position(location).title(report.toString()));
-                        googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-
-                    }
-                }
-            }
-        });
-
+        Log.d("Start and End Year", startYear +" - " + endYear );
 
     }
 
