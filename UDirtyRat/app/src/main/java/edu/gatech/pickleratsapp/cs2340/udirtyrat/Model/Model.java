@@ -120,6 +120,32 @@ public class Model {
     public List<RatReport> get_reports() {
         return _report_list;
     }
+
+    /**
+     * Gets a list of rat reports within given date range
+     * @param startYear Starting year
+     * @param endYear Ending Year
+     * @return List of reports within year range
+     */
+    public List<RatReport> get_reports_in_range(String startYear, String endYear) {
+        String[] startYearArr = startYear.split("/");
+        String[] endYearArr = endYear.split("/");
+        List<RatReport> results = new LinkedList<>();
+        for(RatReport report: _report_list) {
+            String[] date = report.get_date().split("/");
+            int monthNum = Integer.parseInt(date[0]);
+            int dayNum = Integer.parseInt(date[1]);
+            int yearNum = Integer.parseInt(date[2].substring(0,4));
+            if( ((monthNum >= Integer.parseInt(startYearArr[0]))
+                    ||(yearNum >= Integer.parseInt(startYearArr[2].substring(0,4))))
+                && ((monthNum <= Integer.parseInt(endYearArr[0]))
+                    || (yearNum <= Integer.parseInt(endYearArr[2].substring(0,4))))) {
+                results.add(report);
+
+            }
+        }
+        return results;
+    }
     /**
      *
      * @param user user to login
