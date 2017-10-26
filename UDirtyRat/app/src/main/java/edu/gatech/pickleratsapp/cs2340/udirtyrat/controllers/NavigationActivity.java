@@ -62,7 +62,7 @@ public class NavigationActivity extends AppCompatActivity
         Bundle extras = getIntent().getExtras();
         model = Model.get_instance();
         if(extras != null) {
-            int latestKey = extras.getInt("key");
+            int latestKey = extras.getInt("latest_report_key");
             if(latestKey >= 0) {
                 latestRatReport = model.get_report(latestKey);
             } else {
@@ -92,10 +92,20 @@ public class NavigationActivity extends AppCompatActivity
                 Log.d("Reports in range", ": " + recent_reports.size());
                 for(int i = 0; i < 200; i++) {
                     report = recent_reports.get(i);
-                    LatLng location = new LatLng(report.get_longitude(), report.get_latitude());
-                    googleMap.addMarker(
-                            new MarkerOptions().position(location).title(report.toString()));
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+                    if(report.get_key() != Model.get_latest_report_key()) {
+                        LatLng location = new LatLng(report.get_longitude(), report.get_latitude());
+                        googleMap.addMarker(
+                                new MarkerOptions().position(location).title(report.toString()));
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 10));
+
+                    }
+                }
+                if(latestRatReport != null) {
+                    LatLng latestLocation = new LatLng(latestRatReport.get_longitude(),
+                            latestRatReport.get_latitude());
+                    googleMap.addMarker(new MarkerOptions().position(latestLocation).
+                            title(latestRatReport.toString()));
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latestLocation, 15));
 
                 }
 
