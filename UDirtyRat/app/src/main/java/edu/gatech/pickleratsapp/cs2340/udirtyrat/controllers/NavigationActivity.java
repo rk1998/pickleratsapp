@@ -23,9 +23,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -88,7 +90,7 @@ public class NavigationActivity extends AppCompatActivity
                 RatReport report;
                 List<RatReport> recent_reports = model.get_reports();
                 Log.d("Reports in range", ": " + recent_reports.size());
-                for(int i = recent_reports.size() - 1; i > recent_reports.size() - 150; i--) {
+                for(int i = 0; i < 200; i++) {
                     report = recent_reports.get(i);
                     LatLng location = new LatLng(report.get_longitude(), report.get_latitude());
                     googleMap.addMarker(
@@ -99,51 +101,54 @@ public class NavigationActivity extends AppCompatActivity
 
             }
         });
-
-
-
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final EditText startInput = new EditText(NavigationActivity.this);
-                startInput.setHint("MM/DD/YYYY");
-                final EditText endInput = new EditText(NavigationActivity.this);
-                endInput.setHint("MM/DD/YYYY");
+                final DatePicker startDate = new DatePicker(NavigationActivity.this);
+                final DatePicker endDate = new DatePicker(NavigationActivity.this);
+//                final EditText startInput = new EditText(NavigationActivity.this);
+//                startInput.setHint("MM/DD/YYYY");
+//                final EditText endInput = new EditText(NavigationActivity.this);
+//                endInput.setHint("MM/DD/YYYY");
                 LinearLayout linearLayout = new LinearLayout(NavigationActivity.this);
                 linearLayout.setOrientation(LinearLayout.VERTICAL);
-                linearLayout.addView(startInput);
-                linearLayout.addView(endInput);
+                linearLayout.addView(startDate);
+                linearLayout.addView(endDate);
                 alertDialog.setTitle("Choose a date range");
 
-                alertDialog.setView(linearLayout);
+                ScrollView scroller = new ScrollView(NavigationActivity.this);
+                scroller.addView(linearLayout);
+
+                alertDialog.setView(scroller);
                 alertDialog.setPositiveButton("Confirm",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                startYear = startInput.getText().toString();
-                                endYear = endInput.getText().toString();
+                                final int startDay = startDate.getDayOfMonth();
+                                final int startMonth = startDate.getMonth();
+                                Log.d("Start Month ", " " + startMonth);
+                                final int startYear = startDate.getYear();
+                                final int endDay = endDate.getDayOfMonth();
+                                final int endMonth = endDate.getMonth();
+                                final int endYear = endDate.getYear();
                                 Log.d("Date Range", startYear + " - " + endYear);
-                                if((startYear.equals("") || endYear.equals(""))
-                                        || (startYear.length() < 4 ) || (endYear.length() < 4)) {
-                                    Toast.makeText(getApplicationContext(),
-                                            "Invalid Year", Toast.LENGTH_SHORT).show();
-                                    startYear = "2015";
-                                    endYear = "2016";
-                                } else {
                                     mapFrag.getMapAsync(new OnMapReadyCallback() {
                                         @Override
                                         public void onMapReady(GoogleMap googleMap) {
                                             googleMap.clear();
                                             RatReport report;
-                                            List<RatReport> recent_reports = model.get_reports_in_range(startYear, endYear);
+                                            List<RatReport> recent_reports =
+                                                    model.get_reports_in_range(startDay, startMonth,
+                                                            startYear, endDay, endMonth, endYear);
                                             Log.d("Reports in range", ": " + recent_reports.size());
                                             if(recent_reports.size() == 0) {
                                                 Toast.makeText(getApplicationContext(),
-                                                        "No reports found in this date range", Toast.LENGTH_SHORT).show();
+                                                        "No reports found in this date range",
+                                                        Toast.LENGTH_SHORT).show();
                                                 recent_reports = model.get_reports();
-                                                for(int i = 0; i > recent_reports.size() - 50; i--) {
+                                                for(int i = 0; i > recent_reports.size() - 150; i--) {
                                                     report = recent_reports.get(i);
-                                                    LatLng location = new LatLng(report.get_longitude(), report.get_latitude());
+                                                    LatLng location =
+                                                            new LatLng(report.get_longitude(), report.get_latitude());
                                                     googleMap.addMarker(
                                                             new MarkerOptions().position(location).title(report.toString()));
                                                     googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
@@ -151,7 +156,7 @@ public class NavigationActivity extends AppCompatActivity
                                                 }
 
                                             } else {
-                                                for(int i = 0; i < 300; i++) {
+                                                for(int i = 0; i < recent_reports.size(); i++) {
                                                     report = recent_reports.get(i);
                                                     LatLng location = new LatLng(report.get_longitude(),
                                                             report.get_latitude());
@@ -162,8 +167,6 @@ public class NavigationActivity extends AppCompatActivity
                                             }
                                         }
                                     });
-
-                                }
                             }
                         });
                 alertDialog.setNegativeButton("Cancel",
@@ -176,7 +179,6 @@ public class NavigationActivity extends AppCompatActivity
             }
         });
 
-        Log.d("Start and End Year", startYear +" - " + endYear );
 
     }
 

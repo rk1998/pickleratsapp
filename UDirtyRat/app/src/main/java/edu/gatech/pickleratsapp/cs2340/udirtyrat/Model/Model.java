@@ -9,8 +9,8 @@ import android.support.annotation.NonNull;
 import android.support.compat.BuildConfig;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -122,32 +122,29 @@ public class Model {
     }
 
     /**
-     * Gets a list of rat reports within given date range
-     * @param startYear Starting year
-     * @param endYear Ending Year
-     * @return List of reports within year range
+     * Gets a list of rat reports in date range startmonth/startDay/startYear
+     * - endMonth/endDay/endYear
+     * @param startDay
+     * @param startMonth
+     * @param startYear
+     * @param endDay
+     * @param endMonth
+     * @param endYear
+     * @return
      */
-    public List<RatReport> get_reports_in_range(String startYear, String endYear) {
-        String[] startYearArr = startYear.split("/");
-        String[] endYearArr = endYear.split("/");
-        int startDayNum = Integer.parseInt(startYearArr[0]);
-        int startMonthNum = Integer.parseInt(startYearArr[1]);
-        int startYearNum = Integer.parseInt(startYearArr[2].substring(0, 4));
-        int endDayNum = Integer.parseInt(endYearArr[0]);
-        int endMonthNum = Integer.parseInt(endYearArr[1]);
-        int endYearNum = Integer.parseInt(endYearArr[2].substring(0,4));
+    public List<RatReport> get_reports_in_range(int startDay, int startMonth, int startYear,
+                                                int endDay, int endMonth, int endYear) {
+        Calendar startDate = new GregorianCalendar(startYear, startMonth, startDay);
+        Calendar endDate = new GregorianCalendar(endYear, endMonth, endDay);
         List<RatReport> results = new LinkedList<>();
         for(RatReport report: _report_list) {
             String[] date = report.get_date().split("/");
             int monthNum = Integer.parseInt(date[0]);
             int dayNum = Integer.parseInt(date[1]);
             int yearNum = Integer.parseInt(date[2].substring(0,4));
-            if( ((monthNum >= startMonthNum) && (dayNum >= startDayNum)
-                    ||(yearNum >= startYearNum))
-                && ((monthNum <= endYearNum) && (dayNum <= endDayNum)
-                    || (yearNum <= endYearNum))){
+            Calendar reportDate = new GregorianCalendar(yearNum, monthNum - 1, dayNum);
+            if((reportDate.compareTo(startDate) >= 0) && (reportDate.compareTo(endDate) <= 0)) {
                 results.add(report);
-
             }
         }
         return results;
