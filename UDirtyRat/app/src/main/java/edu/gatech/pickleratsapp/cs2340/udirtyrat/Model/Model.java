@@ -121,21 +121,14 @@ public class Model {
         return _report_list;
     }
 
+
     /**
-     * Gets a list of rat reports in date range startmonth/startDay/startYear
-     * - endMonth/endDay/endYear
-     * @param startDay
-     * @param startMonth
-     * @param startYear
-     * @param endDay
-     * @param endMonth
-     * @param endYear
+     * Gets reports within the date rage
+     * @param startDate
+     * @param endDate
      * @return
      */
-    public List<RatReport> get_reports_in_range(int startDay, int startMonth, int startYear,
-                                                int endDay, int endMonth, int endYear) {
-        Calendar startDate = new GregorianCalendar(startYear, startMonth, startDay);
-        Calendar endDate = new GregorianCalendar(endYear, endMonth, endDay);
+    public List<RatReport> get_reports_in_range(GregorianCalendar startDate, GregorianCalendar endDate) {
         List<RatReport> results = new LinkedList<>();
         for(RatReport report: _report_list) {
             String[] date = report.get_date().split("/");

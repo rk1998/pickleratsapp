@@ -37,6 +37,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
@@ -105,7 +107,7 @@ public class NavigationActivity extends AppCompatActivity
                             latestRatReport.get_latitude());
                     googleMap.addMarker(new MarkerOptions().position(latestLocation).
                             title(latestRatReport.toString()));
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latestLocation, 15));
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latestLocation, 8));
 
                 }
 
@@ -146,9 +148,12 @@ public class NavigationActivity extends AppCompatActivity
                                         public void onMapReady(GoogleMap googleMap) {
                                             googleMap.clear();
                                             RatReport report;
+                                            GregorianCalendar startDate = new GregorianCalendar(startYear,
+                                                    startMonth, startDay);
+                                            GregorianCalendar endDate = new GregorianCalendar(endYear,
+                                                    endMonth, endDay);
                                             List<RatReport> recent_reports =
-                                                    model.get_reports_in_range(startDay, startMonth,
-                                                            startYear, endDay, endMonth, endYear);
+                                                    model.get_reports_in_range(startDate, endDate);
                                             Log.d("Reports in range", ": " + recent_reports.size());
                                             if(recent_reports.size() == 0) {
                                                 Toast.makeText(getApplicationContext(),
