@@ -57,11 +57,15 @@ public class ReportActivity extends AppCompatActivity {
         cancelReport = (Button) findViewById(R.id.cancelReport);
         //populateAutoComplete();
 
-        ArrayAdapter<String> boroughAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, RatReport.boroughs);
+        ArrayAdapter<String> boroughAdapter = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_item,
+                RatReport.boroughs);
         boroughAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         borough.setAdapter(boroughAdapter);
 
-        ArrayAdapter<String> locationTypeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, RatReport.locationTypes);
+        ArrayAdapter<String> locationTypeAdapter = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_item,
+                RatReport.locationTypes);
         locationTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         locationType.setAdapter(locationTypeAdapter);
 

@@ -63,7 +63,7 @@ public class Model {
         _users.add(new User("Jamie", "jhaunkainen@gatech.edu", "1234", false));
         _users.add(new User("Rohith", "rkrishnan42@gatech.edu", "1234", false));
         _users.add(new User("Nick", "nhuang@gatech.edu", "1234", false));
-        _users.add(new User("b", "b@b", "bb", false));
+        _users.add(new User("ayy bb", "b@b", "bb", false));
     }
 
     public int numReports() {
@@ -131,11 +131,11 @@ public class Model {
     public List<RatReport> get_reports_in_range(GregorianCalendar startDate, GregorianCalendar endDate) {
         List<RatReport> results = new LinkedList<>();
         for(RatReport report: _report_list) {
-            String[] date = report.get_date().split("/");
-            int monthNum = Integer.parseInt(date[0]);
-            int dayNum = Integer.parseInt(date[1]);
-            int yearNum = Integer.parseInt(date[2].substring(0,4));
-            Calendar reportDate = new GregorianCalendar(yearNum, monthNum - 1, dayNum);
+//            String[] date = report.get_date().split("/");
+//            int monthNum = Integer.parseInt(date[0]);
+//            int dayNum = Integer.parseInt(date[1]);
+//            int yearNum = Integer.parseInt(date[2].substring(0,4));
+            Calendar reportDate = report.get_date();
             if((reportDate.compareTo(startDate) >= 0) && (reportDate.compareTo(endDate) <= 0)) {
                 results.add(report);
             }

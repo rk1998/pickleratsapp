@@ -160,7 +160,8 @@ public class NavigationActivity extends AppCompatActivity
                                                         "No reports found in this date range",
                                                         Toast.LENGTH_SHORT).show();
                                                 recent_reports = model.get_reports();
-                                                for(int i = 0; i > recent_reports.size() - 150; i--) {
+                                                for(int i = recent_reports.size() - 1;
+                                                    i > recent_reports.size() - 150; i--) {
                                                     report = recent_reports.get(i);
                                                     LatLng location =
                                                             new LatLng(report.get_longitude(), report.get_latitude());

@@ -1,6 +1,8 @@
 package edu.gatech.pickleratsapp.cs2340.udirtyrat.Model;
 
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -47,7 +49,8 @@ public class RatReport {
 
     }
     private int _key;
-    private String _date;
+    private Calendar _date;
+    private String _date_string;
     private String _locationType;
     private int _zip;
     private String _address;
@@ -59,7 +62,6 @@ public class RatReport {
     public RatReport(int key, String date, String locationType, int zip, String address, String city,
                      String borough, double latitude, double longitude) {
         _key = key;
-        _date = date;
         _locationType = locationType;
         _zip = zip;
         _address = address;
@@ -67,6 +69,13 @@ public class RatReport {
         _borough = borough;
         _latitude = latitude;
         _longitude = longitude;
+
+        String[] dateArr = date.split("/");
+        int dayNum = Integer.parseInt(dateArr[0]);
+        int monthNum = Integer.parseInt(dateArr[1]);
+        int yearNum = Integer.parseInt(dateArr[2].substring(0,4));
+        _date = new GregorianCalendar(yearNum, monthNum - 1, dayNum);
+        _date_string = date;
 
     }
 
@@ -82,7 +91,15 @@ public class RatReport {
      *
      * @return date the report was made
      */
-    public String get_date() { return _date; }
+    public Calendar get_date() { return _date; }
+
+    /**
+     *
+     * @return date the report was made as a string.
+     */
+    public String get_date_string() {
+        return _date_string;
+    }
     /**
      *
      * @return zip code of the report
@@ -141,6 +158,6 @@ public class RatReport {
 
     @Override
     public String toString() {
-        return " "+ _key + " : " + _address + " " + _city + " " + _date + "  ";
+        return " "+ _key + " : " + _address + " " + _city + " " + _date_string + "  ";
     }
 }

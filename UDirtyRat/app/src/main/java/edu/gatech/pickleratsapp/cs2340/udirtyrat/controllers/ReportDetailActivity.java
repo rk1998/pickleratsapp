@@ -37,7 +37,7 @@ public class ReportDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_report_detail);
 
         date = (TextView) findViewById(R.id.dateDetail);
-        String dateString = toReportDetails.get_date();
+        String dateString = toReportDetails.get_date_string();
         date.setText("Date: " + dateString);
         locationType = (TextView) findViewById(R.id.locationTypeDetail);
         String locationTypeString = toReportDetails.get_locationType();
