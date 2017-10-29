@@ -142,6 +142,27 @@ public class Model {
         }
         return results;
     }
+
+    /**
+     * Creates a data set for number of rat reports within year range [startYear, endYear]
+     * @param startYear
+     * @param endYear
+     * @return a list of ChartData objects, represents data set for year range
+     */
+    public List<ChartData> get_data_in_range(int startYear, int endYear) {
+        List<ChartData> dataSet = new LinkedList<>();
+        for(int i = startYear; i <= endYear; i++){
+            int numReports = 0;
+            for(RatReport r: _report_list) {
+                int year = r.get_date().get(Calendar.YEAR);
+                if(year == i) {
+                    numReports++;
+                }
+            }
+            dataSet.add(new ChartData(i, numReports));
+        }
+        return dataSet;
+    }
     /**
      *
      * @param user user to login
