@@ -175,12 +175,14 @@ public class NavigationActivity extends AppCompatActivity
                                             } else {
                                                 for(int i = 0; i < recent_reports.size(); i++) {
                                                     report = recent_reports.get(i);
-                                                    LatLng location = new LatLng(report.get_longitude(),
+                                                    LatLng location = new LatLng(
+                                                            report.get_longitude(),
                                                             report.get_latitude());
                                                     googleMap.addMarker(new MarkerOptions()
                                                             .position(location)
                                                             .title(report.toString()));
-                                                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+                                                    googleMap.moveCamera(CameraUpdateFactory.
+                                                            newLatLng(location));
 
                                                 }
                                             }
