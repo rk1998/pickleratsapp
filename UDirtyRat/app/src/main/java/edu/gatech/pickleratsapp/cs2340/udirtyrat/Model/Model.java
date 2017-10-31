@@ -128,11 +128,17 @@ public class Model {
      * @param endDate
      * @return
      */
-    public List<RatReport> get_reports_in_range(GregorianCalendar startDate, GregorianCalendar endDate) {
+    public List<RatReport> get_reports_in_range(GregorianCalendar startDate,
+                                                GregorianCalendar endDate) {
         List<RatReport> results = new LinkedList<>();
         for (RatReport report: _report_list) {
-            Calendar reportDate = report.get_date();
-            if ((reportDate.compareTo(startDate) >= 0) && (reportDate.compareTo(endDate) <= 0)) {
+            String[] date = report.get_date_string().split("/");
+            int monthNum = Integer.parseInt(date[0]);
+            int dayNum = Integer.parseInt(date[1]);
+            int yearNum = Integer.parseInt(date[2].substring(0,4));
+            Calendar reportDate = new GregorianCalendar(yearNum, monthNum - 1, dayNum);
+            if ((reportDate.after(startDate) || reportDate.compareTo(startDate) == 0)
+                    && (reportDate.before(endDate) || reportDate.compareTo(endDate) == 0)) {
                 results.add(report);
             }
         }

@@ -50,8 +50,6 @@ public class NavigationActivity extends AppCompatActivity
     private FragmentManager fragManager;
     private SupportMapFragment mapFrag;
     private Model model;
-    private String startYear = "09/04/2015";
-    private String endYear = "09/05/2015";
     private RatReport latestRatReport;
 
 
@@ -118,10 +116,6 @@ public class NavigationActivity extends AppCompatActivity
             public void onClick(View view) {
                 final DatePicker startDate = new DatePicker(NavigationActivity.this);
                 final DatePicker endDate = new DatePicker(NavigationActivity.this);
-//                final EditText startInput = new EditText(NavigationActivity.this);
-//                startInput.setHint("MM/DD/YYYY");
-//                final EditText endInput = new EditText(NavigationActivity.this);
-//                endInput.setHint("MM/DD/YYYY");
                 LinearLayout linearLayout = new LinearLayout(NavigationActivity.this);
                 linearLayout.setOrientation(LinearLayout.VERTICAL);
                 linearLayout.addView(startDate);
@@ -148,6 +142,10 @@ public class NavigationActivity extends AppCompatActivity
                                         public void onMapReady(GoogleMap googleMap) {
                                             googleMap.clear();
                                             RatReport report;
+                                            Log.d("Start Year", " " + startYear);
+                                            Log.d("End Year", " " + endYear);
+                                            Log.d("Start month", " " + startMonth);
+                                            Log.d("End Month", " " + endMonth);
                                             GregorianCalendar startDate = new GregorianCalendar(startYear,
                                                     startMonth, startDay);
                                             GregorianCalendar endDate = new GregorianCalendar(endYear,
@@ -164,10 +162,13 @@ public class NavigationActivity extends AppCompatActivity
                                                     i > recent_reports.size() - 150; i--) {
                                                     report = recent_reports.get(i);
                                                     LatLng location =
-                                                            new LatLng(report.get_longitude(), report.get_latitude());
+                                                            new LatLng(report.get_longitude(),
+                                                                    report.get_latitude());
                                                     googleMap.addMarker(
-                                                            new MarkerOptions().position(location).title(report.toString()));
-                                                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+                                                            new MarkerOptions().position(location).
+                                                                    title(report.toString()));
+                                                    googleMap.moveCamera(CameraUpdateFactory.
+                                                            newLatLng(location));
 
                                                 }
 
@@ -176,7 +177,9 @@ public class NavigationActivity extends AppCompatActivity
                                                     report = recent_reports.get(i);
                                                     LatLng location = new LatLng(report.get_longitude(),
                                                             report.get_latitude());
-                                                    googleMap.addMarker(new MarkerOptions().position(location).title(report.toString()));
+                                                    googleMap.addMarker(new MarkerOptions()
+                                                            .position(location)
+                                                            .title(report.toString()));
                                                     googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
 
                                                 }
