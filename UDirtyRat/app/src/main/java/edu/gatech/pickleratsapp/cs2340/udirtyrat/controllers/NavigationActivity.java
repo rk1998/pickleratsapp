@@ -194,8 +194,6 @@ public class NavigationActivity extends AppCompatActivity
                 alertDialog.show();
             }
         });
-
-
     }
 
     @Override
@@ -244,7 +242,10 @@ public class NavigationActivity extends AppCompatActivity
         } else if (id == R.id.nav_logout) {
             startActivity(new Intent(NavigationActivity.this, HomeScreen.class));
 
+        } else if (id == R.id.nav_graph_view) {
+            startActivity(new Intent(NavigationActivity.this, GraphView.class));
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
