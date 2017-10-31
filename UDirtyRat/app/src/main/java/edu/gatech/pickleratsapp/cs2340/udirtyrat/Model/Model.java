@@ -77,7 +77,7 @@ public class Model {
      */
     public boolean add_user(User newUser) {
 
-        if(_users.contains(newUser)) {
+        if (_users.contains(newUser)) {
             return false;
         } else {
             _users.add(newUser);
@@ -130,13 +130,9 @@ public class Model {
      */
     public List<RatReport> get_reports_in_range(GregorianCalendar startDate, GregorianCalendar endDate) {
         List<RatReport> results = new LinkedList<>();
-        for(RatReport report: _report_list) {
-//            String[] date = report.get_date().split("/");
-//            int monthNum = Integer.parseInt(date[0]);
-//            int dayNum = Integer.parseInt(date[1]);
-//            int yearNum = Integer.parseInt(date[2].substring(0,4));
+        for (RatReport report: _report_list) {
             Calendar reportDate = report.get_date();
-            if((reportDate.compareTo(startDate) >= 0) && (reportDate.compareTo(endDate) <= 0)) {
+            if ((reportDate.compareTo(startDate) >= 0) && (reportDate.compareTo(endDate) <= 0)) {
                 results.add(report);
             }
         }
@@ -145,13 +141,15 @@ public class Model {
 
     /**
      * Creates a data set for number of rat reports within year range [startYear, endYear]
-     * @param startYear
-     * @param endYear
+     * @param startDate
+     * @param endDate
      * @return a list of ChartData objects, represents data set for year range
      */
-    public List<ChartData> get_data_in_range(int startYear, int endYear) {
+    public List<ChartData> get_data_in_range(GregorianCalendar startDate, GregorianCalendar endDate) {
         List<ChartData> dataSet = new LinkedList<>();
-        for(int i = startYear; i <= endYear; i++){
+        int startYear = startDate.get(Calendar.YEAR);
+        int endYear = startDate.get(Calendar.YEAR);
+        for(int i = startYear; i <= endYear; i++) {
             int numReports = 0;
             for(RatReport r: _report_list) {
                 int year = r.get_date().get(Calendar.YEAR);

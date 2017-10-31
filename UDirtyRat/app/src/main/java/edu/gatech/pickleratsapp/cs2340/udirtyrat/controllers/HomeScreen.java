@@ -49,7 +49,7 @@ public class HomeScreen extends AppCompatActivity {
                     double latitude = 0.0;
                     double longitude = 0.0;
                     int length = reportData.length;
-                    if(!(length < 53) &&
+                    if (!(length < 53) &&
                             (!reportData[length - 3].isEmpty()
                                     || !reportData[length - 3].equals("Unspecified"))
                             && (!reportData[length - 4].isEmpty()
@@ -85,7 +85,8 @@ public class HomeScreen extends AppCompatActivity {
         Model model = Model.get_instance();
         if(model.numReports() == 0) {
             //loadRatData();
-            new LoadCSVTask().execute("load"); // launches Async task in background while the Homescreen is being created
+            new LoadCSVTask().execute("load");
+            // launches Async task in background while the Homescreen is being created
         }
 
         // Capture button clicks
@@ -104,7 +105,8 @@ public class HomeScreen extends AppCompatActivity {
 
                 // Start RegisterActivity.class
                 Intent myIntent = new Intent(HomeScreen.this,
-                        edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers.RegisterActivity.class);
+                        edu.gatech.pickleratsapp.cs2340.udirtyrat.
+                                controllers.RegisterActivity.class);
                 startActivity(myIntent);
             }
         });
