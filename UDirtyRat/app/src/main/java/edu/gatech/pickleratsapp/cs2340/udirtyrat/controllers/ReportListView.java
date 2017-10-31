@@ -1,24 +1,25 @@
 package edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers;
 
-import android.app.ListActivity;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.view.View;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+
 import java.util.LinkedList;
-import android.content.Context;
-import android.content.Intent;
 import java.util.List;
 
-import android.widget.Toast;
-
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.DataBaseHelper;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.RatReport;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
 
 public class ReportListView extends AppCompatActivity {
+    DataBaseHelper db = new DataBaseHelper(this);
     private ListView mRatListView;
     public void onCreate(Bundle savedInstanceData) {
         super.onCreate(savedInstanceData);
@@ -46,5 +47,7 @@ public class ReportListView extends AppCompatActivity {
                 startActivity(detailIntent);
             }
         });
+        Cursor res = db.getAllData();
+
     }
 }

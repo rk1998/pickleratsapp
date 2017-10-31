@@ -9,7 +9,6 @@ import java.util.List;
 
 public class RatReport {
     /**Enum for the location type of the report**/
-
     public static List<String> locationTypes = Arrays.asList("Park", "Residential", "Business", "NYC Metro");
 
     public enum LocationType {
