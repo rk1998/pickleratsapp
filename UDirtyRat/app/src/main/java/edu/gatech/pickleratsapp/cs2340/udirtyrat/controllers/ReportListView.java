@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
@@ -36,10 +37,11 @@ public class ReportListView extends AppCompatActivity {
         mRatListView = (ListView) findViewById(R.id.ratList);
         Model model = Model.get_instance();
         reports = model.get_reports();
+        Collections.reverse(reports);
         LinkedList<String> keys = new LinkedList<>();
         Log.d("LATEST REPORT KEY", "" + Model.get_latest_report_key());
         int numReports = reports.size() - 100;
-        for (int i = reports.size() - 1; i > numReports; i--) {
+        for (int i = 0; i < 100; i++) {
             keys.add(reports.get(i).toString());
         }
         ArrayAdapter adapter = new ArrayAdapter(this,
@@ -51,7 +53,6 @@ public class ReportListView extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Todo:bug, doesnt get right report when you click on listview
                 RatReport selectedReport = reports.get(position);
                 Intent detailIntent = new Intent(ReportListView.this, ReportDetailActivity.class);
                 detailIntent.putExtra("key",  selectedReport.get_key());

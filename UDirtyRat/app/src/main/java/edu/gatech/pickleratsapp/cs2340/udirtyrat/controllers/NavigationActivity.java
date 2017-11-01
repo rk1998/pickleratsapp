@@ -90,7 +90,7 @@ public class NavigationActivity extends AppCompatActivity
                 RatReport report;
                 List<RatReport> recent_reports = model.get_reports();
                 Log.d("Reports in range", ": " + recent_reports.size());
-                for(int i = 0; i < 200; i++) {
+                for(int i = recent_reports.size() - 1; i > recent_reports.size() - 200; i--) {
                     report = recent_reports.get(i);
                     if(report.get_key() != Model.get_latest_report_key()) {
                         LatLng location = new LatLng(report.get_longitude(), report.get_latitude());
@@ -100,7 +100,7 @@ public class NavigationActivity extends AppCompatActivity
 
                     }
                 }
-                if(latestRatReport != null) {
+                if (latestRatReport != null) {
                     LatLng latestLocation = new LatLng(latestRatReport.get_longitude(),
                             latestRatReport.get_latitude());
                     googleMap.addMarker(new MarkerOptions().position(latestLocation).
@@ -146,10 +146,10 @@ public class NavigationActivity extends AppCompatActivity
                                             Log.d("End Year", " " + endYear);
                                             Log.d("Start month", " " + startMonth);
                                             Log.d("End Month", " " + endMonth);
-                                            GregorianCalendar startDate = new GregorianCalendar(startYear,
-                                                    startMonth, startDay);
-                                            GregorianCalendar endDate = new GregorianCalendar(endYear,
-                                                    endMonth, endDay);
+                                            GregorianCalendar startDate = new GregorianCalendar(
+                                                    startYear, startMonth, startDay);
+                                            GregorianCalendar endDate = new GregorianCalendar(
+                                                    endYear, endMonth, endDay);
                                             List<RatReport> recent_reports =
                                                     model.get_reports_in_range(startDate, endDate);
                                             Log.d("Reports in range", ": " + recent_reports.size());
@@ -159,7 +159,7 @@ public class NavigationActivity extends AppCompatActivity
                                                         Toast.LENGTH_SHORT).show();
                                                 recent_reports = model.get_reports();
                                                 for(int i = recent_reports.size() - 1;
-                                                    i > recent_reports.size() - 150; i--) {
+                                                    i > recent_reports.size() - 200; i--) {
                                                     report = recent_reports.get(i);
                                                     LatLng location =
                                                             new LatLng(report.get_longitude(),
