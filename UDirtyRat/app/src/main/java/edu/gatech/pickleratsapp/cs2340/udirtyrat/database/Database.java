@@ -1,0 +1,45 @@
+package edu.gatech.pickleratsapp.cs2340.udirtyrat.database;
+
+import android.content.Context;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+
+import java.util.List;
+
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.RatReport;
+
+
+/**
+ * Class representing Database, Used in Model
+ */
+
+public class Database {
+    private SQLiteDatabase database;
+    private DataBaseHelper dbHelper;
+    public Database(Context context) {
+        if(context == null) {
+            context = UDirtyRatApplication.getAppContext();
+        }
+        dbHelper = new DataBaseHelper(context);
+        open();
+    }
+    public void open() throws SQLException {
+        database = dbHelper.getWritableDatabase();
+    }
+    public void close() {
+        dbHelper.close();
+    }
+    public boolean insertData(RatReport report) {
+        return dbHelper.insertData(database, report.get_key(), report.get_date_string(),
+                report.get_locationType(), report.get_zip(), report.get_address(),
+                report.get_city(), report.get_borough(), report.get_longitude(),
+                report.get_latitude());
+    }
+
+    public RatReport findRatReportbyKey(int key) {
+        return dbHelper.getRatReportByKey(database, key);
+    }
+    public List<RatReport> getReportList() {
+        return dbHelper.getAllReports(database);
+    }
+}

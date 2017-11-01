@@ -15,8 +15,6 @@ import android.widget.ListView;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.DataBaseHelper;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.RatReport;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
@@ -25,7 +23,6 @@ import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
  * Activity for the Report List View
  */
 public class ReportListView extends AppCompatActivity {
-    DataBaseHelper db = new DataBaseHelper(this);
     private ListView mRatListView;
     private List<RatReport> reports;
 
@@ -54,13 +51,13 @@ public class ReportListView extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Todo:bug, doesnt get right report when you click on listview
                 RatReport selectedReport = reports.get(position);
                 Intent detailIntent = new Intent(ReportListView.this, ReportDetailActivity.class);
                 detailIntent.putExtra("key",  selectedReport.get_key());
                 startActivity(detailIntent);
             }
         });
-        Cursor res = db.getAllData();
 
     }
 }

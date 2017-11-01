@@ -58,8 +58,8 @@ public class RatReport {
     private double _latitude;
     private double _longitude;
 
-    public RatReport(int key, String date, String locationType, int zip, String address, String city,
-                     String borough, double latitude, double longitude) {
+    public RatReport(int key, String date, String locationType, int zip, String address,
+                     String city, String borough, double latitude, double longitude) {
         _key = key;
         _locationType = locationType;
         _zip = zip;

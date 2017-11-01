@@ -5,6 +5,7 @@ package edu.gatech.pickleratsapp.cs2340.udirtyrat.Model;
  * each controller
  */
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.compat.BuildConfig;
 import android.util.Log;
@@ -16,12 +17,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.database.Database;
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.database.UDirtyRatApplication;
+
 
 public class Model {
     /**Singleton Instance**/
     private static final Model _instance = new Model();
     private static int latest_report_key = 0;
-
+    private Database database;
     /**
      * Gets the singleton instance of model
      * @return The singleton instance of model
@@ -86,10 +90,40 @@ public class Model {
     }
 
     /**
+     * Loads report data into model from the database
+     */
+    public void load_database(Context context) {
+        database = new Database(context);
+        List<RatReport> saved_reports = database.getReportList();
+        Log.d("saved reports", "" + saved_reports);
+        if(saved_reports.size() != 0) {
+            for(RatReport report: saved_reports) {
+                _reports.put(report.get_key(), report);
+                _report_list.add(report);
+                latest_report_key = report.get_key();
+            }
+        }
+    }
+
+    /**
+     * Loads report data from csv when app first starts
+     * @param report report to be loaded from csv
+     */
+    public void load_data_csv(RatReport report) {
+        _reports.put(report.get_key(), report);
+        _report_list.add(report);
+        latest_report_key = report.get_key();
+    }
+
+    /**
      * Adds new rat reports to the Model
      * @param report New report to add to the app
      */
     public void add_report(RatReport report) {
+        if(!database.insertData(report)) {
+            System.out.println("OOPS DATABASE SUX BALLZ");
+        }
+        Log.d("list size",""+database.getReportList().size());
         _reports.put(report.get_key(), report);
         _report_list.add(report);
         latest_report_key = report.get_key();

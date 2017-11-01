@@ -57,7 +57,7 @@ public class HomeScreen extends AppCompatActivity {
                         latitude = Double.parseDouble(reportData[reportData.length - 3]);
                         longitude = Double.parseDouble(reportData[reportData.length - 4]);
                     }
-                    model.add_report(new RatReport(id, reportData[1], reportData[7], zip,
+                    model.load_data_csv(new RatReport(id, reportData[1], reportData[7], zip,
                             reportData[9], reportData[16], reportData[23],latitude, longitude));
                     lineNumber++;
                 }
@@ -65,6 +65,7 @@ public class HomeScreen extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            model.load_database(HomeScreen.this);
             return lineNumber;
         }
         protected void onPostExecute(Long result) {

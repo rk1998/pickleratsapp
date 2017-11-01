@@ -14,8 +14,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.Random;
-
-import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.DataBaseHelper;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.RatReport;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
@@ -24,7 +22,7 @@ import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
  * activity to create a new rat report
  */
 public class ReportActivity extends AppCompatActivity {
-    DataBaseHelper db;
+    //DataBaseHelper db;
     // UI references.
     private EditText date;
     private Spinner locationType;
@@ -86,34 +84,34 @@ public class ReportActivity extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
-        db = new DataBaseHelper(this);
+//        db = new DataBaseHelper(this);
     }
 
     /**
      * Inserting data into database
      */
-    public void AddData() {
-        report.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        boolean isInserted = db.insertData( date.getText().toString(),
-                                locationType.getTransitionName().toString(),
-                                Integer.parseInt(zip.getText().toString()),
-                                address.getText().toString(),
-                                city.getText().toString(),
-                                borough.getTransitionName().toString(),
-                                Integer.parseInt(longitude.getText().toString()),
-                                Integer.parseInt(latitude.getText().toString()));
-                        if (isInserted == true) {
-                            Toast.makeText(ReportActivity.this, "Report Inserted", Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(ReportActivity.this, "Report Not Inserted", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                }
-        );
-    }
+//    public void AddData() {
+//        report.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+////                        boolean isInserted = db.insertData(date.getText().toString(),
+////                                locationType.getTransitionName().toString(),
+////                                Integer.parseInt(zip.getText().toString()),
+////                                address.getText().toString(),
+////                                city.getText().toString(),
+////                                borough.getTransitionName().toString(),
+////                                Integer.parseInt(longitude.getText().toString()),
+////                                Integer.parseInt(latitude.getText().toString()));
+//                        if (isInserted == true) {
+//                            Toast.makeText(ReportActivity.this, "Report Inserted", Toast.LENGTH_LONG).show();
+//                        } else {
+//                            Toast.makeText(ReportActivity.this, "Report Not Inserted", Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//                }
+//        );
+//    }
 
         protected boolean attemptReport() {
             // Reset errors.
