@@ -18,7 +18,7 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
     public static final String Col_1 = "Key";
     public static final String Col_2 = "Date";
     public static final String Col_3 = "Location";
-    public static final String Col_4 = "ZipCode";
+    public static final String Col_4 = "Code";
     public static final String Col_5 = "Address";
     public static final String Col_6 = "City";
     public static final String Col_7 = "Borough";
@@ -27,12 +27,12 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
     private static final String DATABASE_CREATE = "create table " + Table_Name
             + "("
             + Col_1 + " INTEGER, "
-            + Col_2 + " text not null, "
-            + Col_3 + " text not null,"
+            + Col_2 + " TEXT NOT NULL, "
+            + Col_3 + " TEXT NOT NULL, "
             + Col_4 + " INTEGER, "
-            + Col_5 + " text not null, "
-            + Col_6 + " text not null, "
-            + Col_7 + " text not null, "
+            + Col_5 + " TEXT NOT NULL, "
+            + Col_6 + " TEXT NOT NULL, "
+            + Col_7 + " TEXT NOT NULL, "
             + Col_8 + " DOUBLE, "
             + Col_9 + " DOUBLE"
             + ");";
@@ -40,7 +40,7 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
 
 
     public DataBaseHelper (Context context) {
-        super(context, DataBase_Name, null, 1);
+        super(context, DataBase_Name, null, 2);
     }
 
     @Override
@@ -56,29 +56,30 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
         onCreate(sqLiteDatabase);
     }
 
-    public boolean insertData(SQLiteDatabase db, int key, String Date, String Location,
+    public boolean insertData(int key, String Date, String Location,
                               int ZipCode, String Address,
                               String City, String Borough,
                               double Longitude, double Latitude) {
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(Col_1, key);
-        contentValues.put(Col_2, Date);
-        contentValues.put(Col_3, Location);
-        contentValues.put(Col_4, ZipCode);
-        contentValues.put(Col_5, Address);
-        contentValues.put(Col_6, City);
-        contentValues.put(Col_7, Borough);
-        contentValues.put(Col_8, Longitude);
-        contentValues.put(Col_9, Latitude);
+        contentValues.put(DataBaseHelper.Col_1, key);
+        contentValues.put(DataBaseHelper.Col_2, Date);
+        contentValues.put(DataBaseHelper.Col_3, Location);
+        contentValues.put(DataBaseHelper.Col_4, ZipCode);
+        contentValues.put(DataBaseHelper.Col_5, Address);
+        contentValues.put(DataBaseHelper.Col_6, City);
+        contentValues.put(DataBaseHelper.Col_7, Borough);
+        contentValues.put(DataBaseHelper.Col_8, Longitude);
+        contentValues.put(DataBaseHelper.Col_9, Latitude);
         long result = db.insert(Table_Name, null, contentValues);
-        db.close();
         if (result == -1) {
             return false;
         }
         return true;
     }
 
-    public RatReport getRatReportByKey(SQLiteDatabase database, int key) {
+    public RatReport getRatReportByKey(int key) {
+        SQLiteDatabase database = this.getWritableDatabase();
         String query = "SELECT * FROM " + Table_Name + "WHERE " + Col_1 + " ='" + key;
         Cursor cursor = database.rawQuery(query, null);
         RatReport report = null;
@@ -94,7 +95,8 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
 
     }
 
-    public List<RatReport> getAllReports(SQLiteDatabase database) {
+    public List<RatReport> getAllReports() {
+        SQLiteDatabase database = this.getWritableDatabase();
         List<RatReport> report_list = new LinkedList<>();
         Cursor cursor = getAllData(database);
         cursor.moveToFirst();

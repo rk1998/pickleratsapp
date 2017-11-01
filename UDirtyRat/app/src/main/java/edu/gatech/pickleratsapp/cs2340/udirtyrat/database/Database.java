@@ -14,6 +14,10 @@ import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.RatReport;
  */
 
 public class Database {
+//    private static final Database dBase= new Database(UDirtyRatApplication.getAppContext());
+//    public static Database get_instance() {
+//        return dBase;
+//    }
     private SQLiteDatabase database;
     private DataBaseHelper dbHelper;
     public Database(Context context) {
@@ -30,16 +34,16 @@ public class Database {
         dbHelper.close();
     }
     public boolean insertData(RatReport report) {
-        return dbHelper.insertData(database, report.get_key(), report.get_date_string(),
+        return dbHelper.insertData(report.get_key(), report.get_date_string(),
                 report.get_locationType(), report.get_zip(), report.get_address(),
                 report.get_city(), report.get_borough(), report.get_longitude(),
                 report.get_latitude());
     }
 
     public RatReport findRatReportbyKey(int key) {
-        return dbHelper.getRatReportByKey(database, key);
+        return dbHelper.getRatReportByKey(key);
     }
     public List<RatReport> getReportList() {
-        return dbHelper.getAllReports(database);
+        return dbHelper.getAllReports();
     }
 }

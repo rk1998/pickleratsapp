@@ -17,6 +17,7 @@ import java.util.Random;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.RatReport;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.database.DataBaseHelper;
 
 /**
  * activity to create a new rat report
@@ -36,6 +37,8 @@ public class ReportActivity extends AppCompatActivity {
     private Button cancelReport;
     private RatReport ratReport;
 
+    private DataBaseHelper mDbHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +55,7 @@ public class ReportActivity extends AppCompatActivity {
         borough = (Spinner) findViewById(R.id.borough);
         cancelReport = (Button) findViewById(R.id.cancelReport);
         //populateAutoComplete();
+        mDbHelper = new DataBaseHelper(this);
 
         ArrayAdapter<String> boroughAdapter = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_item,
@@ -187,6 +191,8 @@ public class ReportActivity extends AppCompatActivity {
                 Random rand = new Random();
                 int n = Model.get_latest_report_key() + 1;
                 Model model = Model.get_instance();
+                mDbHelper.insertData(n, dateZ, locationTypeZ, zipZ, addressZ,
+                        cityZ, boroughZ, latitudeZ, longitudeZ);
                 ratReport = new RatReport(n, dateZ, locationTypeZ, zipZ,
                         addressZ, cityZ, boroughZ, latitudeZ, longitudeZ);
                 model.add_report(ratReport);

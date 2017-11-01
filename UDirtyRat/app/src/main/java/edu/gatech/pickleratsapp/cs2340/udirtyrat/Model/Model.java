@@ -120,10 +120,10 @@ public class Model {
      * @param report New report to add to the app
      */
     public void add_report(RatReport report) {
-        if(!database.insertData(report)) {
-            System.out.println("OOPS DATABASE SUX BALLZ");
-        }
-        Log.d("list size",""+database.getReportList().size());
+//        if(!database.insertData(report)) {
+//            System.out.println("OOPS DATABASE SUX BALLZ");
+//        }
+        //Log.d("list size",""+database.getReportList().size());
         _reports.put(report.get_key(), report);
         _report_list.add(report);
         latest_report_key = report.get_key();

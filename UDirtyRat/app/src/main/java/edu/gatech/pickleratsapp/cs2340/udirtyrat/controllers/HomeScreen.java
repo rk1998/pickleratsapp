@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.*;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.*;
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.database.DataBaseHelper;
 
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -20,11 +21,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 /**
  * Activity for the home screen of the app
  */
 public class HomeScreen extends AppCompatActivity {
+    private DataBaseHelper mdbHelper;
     /**
      * Custom Csv loading task, loads csv in background thread when home screen is created
      */
@@ -65,7 +68,14 @@ public class HomeScreen extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            model.load_database(HomeScreen.this);
+//           model.load_database(HomeScreen.this);
+            mdbHelper = new DataBaseHelper(HomeScreen.this);
+            List<RatReport> data_list = mdbHelper.getAllReports();
+            if(data_list.size() != 0) {
+                for(RatReport report : data_list) {
+                    model.add_report(report);
+                }
+            }
             return lineNumber;
         }
         protected void onPostExecute(Long result) {
