@@ -24,6 +24,11 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
     public static final String Col_7 = "Borough";
     public static final String Col_8 = "Longitude";
     public static final String Col_9 = "Latitude";
+    public static final String USR_TABLE = "User_Table";
+    public static final String USR_NAME = "Name";
+    public static final String USR_ID = "UserID";
+    public static final String PASSWORD = "Password";
+    public static final String ADMINFLAG = "AdminFlag";
     private static final String DATABASE_CREATE = "create table " + Table_Name
             + "("
             + Col_1 + " INTEGER, "
@@ -37,10 +42,16 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
             + Col_9 + " DOUBLE"
             + ");";
 
-
+    private static final String USER_TABLE_CREATE = "create table " + USR_TABLE
+            + "("
+            + USR_NAME + " TEXT NOT NULL, "
+            + USR_ID + " TEXT NOT NULL, "
+            + PASSWORD + " TEXT NOT NULL, "
+            + ADMINFLAG + " INTEGER"
+            +");";
 
     public DataBaseHelper (Context context) {
-        super(context, DataBase_Name, null, 2);
+        super(context, DataBase_Name, null, 3);
     }
 
     @Override
@@ -48,11 +59,13 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
 //        db.execSQL("create table " + Table_Name + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, DATE TEXT, LOCATION TEXT, ZIP INTEGER," +
 //                " ADDRESS TEXT, CITY TEXT, BOROUGH TEXT, LONGITUDE INTEGER, LATITUDE INTEGER)");
         db.execSQL(DATABASE_CREATE);
+        db.execSQL(USER_TABLE_CREATE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Table_Name);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + USR_TABLE);
         onCreate(sqLiteDatabase);
     }
 
@@ -77,6 +90,23 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
         }
         return true;
     }
+    public boolean insertUser(User user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DataBaseHelper.USR_NAME, user.get_name());
+        contentValues.put(DataBaseHelper.USR_ID, user.get_userID());
+        contentValues.put(DataBaseHelper.PASSWORD, user.get_passWord());
+        if(user.get_isAdmin()) {
+            contentValues.put(DataBaseHelper.ADMINFLAG, 1);
+        } else {
+            contentValues.put(DataBaseHelper.ADMINFLAG, 0);
+        }
+        long result = db.insert(USR_TABLE, null, contentValues);
+        if (result == -1) {
+            return false;
+        }
+        return true;
+    }
 
     public RatReport getRatReportByKey(int key) {
         SQLiteDatabase database = this.getWritableDatabase();
@@ -93,6 +123,32 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
         }
         return report;
 
+    }
+
+    public User getUserById(String usr_id) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query = "SELECT * FROM " + USR_TABLE + "WHERE " + USR_ID + " ='" + usr_id;
+        Cursor cursor = database.rawQuery(query, null);
+        User user = null;
+        if(cursor != null) {
+            cursor.moveToFirst();
+            user = new User(cursor.getString(0), cursor.getString(1), cursor.getString(2), false);
+            cursor.close();
+        }
+        return user;
+    }
+    public List<User> getAllUsers() {
+        SQLiteDatabase database = this.getWritableDatabase();
+        List<User> user_list = new LinkedList<>();
+        Cursor res = database.rawQuery("select * from " + USR_TABLE, null);
+        res.moveToFirst();
+        while(!res.isAfterLast()) {
+            User user = new User(res.getString(0), res.getString(1), res.getString(2), false);
+            user_list.add(user);
+            res.moveToNext();
+        }
+        res.close();
+        return user_list;
     }
 
     public List<RatReport> getAllReports() {

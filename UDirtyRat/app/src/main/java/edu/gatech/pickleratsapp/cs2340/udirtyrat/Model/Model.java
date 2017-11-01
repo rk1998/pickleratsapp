@@ -52,6 +52,12 @@ public class Model {
        loadDummyUsers();
     }
 
+    public void load_users(List<User> users) {
+        for(User u: users) {
+            _users.add(u);
+        }
+    }
+
     /**
      *
      * @return The Set of Users
@@ -89,21 +95,21 @@ public class Model {
         }
     }
 
-    /**
-     * Loads report data into model from the database
-     */
-    public void load_database(Context context) {
-        database = new Database(context);
-        List<RatReport> saved_reports = database.getReportList();
-        Log.d("saved reports", "" + saved_reports);
-        if(saved_reports.size() != 0) {
-            for(RatReport report: saved_reports) {
-                _reports.put(report.get_key(), report);
-                _report_list.add(report);
-                latest_report_key = report.get_key();
-            }
-        }
-    }
+//    /**
+//     * Loads report data into model from the database
+//     */
+//    public void load_database(Context context) {
+//        database = new Database(context);
+//        List<RatReport> saved_reports = database.getReportList();
+//        Log.d("saved reports", "" + saved_reports);
+//        if(saved_reports.size() != 0) {
+//            for(RatReport report: saved_reports) {
+//                _reports.put(report.get_key(), report);
+//                _report_list.add(report);
+//                latest_report_key = report.get_key();
+//            }
+//        }
+//    }
 
     /**
      * Loads report data from csv when app first starts
@@ -120,10 +126,6 @@ public class Model {
      * @param report New report to add to the app
      */
     public void add_report(RatReport report) {
-//        if(!database.insertData(report)) {
-//            System.out.println("OOPS DATABASE SUX BALLZ");
-//        }
-        //Log.d("list size",""+database.getReportList().size());
         _reports.put(report.get_key(), report);
         _report_list.add(report);
         latest_report_key = report.get_key();

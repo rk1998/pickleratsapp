@@ -71,10 +71,14 @@ public class HomeScreen extends AppCompatActivity {
 //           model.load_database(HomeScreen.this);
             mdbHelper = new DataBaseHelper(HomeScreen.this);
             List<RatReport> data_list = mdbHelper.getAllReports();
+            List<User> user_list = mdbHelper.getAllUsers();
             if(data_list.size() != 0) {
                 for(RatReport report : data_list) {
                     model.add_report(report);
                 }
+            }
+            if(user_list.size() != 0) {
+                model.load_users(user_list);
             }
             return lineNumber;
         }
