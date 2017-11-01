@@ -20,6 +20,7 @@ import android.widget.ToggleButton;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.User;
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.database.DataBaseHelper;
 
 /**
  * A login screen that offers login via email/password.
@@ -52,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity /*implements LoaderCallb
     private ToggleButton adminToggle;
     private Button registerYes;
     private Button cancelRegister;
+    private DataBaseHelper mDataBaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +67,7 @@ public class RegisterActivity extends AppCompatActivity /*implements LoaderCallb
         registerYes = (Button) findViewById(R.id.registerConfirm);
         cancelRegister = (Button) findViewById(R.id.cancelRegister);
         //populateAutoComplete();
-
+        mDataBaseHelper = new DataBaseHelper(this);
         userPasswordInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -200,10 +202,12 @@ public class RegisterActivity extends AppCompatActivity /*implements LoaderCallb
             // perform the user login attempt.
             //showProgress(true);
             Model model = Model.get_instance();
-            boolean check = model.add_user(new User(name, email, password, isAdmin));
+            User newUser = new User(name, email, password, isAdmin);
+            boolean dataBaseCheck = mDataBaseHelper.insertUser(newUser);
+            boolean check = model.add_user(newUser);
             // check will be true if the account was added successfully
-            if (check) {
-                Intent appIntent = new Intent(RegisterActivity.this, MainScreen.class);
+            if (check && dataBaseCheck) {
+                Intent appIntent = new Intent(RegisterActivity.this, NavigationActivity.class);
                 startActivity(appIntent);
             } else {
                 AlertDialog.Builder badAttemptDialog = new AlertDialog.Builder(this);

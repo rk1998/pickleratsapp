@@ -1,10 +1,8 @@
 package edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -13,20 +11,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.ToggleButton;
-import java.util.Random;
+import android.widget.Toast;
 
+import java.util.Random;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.RatReport;
-import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.User;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.database.DataBaseHelper;
 
 /**
  * activity to create a new rat report
  */
 public class ReportActivity extends AppCompatActivity {
-
+    //DataBaseHelper db;
     // UI references.
     private EditText date;
     private Spinner locationType;
@@ -38,6 +35,9 @@ public class ReportActivity extends AppCompatActivity {
     private Spinner borough;
     private Button report;
     private Button cancelReport;
+    private RatReport ratReport;
+
+    private DataBaseHelper mDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +55,17 @@ public class ReportActivity extends AppCompatActivity {
         borough = (Spinner) findViewById(R.id.borough);
         cancelReport = (Button) findViewById(R.id.cancelReport);
         //populateAutoComplete();
+        mDbHelper = new DataBaseHelper(this);
 
-        ArrayAdapter<String> boroughAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, RatReport.boroughs);
+        ArrayAdapter<String> boroughAdapter = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_item,
+                RatReport.boroughs);
         boroughAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         borough.setAdapter(boroughAdapter);
 
-        ArrayAdapter<String> locationTypeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, RatReport.locationTypes);
+        ArrayAdapter<String> locationTypeAdapter = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_item,
+                RatReport.locationTypes);
         locationTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         locationType.setAdapter(locationTypeAdapter);
 
@@ -68,7 +73,8 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(attemptReport()){
-                    Intent appIntent = new Intent(ReportActivity.this, MainScreen.class);
+                    Intent appIntent = new Intent(ReportActivity.this, NavigationActivity.class);
+                    appIntent.putExtra("latest_report_key", ratReport.get_key());
                     startActivity(appIntent);
                 }
             }
@@ -78,11 +84,38 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Start new HomeScreen.Class
-                Intent myIntent = new Intent(ReportActivity.this, MainScreen.class);
+                Intent myIntent = new Intent(ReportActivity.this, NavigationActivity.class);
                 startActivity(myIntent);
             }
         });
+//        db = new DataBaseHelper(this);
     }
+
+    /**
+     * Inserting data into database
+     */
+//    public void AddData() {
+//        report.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+////                        boolean isInserted = db.insertData(date.getText().toString(),
+////                                locationType.getTransitionName().toString(),
+////                                Integer.parseInt(zip.getText().toString()),
+////                                address.getText().toString(),
+////                                city.getText().toString(),
+////                                borough.getTransitionName().toString(),
+////                                Integer.parseInt(longitude.getText().toString()),
+////                                Integer.parseInt(latitude.getText().toString()));
+//                        if (isInserted == true) {
+//                            Toast.makeText(ReportActivity.this, "Report Inserted", Toast.LENGTH_LONG).show();
+//                        } else {
+//                            Toast.makeText(ReportActivity.this, "Report Not Inserted", Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//                }
+//        );
+//    }
 
         protected boolean attemptReport() {
             // Reset errors.
@@ -158,8 +191,11 @@ public class ReportActivity extends AppCompatActivity {
                 Random rand = new Random();
                 int n = Model.get_latest_report_key() + 1;
                 Model model = Model.get_instance();
-                model.add_report(new RatReport(n, dateZ, locationTypeZ, zipZ,
-                        addressZ, cityZ, boroughZ, latitudeZ, longitudeZ));
+                mDbHelper.insertData(n, dateZ, locationTypeZ, zipZ, addressZ,
+                        cityZ, boroughZ, latitudeZ, longitudeZ);
+                ratReport = new RatReport(n, dateZ, locationTypeZ, zipZ,
+                        addressZ, cityZ, boroughZ, latitudeZ, longitudeZ);
+                model.add_report(ratReport);
                 // go to the main screen
                 return true;
             }

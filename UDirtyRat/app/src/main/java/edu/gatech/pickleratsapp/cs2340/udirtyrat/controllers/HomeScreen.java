@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.*;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.*;
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.database.DataBaseHelper;
 
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -20,11 +21,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 /**
  * Activity for the home screen of the app
  */
 public class HomeScreen extends AppCompatActivity {
+    private DataBaseHelper mdbHelper;
     /**
      * Custom Csv loading task, loads csv in background thread when home screen is created
      */
@@ -41,10 +44,6 @@ public class HomeScreen extends AppCompatActivity {
                 br.readLine(); //get rid of header line
                 while ((line = br.readLine()) != null) {
                     String[] reportData = line.split(",");
-//                for(int i = 0; i < reportData.length; i++) {
-//                    System.out.print(reportData[i] + " , ");
-//                }
-//                System.out.println();
                     int id = Integer.parseInt(reportData[0]);
                     int zip = 0;
                     if(!reportData[8].isEmpty() && !reportData[8].equals("N/A")) {
@@ -53,7 +52,7 @@ public class HomeScreen extends AppCompatActivity {
                     double latitude = 0.0;
                     double longitude = 0.0;
                     int length = reportData.length;
-                    if(!(length < 53) &&
+                    if (!(length < 53) &&
                             (!reportData[length - 3].isEmpty()
                                     || !reportData[length - 3].equals("Unspecified"))
                             && (!reportData[length - 4].isEmpty()
@@ -61,13 +60,25 @@ public class HomeScreen extends AppCompatActivity {
                         latitude = Double.parseDouble(reportData[reportData.length - 3]);
                         longitude = Double.parseDouble(reportData[reportData.length - 4]);
                     }
-                    model.add_report(new RatReport(id, reportData[1], reportData[7], zip,
+                    model.load_data_csv(new RatReport(id, reportData[1], reportData[7], zip,
                             reportData[9], reportData[16], reportData[23],latitude, longitude));
                     lineNumber++;
                 }
                 br.close();
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+//           model.load_database(HomeScreen.this);
+            mdbHelper = new DataBaseHelper(HomeScreen.this);
+            List<RatReport> data_list = mdbHelper.getAllReports();
+            List<User> user_list = mdbHelper.getAllUsers();
+            if(data_list.size() != 0) {
+                for(RatReport report : data_list) {
+                    model.add_report(report);
+                }
+            }
+            if(user_list.size() != 0) {
+                model.load_users(user_list);
             }
             return lineNumber;
         }
@@ -89,7 +100,8 @@ public class HomeScreen extends AppCompatActivity {
         Model model = Model.get_instance();
         if(model.numReports() == 0) {
             //loadRatData();
-            new LoadCSVTask().execute("load"); // launches Async task in background while the Homescreen is being created
+            new LoadCSVTask().execute("load");
+            // launches Async task in background while the Homescreen is being created
         }
 
         // Capture button clicks
@@ -108,7 +120,8 @@ public class HomeScreen extends AppCompatActivity {
 
                 // Start RegisterActivity.class
                 Intent myIntent = new Intent(HomeScreen.this,
-                        edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers.RegisterActivity.class);
+                        edu.gatech.pickleratsapp.cs2340.udirtyrat.
+                                controllers.RegisterActivity.class);
                 startActivity(myIntent);
             }
         });

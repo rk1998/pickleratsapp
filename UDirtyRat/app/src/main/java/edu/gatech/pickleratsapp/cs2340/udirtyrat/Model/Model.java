@@ -5,23 +5,27 @@ package edu.gatech.pickleratsapp.cs2340.udirtyrat.Model;
  * each controller
  */
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.compat.BuildConfig;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.database.Database;
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.database.UDirtyRatApplication;
 
 
 public class Model {
     /**Singleton Instance**/
     private static final Model _instance = new Model();
     private static int latest_report_key = 0;
-
+    private Database database;
     /**
      * Gets the singleton instance of model
      * @return The singleton instance of model
@@ -48,6 +52,12 @@ public class Model {
        loadDummyUsers();
     }
 
+    public void load_users(List<User> users) {
+        for(User u: users) {
+            _users.add(u);
+        }
+    }
+
     /**
      *
      * @return The Set of Users
@@ -63,7 +73,7 @@ public class Model {
         _users.add(new User("Jamie", "jhaunkainen@gatech.edu", "1234", false));
         _users.add(new User("Rohith", "rkrishnan42@gatech.edu", "1234", false));
         _users.add(new User("Nick", "nhuang@gatech.edu", "1234", false));
-        _users.add(new User("b", "b@b", "bb", false));
+        _users.add(new User("ayy bb", "b@b", "bb", false));
     }
 
     public int numReports() {
@@ -77,12 +87,38 @@ public class Model {
      */
     public boolean add_user(User newUser) {
 
-        if(_users.contains(newUser)) {
+        if (_users.contains(newUser)) {
             return false;
         } else {
             _users.add(newUser);
             return true;
         }
+    }
+
+//    /**
+//     * Loads report data into model from the database
+//     */
+//    public void load_database(Context context) {
+//        database = new Database(context);
+//        List<RatReport> saved_reports = database.getReportList();
+//        Log.d("saved reports", "" + saved_reports);
+//        if(saved_reports.size() != 0) {
+//            for(RatReport report: saved_reports) {
+//                _reports.put(report.get_key(), report);
+//                _report_list.add(report);
+//                latest_report_key = report.get_key();
+//            }
+//        }
+//    }
+
+    /**
+     * Loads report data from csv when app first starts
+     * @param report report to be loaded from csv
+     */
+    public void load_data_csv(RatReport report) {
+        _reports.put(report.get_key(), report);
+        _report_list.add(report);
+        latest_report_key = report.get_key();
     }
 
     /**
@@ -119,6 +155,53 @@ public class Model {
      */
     public List<RatReport> get_reports() {
         return _report_list;
+    }
+
+
+    /**
+     * Gets reports within the date rage
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    public List<RatReport> get_reports_in_range(GregorianCalendar startDate,
+                                                GregorianCalendar endDate) {
+        List<RatReport> results = new LinkedList<>();
+        for (RatReport report: _report_list) {
+            String[] date = report.get_date_string().split("/");
+            int monthNum = Integer.parseInt(date[0]);
+            int dayNum = Integer.parseInt(date[1]);
+            int yearNum = Integer.parseInt(date[2].substring(0,4));
+            Calendar reportDate = new GregorianCalendar(yearNum, monthNum - 1, dayNum);
+            if ((reportDate.after(startDate) || reportDate.compareTo(startDate) == 0)
+                    && (reportDate.before(endDate) || reportDate.compareTo(endDate) == 0)) {
+                results.add(report);
+            }
+        }
+        return results;
+    }
+
+    /**
+     * Creates a data set for number of rat reports within year range [startYear, endYear]
+     * @param startDate
+     * @param endDate
+     * @return a list of ChartData objects, represents data set for year range
+     */
+    public List<ChartData> get_data_in_range(GregorianCalendar startDate, GregorianCalendar endDate) {
+        List<ChartData> dataSet = new LinkedList<>();
+        int startYear = startDate.get(Calendar.YEAR);
+        int endYear = startDate.get(Calendar.YEAR);
+        for(int i = startYear; i <= endYear; i++) {
+            int numReports = 0;
+            for(RatReport r: _report_list) {
+                int year = r.get_date().get(Calendar.YEAR);
+                if(year == i) {
+                    numReports++;
+                }
+            }
+            dataSet.add(new ChartData(i, numReports));
+        }
+        return dataSet;
     }
     /**
      *

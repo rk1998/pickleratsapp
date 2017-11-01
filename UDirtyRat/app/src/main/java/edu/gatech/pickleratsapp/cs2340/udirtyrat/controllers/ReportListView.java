@@ -1,20 +1,20 @@
 package edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers;
 
+
 import android.app.ListActivity;
 import android.util.Log;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.view.View;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+
 import java.util.LinkedList;
-import android.content.Context;
-import android.content.Intent;
 import java.util.List;
-
-import android.widget.Toast;
-
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.RatReport;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
@@ -51,12 +51,13 @@ public class ReportListView extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Todo:bug, doesnt get right report when you click on listview
                 RatReport selectedReport = reports.get(position);
                 Intent detailIntent = new Intent(ReportListView.this, ReportDetailActivity.class);
-                System.out.println(selectedReport.toString());
                 detailIntent.putExtra("key",  selectedReport.get_key());
                 startActivity(detailIntent);
             }
         });
+
     }
 }
