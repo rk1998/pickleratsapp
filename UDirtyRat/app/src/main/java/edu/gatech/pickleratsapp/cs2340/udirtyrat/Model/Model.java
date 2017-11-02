@@ -190,17 +190,38 @@ public class Model {
     public List<ChartData> get_data_in_range(GregorianCalendar startDate, GregorianCalendar endDate) {
         List<ChartData> dataSet = new LinkedList<>();
         int startYear = startDate.get(Calendar.YEAR);
-        int endYear = startDate.get(Calendar.YEAR);
-        for(int i = startYear; i <= endYear; i++) {
-            int numReports = 0;
-            for(RatReport r: _report_list) {
-                int year = r.get_date().get(Calendar.YEAR);
-                if(year == i) {
-                    numReports++;
-                }
-            }
-            dataSet.add(new ChartData(i, numReports));
+        int startMonth =  startDate.get(Calendar.MONTH);
+        int endYear = endDate.get(Calendar.YEAR);
+        int endMonth = endDate.get(Calendar.MONTH);
+        int monthsSpanned;
+        if (startYear == endYear) {
+            monthsSpanned = endMonth - startMonth + 1;
+        } else {
+            monthsSpanned = ((endYear - startYear - 1) * 12) + (12 - startMonth) + (endMonth + 1);
         }
+        int[] counts = new int[monthsSpanned];
+        for (RatReport r : _report_list) {
+            if ((r.get_date().after(startDate) || r.get_date().compareTo(startDate) == 0)
+                && (r.get_date().before(endDate) || r.get_date().compareTo(endDate) == 0)) {
+                int monthInRange;
+                int reportYear = r.get_date().get(Calendar.YEAR);
+                int reportMonth = r.get_date().get(Calendar.MONTH);
+                if (reportYear == startYear) {
+                    monthInRange = reportMonth - startMonth;
+                } else {
+                    monthInRange = ((reportYear - startYear - 1) * 12) + (12 - startMonth)
+                        + reportMonth;
+                }
+                counts[monthInRange]++;
+            }
+        }
+        for (int i = 0; i < monthsSpanned; i++) {
+            dataSet.add(new ChartData(i, counts[i]));
+        }
+//        int i = 0;
+//        while (i < monthsSpanned) {
+//            int currMonth = startMonth + i % 12;
+//        }
         return dataSet;
     }
     /**
