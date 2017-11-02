@@ -12,6 +12,9 @@ import java.util.List;
 
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.*;
 
+/**
+ * Class that Directly Interacts with SQL Database. Writes data to and Reads data from it.
+ */
 public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
     public static final String DataBase_Name = "RatReport.db";
     public static final String Table_Name = "Report_Table";
