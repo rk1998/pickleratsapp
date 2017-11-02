@@ -24,18 +24,20 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.Entry;
+
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.ChartData;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.RatReport;
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.XAxisDateFormatter;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
 
 /**
@@ -52,8 +54,9 @@ public class GraphView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_view);
+        LineChart lineChart = (LineChart) findViewById(R.id.chart);
         model = Model.get_instance();
-        Context context = GraphView.this;
+        final Context context = GraphView.this;
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -82,30 +85,38 @@ public class GraphView extends AppCompatActivity {
                                 final int endMonth = endDate.getMonth();
                                 final int endYear = endDate.getYear();
                                 Log.d("Date Range", startYear + " - " + endYear);
-                                RatReport report;
                                 GregorianCalendar startDate = new GregorianCalendar(startYear,
                                         startMonth, startDay);
                                 GregorianCalendar endDate = new GregorianCalendar(endYear,
                                         endMonth, endDay);
-                                List<RatReport> recent_reports =
-                                        model.get_reports_in_range(startDate, endDate);
-                                Log.d("Reports in range", ": " + recent_reports.size());
-                                if (recent_reports.size() == 0) {
-                                    Toast.makeText(getApplicationContext(),
-                                            "No reports found in this date range",
-                                            Toast.LENGTH_SHORT).show();
-                                    recent_reports = model.get_reports();
-                                    for (int i = recent_reports.size() - 1;
-                                         i > recent_reports.size() - 150; i--) {
-                                        report = recent_reports.get(i);
-                                        //getting each report TODO: add report to graph or something
-                                    }
-                                } else {
-                                    for (int i = 0; i < recent_reports.size(); i++) {
-                                        report = recent_reports.get(i);
-
-                                    }
+                                List<ChartData> lineData = model.get_data_in_range(startDate,
+                                        endDate);
+                                String[] labels = new String[lineData.size()];
+                                String[] monthsRef = {"Jan", "Feb", "Mar", "Apr", "May",
+                                    "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+                                ArrayList<Entry> entries = new ArrayList<>();
+                                for (int i = 0; i < lineData.size(); i++) {
+                                    labels[i] = monthsRef[(startMonth + i) % 12] + ", "
+                                        + (startYear + ((startMonth + i) / 12));
+                                    entries.add(new Entry(i, lineData.get(i).getY()));
                                 }
+                                LineDataSet lineSet = new LineDataSet(entries, "# of Reports");
+                                LineChart chart = new LineChart(context);
+                                setContentView(chart);
+                                LineData data = new LineData(lineSet);
+                                chart.getXAxis().setValueFormatter(new XAxisDateFormatter(labels));
+                                // enable touch gestures
+                                chart.setTouchEnabled(true);
+
+                                // enable scaling and dragging
+                                chart.setDragEnabled(true);
+                                chart.setScaleEnabled(true);
+                                // mChart.setScaleXEnabled(true);
+                                // mChart.setScaleYEnabled(true);
+
+                                // if disabled, scaling can be done on x- and y-axis separately
+                                chart.setPinchZoom(true);
+                                chart.setData(data);
                             }
                         });
                 alertDialog.setNegativeButton("Cancel",

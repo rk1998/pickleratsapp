@@ -22,5 +22,9 @@
         app:layout_anchorGravity="bottom|center_horizontal"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" />
 
 </android.support.design.widget.CoordinatorLayout>
