@@ -72,6 +72,19 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
         onCreate(sqLiteDatabase);
     }
 
+    /**
+     * Puts a rat report into the database from its component parts
+     * @param key
+     * @param Date
+     * @param Location
+     * @param ZipCode
+     * @param Address
+     * @param City
+     * @param Borough
+     * @param Longitude
+     * @param Latitude
+     * @return
+     */
     public boolean insertData(int key, String Date, String Location,
                               int ZipCode, String Address,
                               String City, String Borough,
@@ -93,6 +106,12 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
         }
         return true;
     }
+
+    /**
+     * Puts a user into the database
+     * @param user user to add to the database
+     * @return if the user was added to the database
+     */
     public boolean insertUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -111,6 +130,11 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
         return true;
     }
 
+    /**
+     * Retrieves a Ratreport from the database by key
+     * @param key key of the rat report to look for
+     * @return the RatReport corresponding to that key
+     */
     public RatReport getRatReportByKey(int key) {
         SQLiteDatabase database = this.getWritableDatabase();
         String query = "SELECT * FROM " + Table_Name + "WHERE " + Col_1 + " ='" + key;
@@ -128,6 +152,11 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
 
     }
 
+    /**
+     * Gets a User by its user id
+     * @param usr_id
+     * @return User with corresponding user id
+     */
     public User getUserById(String usr_id) {
         SQLiteDatabase database = this.getWritableDatabase();
         String query = "SELECT * FROM " + USR_TABLE + "WHERE " + USR_ID + " ='" + usr_id;
@@ -140,6 +169,11 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
         }
         return user;
     }
+
+    /**
+     *
+     * @return a list of all users in the database
+     */
     public List<User> getAllUsers() {
         SQLiteDatabase database = this.getWritableDatabase();
         List<User> user_list = new LinkedList<>();
@@ -154,6 +188,10 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
         return user_list;
     }
 
+    /**
+     *
+     * @return a list of all reports in the database
+     */
     public List<RatReport> getAllReports() {
         SQLiteDatabase database = this.getWritableDatabase();
         List<RatReport> report_list = new LinkedList<>();

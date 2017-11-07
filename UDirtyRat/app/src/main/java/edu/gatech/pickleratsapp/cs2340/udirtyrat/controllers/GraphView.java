@@ -62,15 +62,19 @@ public class GraphView extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final DatePicker startDate = new DatePicker(edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers.GraphView.this);
-                final DatePicker endDate = new DatePicker(edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers.GraphView.this);
-                LinearLayout linearLayout = new LinearLayout(edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers.GraphView.this);
+                final DatePicker startDate = new DatePicker(
+                        edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers.GraphView.this);
+                final DatePicker endDate = new DatePicker(
+                        edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers.GraphView.this);
+                LinearLayout linearLayout = new LinearLayout(
+                        edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers.GraphView.this);
                 linearLayout.setOrientation(LinearLayout.VERTICAL);
                 linearLayout.addView(startDate);
                 linearLayout.addView(endDate);
                 alertDialog.setTitle("Choose a date range");
 
-                ScrollView scroller = new ScrollView(edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers.GraphView.this);
+                ScrollView scroller = new ScrollView(
+                        edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers.GraphView.this);
                 scroller.addView(linearLayout);
 
                 alertDialog.setView(scroller);

@@ -4,7 +4,7 @@ import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
 /**
- * Created by Giuseppe on 11/2/2017.
+ * Class that formats labels for the graph
  */
 
 public class XAxisDateFormatter implements IAxisValueFormatter {
