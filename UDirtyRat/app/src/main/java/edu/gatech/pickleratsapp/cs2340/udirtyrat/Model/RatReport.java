@@ -11,52 +11,52 @@ import java.util.List;
 
 public class RatReport {
     /**Enum for the location type of the report**/
-    public static List<String> locationTypes = Arrays.asList("Park", "Residential", "Business", "NYC Metro");
-
-    public enum LocationType {
-        PARK("Park"),
-        RESIDENTIAL("Residential"),
-        BUSINESS("Business"),
-        METRO("NYC Metro");
-
-        private final String _locationType;
-        LocationType(String locationType) {
-            _locationType = locationType;
-        }
-
-        public String get_locationType() {
-            return _locationType;
-        }
-    }
+    public final static List<String> locationTypes = Arrays.asList("Park", "Residential", "Business", "NYC Metro");
+//
+//    public enum LocationType {
+//        PARK("Park"),
+//        RESIDENTIAL("Residential"),
+//        BUSINESS("Business"),
+//        METRO("NYC Metro");
+//
+//        private final String _locationType;
+//        LocationType(String locationType) {
+//            _locationType = locationType;
+//        }
+//
+//        public String get_locationType() {
+//            return _locationType;
+//        }
+//    }
     /**Enum for Borough where the report took place**/
 
-    public static List<String> boroughs = Arrays.asList("Queens", "Manhattan", "Bronx", "Brooklyn", "Staten Island");
+    public final static List<String> boroughs = Arrays.asList("Queens", "Manhattan", "Bronx", "Brooklyn", "Staten Island");
 
-    public enum Borough {
-        QUEENS("Queens"),
-        MANHATTAN("Manhattan"),
-        BRONX("Bronx"),
-        BROOKLYN("Brooklyn"),
-        STATEN_ISLAND("Staten Island");
-        private final String _borough;
-        Borough(String borough) {
-            _borough = borough;
-        }
-        public String get_borough() {
-            return _borough;
-        }
-
-    }
-    private int _key;
-    private Calendar _date;
-    private String _date_string;
-    private String _locationType;
-    private int _zip;
-    private String _address;
-    private String _city;
-    private String _borough;
-    private double _latitude;
-    private double _longitude;
+//    public enum Borough {
+//        QUEENS("Queens"),
+//        MANHATTAN("Manhattan"),
+//        BRONX("Bronx"),
+//        BROOKLYN("Brooklyn"),
+//        STATEN_ISLAND("Staten Island");
+//        private final String _borough;
+//        Borough(String borough) {
+//            _borough = borough;
+//        }
+//        public String get_borough() {
+//            return _borough;
+//        }
+//
+//    }
+    private final int _key;
+    private final Calendar _date;
+    private final String _date_string;
+    private final String _locationType;
+    private final int _zip;
+    private final String _address;
+    private final String _city;
+    private final String _borough;
+    private final double _latitude;
+    private final double _longitude;
 
     public RatReport(int key, String date, String locationType, int zip, String address,
                      String city, String borough, double latitude, double longitude) {

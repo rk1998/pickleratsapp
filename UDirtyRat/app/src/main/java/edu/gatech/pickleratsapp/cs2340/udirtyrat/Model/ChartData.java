@@ -5,8 +5,8 @@ package edu.gatech.pickleratsapp.cs2340.udirtyrat.Model;
  */
 
 public class ChartData implements Comparable {
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
     public ChartData(int px, int py) {
         x = px;
         y = py;

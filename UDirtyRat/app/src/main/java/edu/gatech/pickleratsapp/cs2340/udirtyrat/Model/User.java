@@ -6,9 +6,9 @@ package edu.gatech.pickleratsapp.cs2340.udirtyrat.Model;
 
 public class User {
     private String _name;
-    private String _userID;
+    private final String _userID;
     private String _passWord;
-    private  boolean _isAdmin;
+    private final boolean _isAdmin;
     public User(String name, String userID, String passWord, boolean isAdmin) {
         _name = name;
         _userID = userID;
@@ -75,10 +75,8 @@ public class User {
     @Override
     public boolean equals(Object obj) {
         //TODO: add own implementation of this
-        if(!(obj instanceof  User)) {
-            return false;
-        }
-        return (this == (User) obj || this.get_userID().equals(((User) obj).get_userID()));
+        return (obj instanceof User) && (this == (User) obj
+                || this.get_userID().equals(((User) obj).get_userID()));
     }
 
     /**

@@ -1,10 +1,5 @@
 package edu.gatech.pickleratsapp.cs2340.udirtyrat.Model;
 
-/**
- * The facade to the Model. Using Singleton design pattern to allow access to the model from
- * each controller
- */
-
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.compat.BuildConfig;
@@ -20,7 +15,10 @@ import java.util.HashMap;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.database.Database;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.database.UDirtyRatApplication;
 
-
+/**
+ * The facade to the Model. Using Singleton design pattern to allow access to the model from
+ * each controller
+ */
 public class Model {
     /**Singleton Instance**/
     private static final Model _instance = new Model();
@@ -37,10 +35,9 @@ public class Model {
     public static int get_latest_report_key() {
         return latest_report_key;
     }
-    private List<User> _users;
-    private Map<Integer, RatReport> _reports;
-    private Map<String, Integer> _string_to_key;
-    private List<RatReport> _report_list;
+    private final List<User> _users;
+    private final Map<Integer, RatReport> _reports;
+    private final List<RatReport> _report_list;
 
     /**
      * Make a new Model
@@ -140,14 +137,6 @@ public class Model {
         return _reports.get(key);
     }
 
-    /**
-     * Gets a rat report based on its string representation
-     * @param report_string the string representation of a rat report
-     * @return the full rat report 
-     */
-    public RatReport get_report_from_string(String report_string) {
-        return _reports.get(_string_to_key.get(report_string));
-    }
 
     /**
      * returns the whole of the RatReports as an array for the list view mainly

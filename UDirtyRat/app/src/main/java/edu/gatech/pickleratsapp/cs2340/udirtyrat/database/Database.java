@@ -18,20 +18,12 @@ public class Database {
 //    public static Database get_instance() {
 //        return dBase;
 //    }
-    private SQLiteDatabase database;
-    private DataBaseHelper dbHelper;
+    private final DataBaseHelper dbHelper;
     public Database(Context context) {
         if(context == null) {
-            context = UDirtyRatApplication.getAppContext();
+            System.out.println("temp");
         }
         dbHelper = new DataBaseHelper(context);
-        open();
-    }
-    public void open() throws SQLException {
-        database = dbHelper.getWritableDatabase();
-    }
-    public void close() {
-        dbHelper.close();
     }
     public boolean insertData(RatReport report) {
         return dbHelper.insertData(report.get_key(), report.get_date_string(),
@@ -40,7 +32,7 @@ public class Database {
                 report.get_latitude());
     }
 
-    public RatReport findRatReportbyKey(int key) {
+    public RatReport findRatReportByKey(int key) {
         return dbHelper.getRatReportByKey(key);
     }
     public List<RatReport> getReportList() {

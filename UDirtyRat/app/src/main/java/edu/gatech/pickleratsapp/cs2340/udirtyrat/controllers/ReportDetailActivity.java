@@ -37,29 +37,29 @@ public class ReportDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_report_detail);
 
         date = (TextView) findViewById(R.id.dateDetail);
-        String dateString = toReportDetails.get_date_string();
-        date.setText("Date: " + dateString);
+        String dateString = "Date: " + toReportDetails.get_date_string();
+        date.setText(dateString);
         locationType = (TextView) findViewById(R.id.locationTypeDetail);
-        String locationTypeString = toReportDetails.get_locationType();
-        locationType.setText("Location Type: " + locationTypeString);
+        String locationTypeString = "Location Type: " + toReportDetails.get_locationType();
+        locationType.setText(locationTypeString);
         zip = (TextView) findViewById(R.id.zipcodeDetail);
-        String zipString = "" + toReportDetails.get_zip();
-        zip.setText("ZipCode: " + zipString);
+        String zipString = "ZipCode: " + toReportDetails.get_zip();
+        zip.setText(zipString);
         address = (TextView) findViewById(R.id.addressDetail);
-        String addressString = toReportDetails.get_address();
-        address.setText("Address: " + addressString);
+        String addressString = "Address: " + toReportDetails.get_address();
+        address.setText(addressString);
         city = (TextView) findViewById(R.id.cityDetail);
-        String cityString = toReportDetails.get_city();
-        city.setText("City: " + cityString);
+        String cityString = "City: " + toReportDetails.get_city();
+        city.setText(cityString);
         latitude = (TextView) findViewById(R.id.latitudeDetail);
-        String latitudeString = "" + toReportDetails.get_latitude();
-        latitude.setText("Latitude: " + latitudeString);
+        String latitudeString = "Latitude: " + toReportDetails.get_latitude();
+        latitude.setText(latitudeString);
         longitude = (TextView) findViewById(R.id.longitudeDetail);
-        String longitudeString = "" + toReportDetails.get_longitude();
-        longitude.setText("Longitude: " + longitudeString);
+        String longitudeString = "Longitude: " + toReportDetails.get_longitude();
+        longitude.setText(longitudeString);
         borough = (TextView) findViewById(R.id.boroughDetail);
-        String boroughString = toReportDetails.get_borough();
-        borough.setText("Borough: " + boroughString);
+        String boroughString = "Borough: " + toReportDetails.get_borough();
+        borough.setText(boroughString);
     }
 
 }

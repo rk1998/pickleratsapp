@@ -16,22 +16,22 @@ import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.*;
  * Class that Directly Interacts with SQL Database. Writes data to and Reads data from it.
  */
 public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
-    public static final String DataBase_Name = "RatReport.db";
-    public static final String Table_Name = "Report_Table";
-    public static final String Col_1 = "Key";
-    public static final String Col_2 = "Date";
-    public static final String Col_3 = "Location";
-    public static final String Col_4 = "Code";
-    public static final String Col_5 = "Address";
-    public static final String Col_6 = "City";
-    public static final String Col_7 = "Borough";
-    public static final String Col_8 = "Longitude";
-    public static final String Col_9 = "Latitude";
-    public static final String USR_TABLE = "User_Table";
-    public static final String USR_NAME = "Name";
-    public static final String USR_ID = "UserID";
-    public static final String PASSWORD = "Password";
-    public static final String ADMINFLAG = "AdminFlag";
+    private static final String DataBase_Name = "RatReport.db";
+    private static final String Table_Name = "Report_Table";
+    private static final String Col_1 = "Key";
+    private static final String Col_2 = "Date";
+    private static final String Col_3 = "Location";
+    private static final String Col_4 = "Code";
+    private static final String Col_5 = "Address";
+    private static final String Col_6 = "City";
+    private static final String Col_7 = "Borough";
+    private static final String Col_8 = "Longitude";
+    private static final String Col_9 = "Latitude";
+    private static final String USR_TABLE = "User_Table";
+    private static final String USR_NAME = "Name";
+    private static final String USR_ID = "UserID";
+    private static final String PASSWORD = "Password";
+    private static final String ADMINFLAG = "AdminFlag";
     private static final String DATABASE_CREATE = "create table " + Table_Name
             + "("
             + Col_1 + " INTEGER, "

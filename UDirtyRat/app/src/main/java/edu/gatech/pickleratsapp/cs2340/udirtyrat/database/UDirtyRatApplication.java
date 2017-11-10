@@ -7,13 +7,13 @@ import android.content.Context;
  *  Represents AppContext
  */
 
-public class UDirtyRatApplication extends Application {
-    private static Context context;
+ public class UDirtyRatApplication extends Application {
+    private Context context;
     public void onCreate() {
         super.onCreate();
-        UDirtyRatApplication.context = getApplicationContext();
+        context = getApplicationContext();
     }
-    public static Context getAppContext() {
+    public Context getAppContext() {
         return context;
     }
 }

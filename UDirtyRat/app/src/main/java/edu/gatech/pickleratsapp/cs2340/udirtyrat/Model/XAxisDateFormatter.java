@@ -8,7 +8,7 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
  */
 
 public class XAxisDateFormatter implements IAxisValueFormatter {
-    private String[] mValues;
+    private final String[] mValues;
 
     public XAxisDateFormatter(String[] values) {
         this.mValues = values;

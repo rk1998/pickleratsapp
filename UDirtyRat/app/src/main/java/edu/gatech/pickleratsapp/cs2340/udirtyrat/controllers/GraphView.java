@@ -41,14 +41,14 @@ import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.XAxisDateFormatter;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
 
 /**
- * Created by Bram on 10/30/2017.
+ * Class to display a graph
  */
 
 public class GraphView extends AppCompatActivity {
     private Model model;
-    private String startYear = "09/04/2015";
-    private String endYear = "09/05/2015";
-    private RatReport latestRatReport;
+//    private String startYear = "09/04/2015";
+//    private String endYear = "09/05/2015";
+//    private RatReport latestRatReport;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

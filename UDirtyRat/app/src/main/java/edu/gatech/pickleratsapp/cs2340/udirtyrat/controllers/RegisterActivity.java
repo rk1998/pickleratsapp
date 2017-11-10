@@ -23,28 +23,14 @@ import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.User;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.database.DataBaseHelper;
 
 /**
- * A login screen that offers login via email/password.
+ * An activity to register a new user.
  */
 public class RegisterActivity extends AppCompatActivity /*implements LoaderCallbacks<Cursor>*/ {
 
     /**
      * Id to identity READ_CONTACTS permission request.
      */
-    private static final int REQUEST_READ_CONTACTS = 0;
-
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String TEMP_USER = "user@user";
-    private static final String TEMP_PASS = "pass";
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:user", "bar@example.com:pass"
-    };
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-    private RegisterActivity.UserLoginTask mAuthTask = null;
+//    private static final int REQUEST_READ_CONTACTS = 0;
 
     // UI references.
     private EditText userNameInput;
@@ -145,9 +131,7 @@ public class RegisterActivity extends AppCompatActivity /*implements LoaderCallb
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
+
 
         // Reset errors.
         userNameInput.setError(null);
@@ -238,9 +222,6 @@ public class RegisterActivity extends AppCompatActivity /*implements LoaderCallb
         return password.length() > 1;
     }
 
-    /**
-     * Shows the progress UI and hides the login form.
-     */
 //    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
 //    private void showProgress(final boolean show) {
 //        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
@@ -328,61 +309,58 @@ public class RegisterActivity extends AppCompatActivity /*implements LoaderCallb
 //        int IS_PRIMARY = 1;
 //    }
 
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final String mEmail;
-        private final String mPassword;
-
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            //showProgress(false);
-
-            if (success) {
-                finish();
-            } else {
-                //mPasswordView.setError(getString(R.string.error_incorrect_password));
-                //mPasswordView.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            //showProgress(false);
-        }
-    }
+//    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+//
+//        private final String mEmail;
+//        private final String mPassword;
+//
+//        UserLoginTask(String email, String password) {
+//            mEmail = email;
+//            mPassword = password;
+//        }
+//
+//        @Override
+//        protected Boolean doInBackground(Void... params) {
+//            // TODO: attempt authentication against a network service.
+//
+//            try {
+//                // Simulate network access.
+//                Thread.sleep(2000);
+//            } catch (InterruptedException e) {
+//                return false;
+//            }
+//
+//            for (String credential : DUMMY_CREDENTIALS) {
+//                String[] pieces = credential.split(":");
+//                if (pieces[0].equals(mEmail)) {
+//                    // Account exists, return true if the password matches.
+//                    return pieces[1].equals(mPassword);
+//                }
+//            }
+//
+//            // TODO: register the new account here.
+//            return true;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(final Boolean success) {
+//            mAuthTask = null;
+//            //showProgress(false);
+//
+//            if (success) {
+//                finish();
+//            } else {
+//                System.out.println("temp");
+//                //mPasswordView.setError(getString(R.string.error_incorrect_password));
+//                //mPasswordView.requestFocus();
+//            }
+//        }
+//
+//        @Override
+//        protected void onCancelled() {
+//            mAuthTask = null;
+//            //showProgress(false);
+//        }
+//    }
 }
 
