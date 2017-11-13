@@ -1,11 +1,7 @@
 package edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers;
 
-
-import android.app.ListActivity;
 import android.util.Log;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -24,7 +20,7 @@ import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
  * Activity for the Report List View
  */
 public class ReportListView extends AppCompatActivity {
-    private ListView mRatListView;
+    //private ListView mRatListView;
     private List<RatReport> reports;
 
     /**
@@ -34,13 +30,12 @@ public class ReportListView extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceData) {
         super.onCreate(savedInstanceData);
         setContentView(R.layout.activity_report_list_view);
-        mRatListView = (ListView) findViewById(R.id.ratList);
+       ListView mRatListView = (ListView) findViewById(R.id.ratList);
         Model model = Model.get_instance();
         reports = model.get_reports();
         Collections.reverse(reports);
         LinkedList<String> keys = new LinkedList<>();
         Log.d("LATEST REPORT KEY", "" + Model.get_latest_report_key());
-        int numReports = reports.size() - 100;
         for (int i = 0; i < 100; i++) {
             keys.add(reports.get(i).toString());
         }
@@ -48,7 +43,6 @@ public class ReportListView extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, keys);
 
         mRatListView.setAdapter(adapter);
-        final Context context = this;
         mRatListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override

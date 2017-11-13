@@ -87,7 +87,6 @@ public class RatReport {
     }
 
     /**
-     *
      * @return date the report was made
      */
     public Calendar get_date() { return _date; }

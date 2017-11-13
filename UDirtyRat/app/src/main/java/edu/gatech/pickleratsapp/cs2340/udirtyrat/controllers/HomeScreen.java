@@ -8,15 +8,12 @@ import edu.gatech.pickleratsapp.cs2340.udirtyrat.*;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.*;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.database.DataBaseHelper;
 
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+
 import android.view.View;
 import android.content.Intent;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -27,7 +24,7 @@ import java.util.List;
  * Activity for the home screen of the app
  */
 public class HomeScreen extends AppCompatActivity {
-    private DataBaseHelper mdbHelper;
+    //private DataBaseHelper mdbHelper;
     /**
      * Custom Csv loading task, loads csv in background thread when home screen is created
      */
@@ -38,7 +35,8 @@ public class HomeScreen extends AppCompatActivity {
             Model model = Model.get_instance();
             try {
                 InputStream is = getResources().openRawResource(R.raw.rats);
-                BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+                BufferedReader br = new BufferedReader(
+                        new InputStreamReader(is, StandardCharsets.UTF_8));
 
                 String line;
                 br.readLine(); //get rid of header line
@@ -69,7 +67,7 @@ public class HomeScreen extends AppCompatActivity {
                 e.printStackTrace();
             }
 //           model.load_database(HomeScreen.this);
-            mdbHelper = new DataBaseHelper(HomeScreen.this);
+            DataBaseHelper mdbHelper = new DataBaseHelper(HomeScreen.this);
             List<RatReport> data_list = mdbHelper.getAllReports();
             List<User> user_list = mdbHelper.getAllUsers();
             if(data_list.size() != 0) {
@@ -87,21 +85,19 @@ public class HomeScreen extends AppCompatActivity {
         }
 
     }
-    private Button login;
-    private Button register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen2);
         // Locate the button in activity_main.xml
-        login = (Button) findViewById(R.id.login);
-        register = (Button) findViewById(R.id.registerConfirm);
+        Button login = (Button) findViewById(R.id.login);
+        Button register = (Button) findViewById(R.id.registerConfirm);
         Model model = Model.get_instance();
         if(model.numReports() == 0) {
             //loadRatData();
             new LoadCSVTask().execute("load");
-            // launches Async task in background while the Homescreen is being created
+            // launches Async task in background while the Home Screen is being created
         }
 
         // Capture button clicks

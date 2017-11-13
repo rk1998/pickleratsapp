@@ -54,7 +54,7 @@ public class GraphView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_view);
-        LineChart lineChart = (LineChart) findViewById(R.id.chart);
+        //LineChart lineChart = (LineChart) findViewById(R.id.chart);
         model = Model.get_instance();
         final Context context = GraphView.this;
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);

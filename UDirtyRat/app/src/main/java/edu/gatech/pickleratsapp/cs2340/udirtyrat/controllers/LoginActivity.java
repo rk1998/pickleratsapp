@@ -86,7 +86,6 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    //private edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers.LoginActivity.UserLoginTask mAuthTask = null;
 
     // UI references.
     private AutoCompleteTextView mEmailView;

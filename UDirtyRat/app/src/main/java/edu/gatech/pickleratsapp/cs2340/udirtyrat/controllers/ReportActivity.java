@@ -4,16 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
-
-import java.util.Random;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.RatReport;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
@@ -33,8 +28,8 @@ public class ReportActivity extends AppCompatActivity {
     private EditText latitude;
     private EditText longitude;
     private Spinner borough;
-    private Button report;
-    private Button cancelReport;
+//    private Button report;
+//    private Button cancelReport;
     private RatReport ratReport;
 
     private DataBaseHelper mDbHelper;
@@ -48,12 +43,12 @@ public class ReportActivity extends AppCompatActivity {
         locationType = (Spinner) findViewById(R.id.locationType);
         zip = (EditText) findViewById(R.id.zip);
         address = (EditText) findViewById(R.id.address);
-        report = (Button) findViewById(R.id.report);
+        Button report = (Button) findViewById(R.id.report);
         city = (EditText) findViewById(R.id.city);
         latitude = (EditText) findViewById(R.id.latitude);
         longitude = (EditText) findViewById(R.id.Longitude);
         borough = (Spinner) findViewById(R.id.borough);
-        cancelReport = (Button) findViewById(R.id.cancelReport);
+        Button cancelReport = (Button) findViewById(R.id.cancelReport);
         //populateAutoComplete();
         mDbHelper = new DataBaseHelper(this);
 
@@ -66,7 +61,8 @@ public class ReportActivity extends AppCompatActivity {
         ArrayAdapter<String> locationTypeAdapter = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_item,
                 RatReport.locationTypes);
-        locationTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        locationTypeAdapter.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item);
         locationType.setAdapter(locationTypeAdapter);
 
         report.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +105,7 @@ public class ReportActivity extends AppCompatActivity {
                 cancel = true;
             }
 
-            // Check that the user entered a zipcode
+            // Check that the user entered a zip code
             if (TextUtils.isEmpty(zip.getText().toString())) {
                 zip.setError("This field is required");
                 focusView = zip;
@@ -160,8 +156,7 @@ public class ReportActivity extends AppCompatActivity {
                 double longitudeZ = Double.parseDouble(longitude.getText().toString());
                 String boroughZ = borough.getSelectedItem().toString();
 
-                // add report to the model with random key
-                Random rand = new Random();
+                // add report to the model with random keY
                 int n = Model.get_latest_report_key() + 1;
                 Model model = Model.get_instance();
                 mDbHelper.insertData(n, dateZ, locationTypeZ, zipZ, addressZ,

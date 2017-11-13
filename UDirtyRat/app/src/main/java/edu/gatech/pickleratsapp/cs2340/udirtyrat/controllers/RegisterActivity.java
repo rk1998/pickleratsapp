@@ -3,15 +3,12 @@ package edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -37,8 +34,8 @@ public class RegisterActivity extends AppCompatActivity /*implements LoaderCallb
     private EditText userIDInput;
     private EditText userPasswordInput;
     private ToggleButton adminToggle;
-    private Button registerYes;
-    private Button cancelRegister;
+//    private Button registerYes;
+//    private Button cancelRegister;
     private DataBaseHelper mDataBaseHelper;
 
     @Override
@@ -50,8 +47,8 @@ public class RegisterActivity extends AppCompatActivity /*implements LoaderCallb
         userIDInput = (EditText) findViewById(R.id.userIDinput);
         userPasswordInput = (EditText) findViewById(R.id.userPasswordInput);
         adminToggle = (ToggleButton) findViewById(R.id.adminToggle);
-        registerYes = (Button) findViewById(R.id.registerConfirm);
-        cancelRegister = (Button) findViewById(R.id.cancelRegister);
+        Button registerYes = (Button) findViewById(R.id.registerConfirm);
+        Button cancelRegister = (Button) findViewById(R.id.cancelRegister);
         //populateAutoComplete();
         mDataBaseHelper = new DataBaseHelper(this);
         userPasswordInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {

@@ -1,9 +1,6 @@
 package edu.gatech.pickleratsapp.cs2340.udirtyrat.Model;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.compat.BuildConfig;
-import android.util.Log;
+
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -12,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
-import edu.gatech.pickleratsapp.cs2340.udirtyrat.database.Database;
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.database.DataBaseHelper;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.database.UDirtyRatApplication;
 
 /**
@@ -23,7 +20,7 @@ public class Model {
     /**Singleton Instance**/
     private static final Model _instance = new Model();
     private static int latest_report_key = 0;
-    private Database database;
+    private DataBaseHelper database;
     /**
      * Gets the singleton instance of model
      * @return The singleton instance of model
@@ -46,6 +43,7 @@ public class Model {
         _users = new LinkedList<>();
         _reports = new HashMap<>();
         _report_list = new LinkedList<>();
+        database = new DataBaseHelper(UDirtyRatApplication.getAppContext());
        loadDummyUsers();
     }
 
@@ -55,13 +53,13 @@ public class Model {
         }
     }
 
-    /**
-     *
-     * @return The Set of Users
-     */
-    public List<User> get_users() {
-        return _users;
-    }
+//    /**
+//     *
+//     * @return The Set of Users
+//     */
+//    public List<User> get_users() {
+//        return _users;
+//    }
 
     /**
      * Populates app with dummy users
@@ -123,6 +121,10 @@ public class Model {
      * @param report New report to add to the app
      */
     public void add_report(RatReport report) {
+//        database.insertData(report.get_key(), report.get_date_string(),
+//                report.get_locationType(), report.get_zip(), report.get_address(),
+//                report.get_city(), report.get_borough(), report.get_longitude(),
+//                report.get_latitude());
         _reports.put(report.get_key(), report);
         _report_list.add(report);
         latest_report_key = report.get_key();
@@ -176,7 +178,8 @@ public class Model {
      * @param endDate
      * @return a list of ChartData objects, represents data set for year range
      */
-    public List<ChartData> get_data_in_range(GregorianCalendar startDate, GregorianCalendar endDate) {
+    public List<ChartData> get_data_in_range(GregorianCalendar startDate,
+                                             GregorianCalendar endDate) {
         List<ChartData> dataSet = new LinkedList<>();
         int startYear = startDate.get(Calendar.YEAR);
         int startMonth =  startDate.get(Calendar.MONTH);
@@ -207,10 +210,6 @@ public class Model {
         for (int i = 0; i < monthsSpanned; i++) {
             dataSet.add(new ChartData(i, counts[i]));
         }
-//        int i = 0;
-//        while (i < monthsSpanned) {
-//            int currMonth = startMonth + i % 12;
-//        }
         return dataSet;
     }
     /**

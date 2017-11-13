@@ -75,7 +75,7 @@ public class User {
     @Override
     public boolean equals(Object obj) {
         //TODO: add own implementation of this
-        return (obj instanceof User) && (this == (User) obj
+        return (obj instanceof User) && (this ==  obj
                 || this.get_userID().equals(((User) obj).get_userID()));
     }
 

@@ -59,8 +59,6 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-//        db.execSQL("create table " + Table_Name + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, DATE TEXT, LOCATION TEXT, ZIP INTEGER," +
-//                " ADDRESS TEXT, CITY TEXT, BOROUGH TEXT, LONGITUDE INTEGER, LATITUDE INTEGER)");
         db.execSQL(DATABASE_CREATE);
         db.execSQL(USER_TABLE_CREATE);
     }
@@ -142,7 +140,8 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
         RatReport report = null;
         if(cursor != null) {
             cursor.moveToFirst();
-            report = new RatReport(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
+            report = new RatReport(cursor.getInt(0), cursor.getString(1),
+                    cursor.getString(2),
                     cursor.getInt(3), cursor.getString(4), cursor.getString(5),
                     cursor.getString(6), cursor.getDouble(7), cursor.getDouble(8));
             cursor.close();
@@ -164,7 +163,8 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
         User user = null;
         if(cursor != null) {
             cursor.moveToFirst();
-            user = new User(cursor.getString(0), cursor.getString(1), cursor.getString(2), false);
+            user = new User(cursor.getString(0), cursor.getString(1),
+                    cursor.getString(2), false);
             cursor.close();
         }
         return user;
@@ -180,7 +180,8 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
         Cursor res = database.rawQuery("select * from " + USR_TABLE, null);
         res.moveToFirst();
         while(!res.isAfterLast()) {
-            User user = new User(res.getString(0), res.getString(1), res.getString(2), false);
+            User user = new User(res.getString(0), res.getString(1),
+                    res.getString(2), false);
             user_list.add(user);
             res.moveToNext();
         }
@@ -210,8 +211,7 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
     }
 
     private Cursor getAllData(SQLiteDatabase db) {
-        Cursor res = db.rawQuery("select * from " + Table_Name, null);
-        return res;
+         return db.rawQuery("select * from " + Table_Name, null);
     }
 
 }

@@ -32,9 +32,11 @@ public class Database {
                 report.get_latitude());
     }
 
+
     public RatReport findRatReportByKey(int key) {
         return dbHelper.getRatReportByKey(key);
     }
+
     public List<RatReport> getReportList() {
         return dbHelper.getAllReports();
     }

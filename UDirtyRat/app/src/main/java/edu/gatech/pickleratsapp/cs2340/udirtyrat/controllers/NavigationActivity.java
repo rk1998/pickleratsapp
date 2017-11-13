@@ -1,8 +1,6 @@
 package edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers;
 
 import android.app.AlertDialog;
-import android.app.FragmentTransaction;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -24,9 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -37,7 +32,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -47,7 +41,7 @@ import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
 
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private FragmentManager fragManager;
+    //private FragmentManager fragManager;
     private SupportMapFragment mapFrag;
     private Model model;
     private RatReport latestRatReport;
@@ -70,7 +64,7 @@ public class NavigationActivity extends AppCompatActivity
             }
 
         }
-        LayoutInflater inflater = LayoutInflater.from(this);
+        //LayoutInflater inflater = LayoutInflater.from(this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -80,7 +74,7 @@ public class NavigationActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         Context context = navigationView.getContext();
-        fragManager = getSupportFragmentManager();
+        FragmentManager fragManager = getSupportFragmentManager();
         mapFrag = (SupportMapFragment) fragManager.findFragmentById(R.id.map);
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
         mapFrag.getMapAsync(new OnMapReadyCallback() {
@@ -238,7 +232,7 @@ public class NavigationActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (id == R.id.nav_create_report) {
             startActivity(new Intent(NavigationActivity.this, ReportActivity.class));
         } else if (id == R.id.nav_view_report_list) {

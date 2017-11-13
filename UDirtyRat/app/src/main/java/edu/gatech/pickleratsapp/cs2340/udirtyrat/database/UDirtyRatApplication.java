@@ -8,12 +8,12 @@ import android.content.Context;
  */
 
  public class UDirtyRatApplication extends Application {
-    private Context context;
+    private static Context context;
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
     }
-    public Context getAppContext() {
+    public static Context getAppContext() {
         return context;
     }
 }
