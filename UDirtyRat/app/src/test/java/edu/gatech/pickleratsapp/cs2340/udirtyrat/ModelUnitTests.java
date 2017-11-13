@@ -24,6 +24,7 @@ public class ModelUnitTests {
         testModel.add_user(a);
     }
 
+    //Jamie Hannukainen's tests
     @Test
     public void testLoginExistsRightPassword() {
         assertTrue(testModel.login_user(new User("Jamie", "1111", "password", true)));
