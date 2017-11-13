@@ -25,7 +25,7 @@ public class ReportListView extends AppCompatActivity {
 
     /**
      * Creates the ReportPage
-     * @param savedInstanceData
+     * @param savedInstanceData data generated while the app is currently running
      */
     public void onCreate(Bundle savedInstanceData) {
         super.onCreate(savedInstanceData);

@@ -22,22 +22,22 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="?android:attr/statusBarColor"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@android:color/white" >
 
-        <TextView
-            android:id="@+id/textView"
+        <ImageView
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="U Dirty Rat"
-            android:textSize="32sp"
-            android:layout_marginTop="100dp"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="79dp"
+            app:srcCompat="@drawable/title_asset" />
 
         <ImageView
             android:id="@+id/logo"
@@ -49,31 +49,39 @@
             android:layout_marginTop="160dp"
             android:layout_weight="1"
             android:cropToPadding="false"
-            app:srcCompat="@drawable/picklerat" />
+            app:srcCompat="@drawable/main_asset" />
 
         <Button
             android:id="@+id/registerConfirm"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/login"
+            android:layout_alignBottom="@+id/login"
+            android:layout_alignEnd="@+id/title"
+            android:layout_marginEnd="46dp"
             android:layout_weight="1"
+            android:background="@android:color/holo_blue_light"
             android:text="Register"
-            app:layout_anchorGravity="center_vertical|center_horizontal"
-            android:layout_marginTop="40dp"
-            android:layout_below="@+id/logo"
-            android:layout_alignEnd="@+id/textView"
-            android:layout_marginEnd="-20dp" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"
+            android:textColorLink="@android:color/holo_blue_dark"
+            app:layout_anchorGravity="center_vertical|center_horizontal" />
+
         <Button
             android:id="@+id/login"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/title"
+            android:layout_below="@+id/logo"
             android:layout_gravity="center_vertical|left"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="30dp"
             android:layout_weight="1"
+            android:background="@android:color/holo_blue_light"
             android:text="Login"
-            app:layout_anchorGravity="center_vertical|center_horizontal"
-            android:layout_alignBaseline="@+id/registerConfirm"
-            android:layout_alignBottom="@+id/registerConfirm"
-            android:layout_alignStart="@+id/textView"
-            android:layout_marginStart="-20dp" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"
+            app:layout_anchorGravity="center_vertical|center_horizontal" />
 
     </RelativeLayout>
 

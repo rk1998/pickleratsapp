@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">U Dirty Rat</string>
+    <string name="app_name">RaTracker</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

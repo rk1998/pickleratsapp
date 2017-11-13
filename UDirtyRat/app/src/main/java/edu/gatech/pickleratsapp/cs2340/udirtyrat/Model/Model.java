@@ -151,9 +151,9 @@ public class Model {
 
     /**
      * Gets reports within the date rage
-     * @param startDate
-     * @param endDate
-     * @return
+     * @param startDate beginning of search range
+     * @param endDate end of search range
+     * @return all reports within the range
      */
     public List<RatReport> get_reports_in_range(GregorianCalendar startDate,
                                                 GregorianCalendar endDate) {
@@ -174,8 +174,8 @@ public class Model {
 
     /**
      * Creates a data set for number of rat reports within year range [startYear, endYear]
-     * @param startDate
-     * @param endDate
+     * @param startDate beginning of search range
+     * @param endDate end of search range
      * @return a list of ChartData objects, represents data set for year range
      */
     public List<ChartData> get_data_in_range(GregorianCalendar startDate,

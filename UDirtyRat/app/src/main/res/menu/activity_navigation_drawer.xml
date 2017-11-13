@@ -16,7 +16,7 @@
             android:title="Logout" />
         <item
             android:id="@+id/nav_graph_view"
-            android:icon="@drawable/picklerat"
+            android:icon="@drawable/main_asset"
             android:title="View Graph" />
 
 

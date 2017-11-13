@@ -72,16 +72,16 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
 
     /**
      * Puts a rat report into the database from its component parts
-     * @param key
-     * @param Date
-     * @param Location
-     * @param ZipCode
-     * @param Address
-     * @param City
-     * @param Borough
-     * @param Longitude
-     * @param Latitude
-     * @return
+     * @param key unique for each report
+     * @param Date of sighting
+     * @param Location of sighting
+     * @param ZipCode of sighting
+     * @param Address of sighting
+     * @param City in which sighting is located
+     * @param Borough near which the sighting happened
+     * @param Longitude of sighting
+     * @param Latitude of sighting
+     * @return true if valid report
      */
     public boolean insertData(int key, String Date, String Location,
                               int ZipCode, String Address,
@@ -153,7 +153,7 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
 
     /**
      * Gets a User by its user id
-     * @param usr_id
+     * @param usr_id a user's id
      * @return User with corresponding user id
      */
     public User getUserById(String usr_id) {
