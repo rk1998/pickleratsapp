@@ -99,10 +99,7 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
         contentValues.put(DataBaseHelper.Col_8, Longitude);
         contentValues.put(DataBaseHelper.Col_9, Latitude);
         long result = db.insert(Table_Name, null, contentValues);
-        if (result == -1) {
-            return false;
-        }
-        return true;
+        return result < 0;
     }
 
     /**
@@ -122,10 +119,7 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
             contentValues.put(DataBaseHelper.ADMINFLAG, 0);
         }
         long result = db.insert(USR_TABLE, null, contentValues);
-        if (result == -1) {
-            return false;
-        }
-        return true;
+        return result < 0;
     }
 
     /**

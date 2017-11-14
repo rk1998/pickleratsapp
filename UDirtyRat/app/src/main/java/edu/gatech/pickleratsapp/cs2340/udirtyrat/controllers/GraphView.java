@@ -3,26 +3,14 @@ package edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -36,7 +24,6 @@ import java.util.List;
 
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.ChartData;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
-import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.RatReport;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.XAxisDateFormatter;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.R;
 

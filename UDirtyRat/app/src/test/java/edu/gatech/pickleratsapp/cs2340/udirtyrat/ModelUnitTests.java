@@ -3,8 +3,8 @@ package edu.gatech.pickleratsapp.cs2340.udirtyrat;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.List;
 
 import static org.junit.Assert.*;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
@@ -12,11 +12,11 @@ import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.User;
 
 
 /**
- * Created by Jamie on 11/13/2017.
+ * Unit tests
  */
 
 public class ModelUnitTests {
-    Model testModel;
+    private Model testModel;
     @Before
     public void setUp() {
         User a = new User("Jamie", "1111", "password", true);
@@ -36,5 +36,15 @@ public class ModelUnitTests {
     @Test
     public void testLoginNotExist() {
         assertFalse(testModel.login_user(new User("Julian", "0000", "jameskun", false)));
+    }
+
+    //Rohith Krishnan's Tests
+    @Test
+    public void testAddUserNotInSystem() {
+        assertTrue(testModel.add_user(new User("Rick", "rick@highlevelcomedy.com", "morty", false)));
+    }
+    @Test
+    public void testAddExistingUserId() {
+        assertFalse(testModel.add_user(new User("Jim", "1111", "password", true)));
     }
 }

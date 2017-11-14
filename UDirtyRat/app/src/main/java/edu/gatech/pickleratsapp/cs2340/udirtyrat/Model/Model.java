@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
-import edu.gatech.pickleratsapp.cs2340.udirtyrat.database.DataBaseHelper;
-import edu.gatech.pickleratsapp.cs2340.udirtyrat.database.UDirtyRatApplication;
 
 /**
  * The facade to the Model. Using Singleton design pattern to allow access to the model from
@@ -20,7 +18,7 @@ public class Model {
     /**Singleton Instance**/
     private static final Model _instance = new Model();
     private static int latest_report_key = 0;
-    private DataBaseHelper database;
+    //private DataBaseHelper database;
     /**
      * Gets the singleton instance of model
      * @return The singleton instance of model
@@ -43,7 +41,7 @@ public class Model {
         _users = new LinkedList<>();
         _reports = new HashMap<>();
         _report_list = new LinkedList<>();
-        database = new DataBaseHelper(UDirtyRatApplication.getAppContext());
+        //database = new DataBaseHelper(UDirtyRatApplication.getAppContext());
        loadDummyUsers();
     }
 
