@@ -88,6 +88,14 @@ public class Model {
         }
     }
 
+    /**
+     * Returns the list of users
+     * @return the list of users
+     */
+    public List<User> get_users() {
+        return _users;
+    }
+
 //    /**
 //     * Loads report data into model from the database
 //     */
