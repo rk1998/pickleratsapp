@@ -36,10 +36,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".controllers.MainScreen"
-            android:label="Rat Data"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".controllers.ReportListView" />
         <activity android:name=".controllers.ReportActivity" />
         <activity android:name=".controllers.ReportDetailActivity" />
@@ -61,10 +57,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_keys" />
-
-        <activity
-            android:name=".controllers.MapActivity"
-            android:label="@string/title_activity_map"></activity>
     </application>
 
 </manifest>

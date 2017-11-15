@@ -81,9 +81,9 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
      * @param Borough near which the sighting happened
      * @param Longitude of sighting
      * @param Latitude of sighting
-     * @return true if valid report
+     *
      */
-    public boolean insertData(int key, String Date, String Location,
+    public void insertData(int key, String Date, String Location,
                               int ZipCode, String Address,
                               String City, String Borough,
                               double Longitude, double Latitude) {
@@ -98,8 +98,8 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
         contentValues.put(DataBaseHelper.Col_7, Borough);
         contentValues.put(DataBaseHelper.Col_8, Longitude);
         contentValues.put(DataBaseHelper.Col_9, Latitude);
-        long result = db.insert(Table_Name, null, contentValues);
-        return result < 0;
+        db.insert(Table_Name, null, contentValues);
+        //return result < 0;
     }
 
     /**

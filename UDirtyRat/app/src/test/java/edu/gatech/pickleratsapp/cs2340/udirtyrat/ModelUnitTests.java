@@ -66,16 +66,16 @@ public class ModelUnitTests {
     }
 
     //Nick Huang's Tests
-    @Test
-    public void testAddingReport() {
-        testModel.add_report(new RatReport(21, "10/19/2007", "Johnson", 1234, "1234 Hop Street", "Harb", "Jorge", 12.0, 12.0));
-        assertEquals(1, testModel.get_reports().size());
-    }
 
     @Test
     public void testConfirmAddress() {
         testModel.add_report(new RatReport(21, "10/19/2007", "Johnson", 1234, "1234 Hop Street", "Harb", "Jorge", 12.0, 12.0));
         RatReport r1 = new RatReport(21, "10/19/2007", "Johnson", 1234, "1234 Hop Street", "Harb", "Jorge", 12.0, 12.0);
         assertEquals(r1.get_address(), testModel.get_report(21).get_address());
+    }
+    @Test
+    public void testAddingReport() {
+        testModel.add_report(new RatReport(21, "10/19/2007", "Johnson", 1234, "1234 Hop Street", "Harb", "Jorge", 12.0, 12.0));
+        assertEquals(2, testModel.get_reports().size());
     }
 }

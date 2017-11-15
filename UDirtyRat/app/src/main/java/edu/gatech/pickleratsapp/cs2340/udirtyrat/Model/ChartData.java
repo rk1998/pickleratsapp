@@ -11,7 +11,7 @@ public class ChartData implements Comparable {
         x = px;
         y = py;
     }
-    public int getX() {
+    private int getX() {
         return x;
     }
     public int getY() {
