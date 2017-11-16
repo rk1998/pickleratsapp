@@ -52,13 +52,13 @@ public class ReportActivity extends AppCompatActivity {
         //populateAutoComplete();
         mDbHelper = new DataBaseHelper(this);
 
-        ArrayAdapter<String> boroughAdapter = new ArrayAdapter(this,
+        ArrayAdapter<String> boroughAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item,
                 RatReport.boroughs);
         boroughAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         borough.setAdapter(boroughAdapter);
 
-        ArrayAdapter<String> locationTypeAdapter = new ArrayAdapter(this,
+        ArrayAdapter<String> locationTypeAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item,
                 RatReport.locationTypes);
         locationTypeAdapter.setDropDownViewResource(

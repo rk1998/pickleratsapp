@@ -1,5 +1,7 @@
 package edu.gatech.pickleratsapp.cs2340.udirtyrat.Model;
 
+import android.support.annotation.NonNull;
+
 /**
  * Class that represents a data point for a chart
  */
@@ -18,7 +20,7 @@ public class ChartData implements Comparable {
         return y;
     }
     @Override
-    public int compareTo(Object o) {
+    public int compareTo(@NonNull Object o) {
         ChartData d = (ChartData) o;
         return x - d.getX();
     }

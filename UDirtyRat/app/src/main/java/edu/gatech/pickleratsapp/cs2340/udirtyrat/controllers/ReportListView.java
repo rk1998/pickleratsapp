@@ -39,7 +39,7 @@ public class ReportListView extends AppCompatActivity {
         for (int i = 0; i < 100; i++) {
             keys.add(reports.get(i).toString());
         }
-        ArrayAdapter adapter = new ArrayAdapter(this,
+        ArrayAdapter adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, keys);
 
         mRatListView.setAdapter(adapter);
