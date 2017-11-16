@@ -96,4 +96,21 @@ public class ModelUnitTests {
         assertEquals(2, data.size());
         assertEquals(2877, data.get(0).getY() + data.get(1).getY());
     }
+
+    //Bram Tyler's Tests
+
+    @Test
+    public void testEmptyGetRatReportDateRange() {
+        List<RatReport> empty = testModel.get_reports_in_range( new GregorianCalendar(2017, 11, 16), new
+                GregorianCalendar(2017, 11, 17));
+        assertEquals(0, empty.size());
+    }
+
+    @Test
+    public void testWorkingGetRatReportDateRange() {
+        List<RatReport> data = testModel.get_reports_in_range( new GregorianCalendar(2000, 0, 1), new
+                GregorianCalendar(2017, 11, 28));
+        assertEquals(1, data.size());
+        assertEquals(21, data.get(0).get_key());
+    }
 }
