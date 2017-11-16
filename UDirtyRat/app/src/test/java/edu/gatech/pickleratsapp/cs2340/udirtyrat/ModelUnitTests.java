@@ -3,8 +3,10 @@ package edu.gatech.pickleratsapp.cs2340.udirtyrat;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.ChartData;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.RatReport;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.User;
@@ -77,5 +79,21 @@ public class ModelUnitTests {
     public void testAddingReport() {
         testModel.add_report(new RatReport(21, "10/19/2007", "Johnson", 1234, "1234 Hop Street", "Harb", "Jorge", 12.0, 12.0));
         assertEquals(2, testModel.get_reports().size());
+    }
+
+    //Giuseppe Pantalone's Tests
+
+    @Test
+    public void testEmptyDateRange() {
+        List <ChartData> empty = testModel.get_data_in_range(new GregorianCalendar(2017, 10, 16), new GregorianCalendar(2017, 10, 17));
+        assertEquals(1, empty.size());
+        assertEquals(0, empty.get(0).getY());
+    }
+
+    @Test
+    public void testWorkingDateRange() {
+        List<ChartData> data = testModel.get_data_in_range(new GregorianCalendar(2017, 0, 1), new GregorianCalendar(2017, 1, 28));
+        assertEquals(2, data.size());
+        assertEquals(2877, data.get(0).getY() + data.get(1).getY());
     }
 }

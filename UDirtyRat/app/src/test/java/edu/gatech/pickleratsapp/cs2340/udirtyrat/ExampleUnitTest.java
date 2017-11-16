@@ -2,6 +2,8 @@ package edu.gatech.pickleratsapp.cs2340.udirtyrat;
 
 import org.junit.Test;
 
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
+
 import static org.junit.Assert.*;
 
 /**
@@ -14,4 +16,6 @@ public class ExampleUnitTest {
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
     }
+
+
 }

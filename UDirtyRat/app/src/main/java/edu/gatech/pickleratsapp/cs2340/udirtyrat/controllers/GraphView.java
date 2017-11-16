@@ -70,11 +70,16 @@ public class GraphView extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 final int startDay = startDate.getDayOfMonth();
                                 final int startMonth = startDate.getMonth();
-                                Log.d("Start Month ", " " + startMonth);
                                 final int startYear = startDate.getYear();
                                 final int endDay = endDate.getDayOfMonth();
                                 final int endMonth = endDate.getMonth();
                                 final int endYear = endDate.getYear();
+                                Log.d("Start Month ", " " + startMonth);
+                                Log.d("Start Day ", " " + startDay);
+                                Log.d("Start Year ", " " + startYear);
+                                Log.d("End Month ", " " + endMonth);
+                                Log.d("End Day ", " " + endDay);
+                                Log.d("End Year ", " " + endYear);
                                 Log.d("Date Range", startYear + " - " + endYear);
                                 GregorianCalendar startDate = new GregorianCalendar(startYear,
                                         startMonth, startDay);
