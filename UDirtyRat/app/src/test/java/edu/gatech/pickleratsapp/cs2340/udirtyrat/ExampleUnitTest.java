@@ -2,7 +2,7 @@ package edu.gatech.pickleratsapp.cs2340.udirtyrat;
 
 import org.junit.Test;
 
-import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
+//import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
 
 import static org.junit.Assert.*;
 

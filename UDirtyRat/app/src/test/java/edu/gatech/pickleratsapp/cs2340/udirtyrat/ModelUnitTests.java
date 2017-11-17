@@ -77,40 +77,57 @@ public class ModelUnitTests {
     }
     @Test
     public void testAddingReport() {
-        testModel.add_report(new RatReport(21, "10/19/2007", "Johnson", 1234, "1234 Hop Street", "Harb", "Jorge", 12.0, 12.0));
-        assertEquals(2, testModel.get_reports().size());
+        testModel.add_report(new RatReport(21, "10/19/2007",
+                "Johnson", 1234, "1234 Hop Street", "Harb", "Jorge", 12.0, 12.0));
+        assertEquals(5, testModel.get_reports().size());
     }
 
     //Giuseppe Pantalone's Tests
 
     @Test
     public void testEmptyDateRange() {
-        List <ChartData> empty = testModel.get_data_in_range(new GregorianCalendar(2017, 10, 16), new GregorianCalendar(2017, 10, 17));
+        List<ChartData> empty = testModel.get_data_in_range(new GregorianCalendar(2017, 10, 16),
+                new GregorianCalendar(2017, 10, 17));
         assertEquals(1, empty.size());
         assertEquals(0, empty.get(0).getY());
     }
 
     @Test
     public void testWorkingDateRange() {
-        List<ChartData> data = testModel.get_data_in_range(new GregorianCalendar(2017, 0, 1), new GregorianCalendar(2017, 1, 28));
-        assertEquals(2, data.size());
-        assertEquals(2877, data.get(0).getY() + data.get(1).getY());
+        RatReport r1 = new RatReport(21, "10/19/2010",
+                "Johnson", 1234, "1234 Bop Street", "Harb", "Jorge", 12.0, 12.0);
+        RatReport r2 = new RatReport(22,
+                "1/11/2011", "Jim", 1234, "1234 Hop Street", "Harb", "Jorge", 12.0, 12.0);
+        RatReport r3 =  new RatReport(23,
+                "1/11/2016", "Jim", 1234, "1234 Hop Street", "Harb", "Jorge", 12.0, 12.0);
+        testModel.add_report(r1);
+        testModel.add_report(r2);
+        testModel.add_report(r3);
+        List<ChartData> data = testModel.get_data_in_range(new GregorianCalendar(2010, 0, 1),
+                new GregorianCalendar(2016, 1, 28));
+        assertEquals(74, data.size());
+        int total = 0;
+        for(int i = 0; i < data.size(); i++) {
+            total += data.get(i).getY();
+
+        }
+        assertEquals(2, total);
     }
 
     //Bram Tyler's Tests
 
     @Test
     public void testEmptyGetRatReportDateRange() {
-        List<RatReport> empty = testModel.get_reports_in_range( new GregorianCalendar(2017, 11, 16), new
-                GregorianCalendar(2017, 11, 17));
+        List<RatReport> empty = testModel.get_reports_in_range(new GregorianCalendar(2017, 11, 16),
+                new GregorianCalendar(2017, 11, 17));
         assertEquals(0, empty.size());
     }
 
     @Test
     public void testWorkingGetRatReportDateRange() {
-        List<RatReport> data = testModel.get_reports_in_range( new GregorianCalendar(2000, 0, 1), new
-                GregorianCalendar(2017, 11, 28));
-        assertEquals(1, data.size());
+        List<RatReport> data = testModel.get_reports_in_range( new GregorianCalendar(2000, 0, 1),
+                new GregorianCalendar(2017, 11, 28));
+        assertEquals(4, data.size());
         assertEquals(21, data.get(0).get_key());
     }
 }
