@@ -132,7 +132,7 @@ public class Model {
 //                report.get_city(), report.get_borough(), report.get_longitude(),
 //                report.get_latitude());
         if (report == null) {
-            return;
+            throw new IllegalArgumentException("cannot pass null report to model");
         }
         _reports.put(report.get_key(), report);
         _report_list.add(report);
