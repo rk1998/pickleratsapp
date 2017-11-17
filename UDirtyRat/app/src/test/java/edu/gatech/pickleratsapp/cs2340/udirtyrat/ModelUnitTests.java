@@ -130,4 +130,11 @@ public class ModelUnitTests {
         assertEquals(4, data.size());
         assertEquals(21, data.get(0).get_key());
     }
+
+    @Test
+    public void testStartDateAfterEndDate() {
+        List<RatReport> empty = testModel.get_reports_in_range( new GregorianCalendar(2017, 11, 16), new
+                GregorianCalendar(2017, 1, 17));
+        assertEquals(0, empty.size());
+    }
 }

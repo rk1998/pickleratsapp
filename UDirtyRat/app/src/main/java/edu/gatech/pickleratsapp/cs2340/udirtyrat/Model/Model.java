@@ -131,6 +131,9 @@ public class Model {
 //                report.get_locationType(), report.get_zip(), report.get_address(),
 //                report.get_city(), report.get_borough(), report.get_longitude(),
 //                report.get_latitude());
+        if (report == null) {
+            return;
+        }
         _reports.put(report.get_key(), report);
         _report_list.add(report);
         latest_report_key = report.get_key();
