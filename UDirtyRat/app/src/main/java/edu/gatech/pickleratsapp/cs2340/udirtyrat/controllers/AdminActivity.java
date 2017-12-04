@@ -1,12 +1,14 @@
 package edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -45,8 +47,18 @@ public class AdminActivity extends AppCompatActivity {
         for(User u: users) {
             user_strings.add(u.toString());
         }
-        ArrayAdapter adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, user_strings);
+        ArrayAdapter adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, user_strings) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                if(users.get(position).get_isLocked()) {
+                    view.setBackgroundColor(Color.RED);
+                }
+                return view;
+
+            }
+        };
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

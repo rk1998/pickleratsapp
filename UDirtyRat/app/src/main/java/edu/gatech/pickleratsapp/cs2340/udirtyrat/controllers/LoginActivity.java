@@ -192,18 +192,35 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
                     startActivity(appIntent);
                 }
             } else {
-                AlertDialog.Builder badAttemptDialog = new AlertDialog.Builder(this);
-                badAttemptDialog.setTitle("Oops!");
-                badAttemptDialog.setMessage("Wrong email or password.");
-                badAttemptDialog.setPositiveButton("OK", null);
-                badAttemptDialog.setCancelable(true);
-                badAttemptDialog.create().show();
-                badAttemptDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
+                if(tempUser.get_isLocked()) {
+                    AlertDialog.Builder badAttemptDialog = new AlertDialog.Builder(this);
+                    badAttemptDialog.setTitle("Hold the phone!");
+                    badAttemptDialog.setMessage("Your account has been locked, contact your admin" +
+                            " to have them unlock your account");
+                    badAttemptDialog.setPositiveButton("OK", null);
+                    badAttemptDialog.setCancelable(true);
+                    badAttemptDialog.create().show();
+                    badAttemptDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
 
-                    }
+                        }
 
-                });
+                    });
+
+                } else {
+                    AlertDialog.Builder badAttemptDialog = new AlertDialog.Builder(this);
+                    badAttemptDialog.setTitle("Oops!");
+                    badAttemptDialog.setMessage("Wrong email or password.");
+                    badAttemptDialog.setPositiveButton("OK", null);
+                    badAttemptDialog.setCancelable(true);
+                    badAttemptDialog.create().show();
+                    badAttemptDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+
+                    });
+                }
             }
 //            mAuthTask = new UserLoginTask(email, password);
 //            mAuthTask.execute((Void) null);

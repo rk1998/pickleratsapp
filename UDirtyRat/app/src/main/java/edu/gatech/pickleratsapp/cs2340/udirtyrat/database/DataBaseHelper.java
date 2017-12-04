@@ -181,6 +181,22 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
     }
 
     /**
+     * Changes a user already in the database
+     * @param u a user that is getting changed
+     */
+    public void changeUserAttributes(User u) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(USR_NAME, u.get_name());
+        cv.put(USR_ID, u.get_userID());
+        cv.put(PASSWORD, u.get_passWord());
+        cv.put(ADMINFLAG, u.get_isAdmin());
+        cv.put(LOCKEDFLAG, u.get_isLocked());
+        String searchString = USR_ID + "='" + u.get_userID() + "'";
+        database.update(USR_TABLE, cv, searchString, null);
+    }
+
+    /**
      *
      * @return a list of all users in the database
      */

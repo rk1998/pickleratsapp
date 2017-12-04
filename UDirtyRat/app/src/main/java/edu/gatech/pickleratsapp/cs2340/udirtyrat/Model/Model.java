@@ -2,12 +2,16 @@ package edu.gatech.pickleratsapp.cs2340.udirtyrat.Model;
 
 
 
+import android.content.Context;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.database.DataBaseHelper;
 
 
 /**
@@ -42,22 +46,36 @@ public class Model {
         _reports = new HashMap<>();
         _report_list = new LinkedList<>();
         //database = new DataBaseHelper(UDirtyRatApplication.getAppContext());
-       loadDummyUsers();
+       //loadDummyUsers();
     }
 
+    /**
+     *  Load users from the database into a list
+     * @param users users to put into model
+     */
     public void load_users(List<User> users) {
         for(User u: users) {
             _users.add(u);
         }
     }
 
-//    /**
-//     *
-//     * @return The Set of Users
-//     */
-//    public List<User> get_users() {
-//        return _users;
-//    }
+    /**
+     * Changes the locked status of a user
+     * @param locked_status new locked status
+     * @param usr_id id of user to change the lock status of
+     * @param context app context (used to create database helper object)
+     */
+    public void set_user_locked_status(boolean locked_status, String usr_id, Context context) {
+        DataBaseHelper mDataBaseHelper = new DataBaseHelper(context);
+        for(User u: _users) {
+            if (u.get_userID().equals(usr_id)) {
+                u.set_isLocked(locked_status);
+                mDataBaseHelper.changeUserAttributes(u);
+                return;
+            }
+        }
+
+    }
 
     /**
      * Populates app with dummy users
