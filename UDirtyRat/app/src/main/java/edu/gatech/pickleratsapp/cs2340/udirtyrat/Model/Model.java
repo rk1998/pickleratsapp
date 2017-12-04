@@ -63,10 +63,10 @@ public class Model {
      * Populates app with dummy users
      */
     private void loadDummyUsers() {
-        _users.add(new User("Jamie", "jhaunkainen@gatech.edu", "1234", false));
-        _users.add(new User("Rohith", "rkrishnan42@gatech.edu", "1234", false));
-        _users.add(new User("Nick", "nhuang@gatech.edu", "1234", false));
-        _users.add(new User("ayy bb", "b@b", "bb", false));
+        _users.add(new User("Jamie", "jhaunkainen@gatech.edu", "1234", false, false));
+        _users.add(new User("Rohith", "rkrishnan42@gatech.edu", "1234", false, false));
+        _users.add(new User("Nick", "nhuang@gatech.edu", "1234", false, false));
+        _users.add(new User("ayy bb", "b@b", "bb", false, false));
     }
 
     public int numReports() {
@@ -96,21 +96,6 @@ public class Model {
         return _users;
     }
 
-//    /**
-//     * Loads report data into model from the database
-//     */
-//    public void load_database(Context context) {
-//        database = new Database(context);
-//        List<RatReport> saved_reports = database.getReportList();
-//        Log.d("saved reports", "" + saved_reports);
-//        if(saved_reports.size() != 0) {
-//            for(RatReport report: saved_reports) {
-//                _reports.put(report.get_key(), report);
-//                _report_list.add(report);
-//                latest_report_key = report.get_key();
-//            }
-//        }
-//    }
 
     /**
      * Loads report data from csv when app first starts
@@ -229,7 +214,7 @@ public class Model {
     public boolean login_user(User user) {
         if(_users.contains(user)) {
            User attemptedUser = _users.get(_users.indexOf(user));
-            return attemptedUser.get_passWord().equals(user.get_passWord());
+            return attemptedUser.get_passWord().equals(user.get_passWord()) && !user.get_isLocked();
         } else {
             return false;
         }

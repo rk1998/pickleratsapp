@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity /*implements LoaderCallb
 //    private Button registerYes;
 //    private Button cancelRegister;
     private DataBaseHelper mDataBaseHelper;
+    private boolean isAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity /*implements LoaderCallb
         Button cancelRegister = (Button) findViewById(R.id.cancelRegister);
         //populateAutoComplete();
         mDataBaseHelper = new DataBaseHelper(this);
+
         userPasswordInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -61,6 +64,7 @@ public class RegisterActivity extends AppCompatActivity /*implements LoaderCallb
         registerYes.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                isAdmin = adminToggle.isChecked();
                 attemptLogin();
             }
         });
@@ -140,7 +144,7 @@ public class RegisterActivity extends AppCompatActivity /*implements LoaderCallb
         String name = userNameInput.getText().toString();
         String email = userIDInput.getText().toString();
         String password = userPasswordInput.getText().toString();
-        boolean isAdmin = adminToggle.isPressed();
+        Log.d("Admin :", "" + isAdmin);
 
         boolean cancel = false;
         View focusView = null;
@@ -183,13 +187,18 @@ public class RegisterActivity extends AppCompatActivity /*implements LoaderCallb
             // perform the user login attempt.
             //showProgress(true);
             Model model = Model.get_instance();
-            User newUser = new User(name, email, password, isAdmin);
-            boolean dataBaseCheck = mDataBaseHelper.insertUser(newUser);
+            User newUser = new User(name, email, password, isAdmin, false);
             boolean check = model.add_user(newUser);
             // check will be true if the account was added successfully
-            if (check && dataBaseCheck) {
-                Intent appIntent = new Intent(RegisterActivity.this, NavigationActivity.class);
-                startActivity(appIntent);
+            if (check) {
+                mDataBaseHelper.insertUser(newUser);
+                if(newUser.get_isAdmin()) {
+                    Intent appIntent = new Intent(RegisterActivity.this, AdminActivity.class);
+                    startActivity(appIntent);
+                } else {
+                    Intent appIntent = new Intent(RegisterActivity.this, NavigationActivity.class);
+                    startActivity(appIntent);
+                }
             } else {
                 AlertDialog.Builder badAttemptDialog = new AlertDialog.Builder(this);
                 badAttemptDialog.setTitle("Oops!");

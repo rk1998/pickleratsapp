@@ -27,7 +27,7 @@ public class ModelUnitTests {
     private Model testModel;
     @Before
     public void setUp() {
-        User a = new User("Jamie", "1111", "password", true);
+        User a = new User("Jamie", "1111", "password", true, false);
         testModel = Model.get_instance();
         testModel.add_user(a);
     }
@@ -35,31 +35,32 @@ public class ModelUnitTests {
     //Jamie Hannukainen's tests
     @Test
     public void testLoginExistsRightPassword() {
-        assertTrue(testModel.login_user(new User("Jamie", "1111", "password", true)));
+        assertTrue(testModel.login_user(new User("Jamie", "1111", "password", true, false)));
     }
     @Test
     public void testLoginExistsWrongPassword() {
-        assertFalse(testModel.login_user(new User("Jamie", "1111", "passWord", true)));
+        assertFalse(testModel.login_user(new User("Jamie", "1111", "passWord", true, false)));
     }
     @Test
     public void testLoginNotExist() {
-        assertFalse(testModel.login_user(new User("Julian", "0000", "jameskun", false)));
+        assertFalse(testModel.login_user(new User("Julian", "0000", "jameskun", false, false)));
     }
 
     //Rohith Krishnan's Tests
     @Test
     public void testAddUserNotInSystem() {
-        assertTrue(testModel.add_user(new User("Rick", "rick@highlevelcomedy.com", "morty", false)));
+        assertTrue(testModel.add_user(new User("Rick", "rick@highlevelcomedy.com",
+                "morty", false, false)));
     }
     @Test
     public void testAddExistingUserId() {
-        assertFalse(testModel.add_user(new User("Jim", "1111", "password", true)));
+        assertFalse(testModel.add_user(new User("Jim", "1111", "password", true, false)));
     }
     @Test
     public void testAddMultipleUsers() {
-        User user1 = new User("bb", "ayy@bb", "123", false);
-        User user2 = new User("aa", "byy@aa", "2345", false);
-        User user3 = new User("xys", "dddd", "12345", false);
+        User user1 = new User("bb", "ayy@bb", "123", false, false);
+        User user2 = new User("aa", "byy@aa", "2345", false, false);
+        User user3 = new User("xys", "dddd", "12345", false, false);
         testModel.add_user(user1);
         testModel.add_user(user2);
         testModel.add_user(user3);

@@ -32,6 +32,7 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
     private static final String USR_ID = "UserID";
     private static final String PASSWORD = "Password";
     private static final String ADMINFLAG = "AdminFlag";
+    private static final String LOCKEDFLAG = "LockedFlag";
     private static final String DATABASE_CREATE = "create table " + Table_Name
             + "("
             + Col_1 + " INTEGER, "
@@ -50,11 +51,12 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
             + USR_NAME + " TEXT NOT NULL, "
             + USR_ID + " TEXT NOT NULL, "
             + PASSWORD + " TEXT NOT NULL, "
-            + ADMINFLAG + " INTEGER"
+            + ADMINFLAG + " INTEGER, "
+            + LOCKEDFLAG + " INTEGER"
             +");";
 
     public DataBaseHelper (Context context) {
-        super(context, DataBase_Name, null, 3);
+        super(context, DataBase_Name, null, 4);
     }
 
     @Override
@@ -118,6 +120,11 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
         } else {
             contentValues.put(DataBaseHelper.ADMINFLAG, 0);
         }
+        if(user.get_isLocked()) {
+            contentValues.put(DataBaseHelper.LOCKEDFLAG, 1);
+        } else {
+            contentValues.put(DataBaseHelper.LOCKEDFLAG, 0);
+        }
         long result = db.insert(USR_TABLE, null, contentValues);
         return result < 0;
     }
@@ -152,13 +159,22 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
      */
     public User getUserById(String usr_id) {
         SQLiteDatabase database = this.getWritableDatabase();
-        String query = "SELECT * FROM " + USR_TABLE + "WHERE " + USR_ID + " ='" + usr_id;
-        Cursor cursor = database.rawQuery(query, null);
+        String query = "SELECT * FROM " + USR_TABLE + " WHERE " + USR_ID + " =?";
+        Cursor cursor = database.rawQuery(query, new String[]{usr_id});
         User user = null;
         if(cursor != null) {
             cursor.moveToFirst();
+            boolean isAdmin = false;
+            if(cursor.getInt(3) == 1) {
+                isAdmin = true;
+            }
             user = new User(cursor.getString(0), cursor.getString(1),
-                    cursor.getString(2), false);
+                    cursor.getString(2), isAdmin, false);
+            if(cursor.getInt(4) == 1) {
+                user.set_isLocked(true);
+            } else {
+                user.set_isLocked(false);
+            }
             cursor.close();
         }
         return user;
@@ -175,7 +191,12 @@ public class DataBaseHelper extends SQLiteOpenHelper implements BaseColumns {
         res.moveToFirst();
         while(!res.isAfterLast()) {
             User user = new User(res.getString(0), res.getString(1),
-                    res.getString(2), false);
+                    res.getString(2), false, false);
+            if(res.getInt(4) == 1) {
+                user.set_isLocked(true);
+            } else {
+                user.set_isLocked(false);
+            }
             user_list.add(user);
             res.moveToNext();
         }

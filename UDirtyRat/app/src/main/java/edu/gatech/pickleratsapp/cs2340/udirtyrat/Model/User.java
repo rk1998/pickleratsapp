@@ -9,14 +9,16 @@ public class User {
     private final String _userID;
     private String _passWord;
     private final boolean _isAdmin;
-    public User(String name, String userID, String passWord, boolean isAdmin) {
+    private boolean _isLocked;
+    public User(String name, String userID, String passWord, boolean isAdmin, boolean locked) {
         _name = name;
         _userID = userID;
         _passWord = passWord;
         _isAdmin = isAdmin;
+        _isLocked = locked;
     }
     public User(String userID, String passWord) {
-        this("BigBoi", userID, passWord, false);
+        this("BigBoi", userID, passWord, false, false);
     }
 
     /**
@@ -81,10 +83,22 @@ public class User {
 
     /**
      *
+     * @return The User's locked status
+     */
+    public boolean get_isLocked() {
+        return _isLocked;
+    }
+
+    public void set_isLocked(boolean locked) {
+        _isLocked = locked;
+    }
+
+    /**
+     *
      * @return String representation of the user
      */
     @Override
     public String toString() {
-        return "User " + _name + "has userId : " + _userID;
+        return _name + ", userId : " + _userID;
     }
 }

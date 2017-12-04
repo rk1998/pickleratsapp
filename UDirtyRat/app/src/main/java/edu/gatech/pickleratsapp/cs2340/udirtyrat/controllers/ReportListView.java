@@ -30,7 +30,7 @@ public class ReportListView extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceData) {
         super.onCreate(savedInstanceData);
         setContentView(R.layout.activity_report_list_view);
-       ListView mRatListView = (ListView) findViewById(R.id.ratList);
+        ListView mRatListView = (ListView) findViewById(R.id.ratList);
         Model model = Model.get_instance();
         reports = model.get_reports();
         Collections.reverse(reports);

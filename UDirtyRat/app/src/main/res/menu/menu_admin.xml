@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers.AdminActivity">
+
+    <item
+        android:id="@+id/logout"
+        android:orderInCategory="101"
+        android:title="Log Out"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/view_reports"
+        android:orderInCategory="102"
+        android:title="View Reports"
+        app:showAsAction="never"/>
+
+</menu>

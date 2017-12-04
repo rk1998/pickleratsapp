@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.app.AlertDialog;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.Model;
 import edu.gatech.pickleratsapp.cs2340.udirtyrat.Model.User;
+import edu.gatech.pickleratsapp.cs2340.udirtyrat.database.DataBaseHelper;
 
 /**
  * A login screen that offers login via email/password.
@@ -170,7 +171,12 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             //showProgress(true);
-            User tempUser = new User(email, password);
+            DataBaseHelper mDataBaseHelper = new DataBaseHelper(this);
+            //User tempUser = new User(email, password);
+            User tempUser = mDataBaseHelper.getUserById(email);
+            if(tempUser == null) {
+                tempUser = new User(email, password);
+            }
             Model model = Model.get_instance();
 
 //            if(TEMP_USER.equals(email) && TEMP_PASS.equals(password)) {
@@ -178,8 +184,13 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
 //                startActivity(appIntent);
 //            }
             if(model.login_user(tempUser)) {
-                Intent appIntent = new Intent(LoginActivity.this, NavigationActivity.class);
-                startActivity(appIntent);
+                if(tempUser.get_isAdmin()) {
+                    Intent appIntent = new Intent(LoginActivity.this, AdminActivity.class);
+                    startActivity(appIntent);
+                } else {
+                    Intent appIntent = new Intent(LoginActivity.this, NavigationActivity.class);
+                    startActivity(appIntent);
+                }
             } else {
                 AlertDialog.Builder badAttemptDialog = new AlertDialog.Builder(this);
                 badAttemptDialog.setTitle("Oops!");
