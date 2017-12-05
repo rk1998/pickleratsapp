@@ -59,6 +59,17 @@ public class Model {
         }
     }
 
+    public void set_user_password(String newPassword, String usr_id, Context context) {
+        DataBaseHelper mDataBaseHelper = new DataBaseHelper(context);
+        for(User u: _users) {
+            if (u.get_userID().equals(usr_id)) {
+                u.set_passWord(newPassword);
+                mDataBaseHelper.changeUserAttributes(u);
+                return;
+            }
+        }
+    }
+
     /**
      * Changes the locked status of a user
      * @param locked_status new locked status
@@ -111,7 +122,13 @@ public class Model {
      * @return the list of users
      */
     public List<User> get_users() {
-        return _users;
+        List<User> regular_user = new LinkedList<>();
+        for(User u: _users) {
+            if(!u.get_isAdmin()) {
+                regular_user.add(u);
+            }
+        }
+        return regular_user;
     }
 
 
@@ -224,17 +241,23 @@ public class Model {
         }
         return dataSet;
     }
+
     /**
      *
-     * @param user user to login
+     * @param userId attempted user id
+     * @param password attempted password
      * @return if the user was logged in or not
      */
-    public boolean login_user(User user) {
-        if(_users.contains(user)) {
-           User attemptedUser = _users.get(_users.indexOf(user));
-            return attemptedUser.get_passWord().equals(user.get_passWord()) && !user.get_isLocked();
-        } else {
-            return false;
+    public boolean login_user(String userId, String password) {
+        for(User u: _users) {
+            if(u.get_userID().equals(userId)) {
+                if(u.get_passWord().equals(password)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         }
+        return false;
     }
 }

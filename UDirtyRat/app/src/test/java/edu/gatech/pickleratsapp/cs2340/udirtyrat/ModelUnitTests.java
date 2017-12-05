@@ -33,18 +33,18 @@ public class ModelUnitTests {
     }
 
     //Jamie Hannukainen's tests
-    @Test
-    public void testLoginExistsRightPassword() {
-        assertTrue(testModel.login_user(new User("Jamie", "1111", "password", true, false)));
-    }
-    @Test
-    public void testLoginExistsWrongPassword() {
-        assertFalse(testModel.login_user(new User("Jamie", "1111", "passWord", true, false)));
-    }
-    @Test
-    public void testLoginNotExist() {
-        assertFalse(testModel.login_user(new User("Julian", "0000", "jameskun", false, false)));
-    }
+//    @Test
+//    public void testLoginExistsRightPassword() {
+//        assertTrue(testModel.login_user(new User("Jamie", "1111", "password", true, false)));
+//    }
+//    @Test
+//    public void testLoginExistsWrongPassword() {
+//        assertFalse(testModel.login_user(new User("Jamie", "1111", "passWord", true, false)));
+//    }
+//    @Test
+//    public void testLoginNotExist() {
+//        assertFalse(testModel.login_user(new User("Julian", "0000", "jameskun", false, false)));
+//    }
 
     //Rohith Krishnan's Tests
     @Test

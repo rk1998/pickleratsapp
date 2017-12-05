@@ -37,6 +37,7 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
+    private int failedloginAttempts = 0;
 //    private View mProgressView;
 //    private View mLoginFormView;
 
@@ -172,7 +173,6 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
             // perform the user login attempt.
             //showProgress(true);
             DataBaseHelper mDataBaseHelper = new DataBaseHelper(this);
-            //User tempUser = new User(email, password);
             User tempUser = mDataBaseHelper.getUserById(email);
             if(tempUser == null) {
                 tempUser = new User(email, password);
@@ -183,7 +183,7 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
 //                Intent appIntent = new Intent(LoginActivity.this, MainScreen.class);
 //                startActivity(appIntent);
 //            }
-            if(model.login_user(tempUser)) {
+            if(model.login_user(email, password)) {
                 if(tempUser.get_isAdmin()) {
                     Intent appIntent = new Intent(LoginActivity.this, AdminActivity.class);
                     startActivity(appIntent);
@@ -208,6 +208,25 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
                     });
 
                 } else {
+                    if(failedloginAttempts == 3) {
+                        tempUser.set_isLocked(true);
+                        mDataBaseHelper.changeUserAttributes(tempUser);
+                        AlertDialog.Builder badAttemptDialog = new AlertDialog.Builder(this);
+                        badAttemptDialog.setTitle("Ya Blew it buddo");
+                        badAttemptDialog.setMessage("You have been locked out of your account." +
+                                " Contact your admin to have them change your password and unlock" +
+                                " your account");
+                        badAttemptDialog.setPositiveButton("OK", null);
+                        badAttemptDialog.setCancelable(true);
+                        badAttemptDialog.create().show();
+                        badAttemptDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+
+                        });
+
+                    }
                     AlertDialog.Builder badAttemptDialog = new AlertDialog.Builder(this);
                     badAttemptDialog.setTitle("Oops!");
                     badAttemptDialog.setMessage("Wrong email or password.");
@@ -220,6 +239,8 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
                         }
 
                     });
+                    failedloginAttempts++;
+
                 }
             }
 //            mAuthTask = new UserLoginTask(email, password);
