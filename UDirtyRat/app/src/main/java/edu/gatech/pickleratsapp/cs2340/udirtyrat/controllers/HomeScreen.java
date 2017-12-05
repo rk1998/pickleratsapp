@@ -1,5 +1,7 @@
 package edu.gatech.pickleratsapp.cs2340.udirtyrat.controllers;
 
+import android.graphics.drawable.AnimationDrawable;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.AsyncTask;
@@ -13,6 +15,8 @@ import android.view.View;
 import android.content.Intent;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -86,6 +90,8 @@ public class HomeScreen extends AppCompatActivity {
 
     }
 
+    AnimationDrawable ratAnimation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +105,12 @@ public class HomeScreen extends AppCompatActivity {
             new LoadCSVTask().execute("load");
             // launches Async task in background while the Home Screen is being created
         }
+
+        //adds animation rat
+        ImageView ratImage = (ImageView) findViewById(R.id.ratani);
+        ratImage.setBackgroundResource(R.drawable.ratgif);
+        ratAnimation = (AnimationDrawable) ratImage.getBackground();
+
 
         // Capture button clicks
         login.setOnClickListener(new OnClickListener() {
@@ -121,6 +133,9 @@ public class HomeScreen extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
+
+        ratAnimation.start();
     }
+
 
 }

@@ -54,34 +54,39 @@
         <Button
             android:id="@+id/registerConfirm"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/login"
-            android:layout_alignBottom="@+id/login"
-            android:layout_alignEnd="@+id/title"
-            android:layout_marginEnd="46dp"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
-            android:background="@android:color/holo_blue_light"
+            android:background="@color/colorAccent"
             android:text="Register"
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
             android:textColorLink="@android:color/holo_blue_dark"
-            app:layout_anchorGravity="center_vertical|center_horizontal" />
+            android:layout_marginBottom="80dp"
+            app:layout_anchorGravity="center_vertical|center_horizontal"
+            android:layout_above="@+id/ratani"
+            android:layout_alignStart="@+id/login" />
+            android:layout_alignStart="@+id/login" />
+
 
         <Button
             android:id="@+id/login"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/title"
-            android:layout_below="@+id/logo"
-            android:layout_gravity="center_vertical|left"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="30dp"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:background="@android:color/holo_blue_light"
             android:text="Login"
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
-            app:layout_anchorGravity="center_vertical|center_horizontal" />
+            app:layout_anchorGravity="center_vertical|center_horizontal"
+            android:layout_above="@+id/ratani"
+            android:layout_centerHorizontal="true" />
+
+        <ImageView
+            android:id="@+id/ratani"
+            android:layout_width="91dp"
+            android:layout_height="72dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 

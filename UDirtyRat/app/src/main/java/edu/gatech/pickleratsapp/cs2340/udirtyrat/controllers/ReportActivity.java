@@ -28,6 +28,7 @@ public class ReportActivity extends AppCompatActivity {
     private EditText latitude;
     private EditText longitude;
     private Spinner borough;
+
 //    private Button report;
 //    private Button cancelReport;
     private RatReport ratReport;

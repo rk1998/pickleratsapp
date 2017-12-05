@@ -13,9 +13,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="18dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
-            android:text="Name" />
+            android:text="Name"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/userNameInput"
@@ -23,9 +24,8 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/Name"
             android:layout_below="@+id/Name"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="10dp"
             android:ems="10"
-            android:hint="Name"
             android:inputType="textPersonName" />
 
         <TextView
@@ -34,8 +34,9 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/userNameInput"
             android:layout_below="@+id/userNameInput"
-            android:layout_marginTop="19dp"
-            android:text="User ID" />
+            android:layout_marginTop="10dp"
+            android:text="User ID"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/userIDinput"
@@ -43,9 +44,9 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/UserID"
             android:layout_below="@+id/UserID"
-            android:layout_marginTop="19dp"
+            android:layout_marginTop="10dp"
             android:ems="10"
-            android:hint="User ID"
+            android:hint="email address"
             android:inputType="textPersonName" />
 
         <TextView
@@ -54,8 +55,9 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/userIDinput"
             android:layout_below="@+id/userIDinput"
-            android:layout_marginTop="16dp"
-            android:text="Password" />
+            android:layout_marginTop="10dp"
+            android:text="Password"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/userPasswordInput"
@@ -63,37 +65,41 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/Password"
             android:layout_below="@+id/Password"
-            android:layout_marginTop="23dp"
+            android:layout_marginTop="10dp"
             android:ems="10"
             android:inputType="textPassword" />
 
         <ToggleButton
             android:id="@+id/adminToggle"
-            android:layout_width="wrap_content"
+            style="@android:style/Widget.Holo.Button.Toggle"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/userPasswordInput"
             android:layout_below="@+id/userPasswordInput"
-            android:layout_marginTop="19dp"
+            android:layout_marginTop="10dp"
+            android:checked="true"
             android:text="Admin"
-            android:textOff="Not an Admin"
-            android:textOn="I am an Admin" />
+            android:textOff="NOT ADMIN"
+            android:textOn="ADMIN" />
 
         <Button
             android:id="@+id/registerConfirm"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/adminToggle"
             android:layout_below="@+id/adminToggle"
             android:layout_marginTop="25dp"
+            android:background="@android:color/holo_blue_light"
             android:text="register" />
 
         <Button
             android:id="@+id/cancelRegister"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/registerConfirm"
             android:layout_marginStart="14dp"
             android:layout_toEndOf="@+id/registerConfirm"
+            android:background="@color/colorAccent"
             android:text="Cancel" />
     </RelativeLayout>
 </LinearLayout>
